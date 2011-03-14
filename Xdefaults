@@ -1,0 +1,185 @@
+! Urxvt !
+URxvt*termName: screen-256color
+URxvt*buffered: true
+URxvt*geometry: 120x40
+URxvt*title: urxvt
+
+! internal whitespace !
+!fade text n% upon unfocus
+!!URxvt*fading: 40
+!darken=(0 to 100) lighten=(-1 to -100)
+!!URxvt*shading: 40
+
+! borderless and no scrollbar !
+URxvt*scrollBar_right: false
+URxvt*scrollBar: false
+URxvt*borderLess: false
+URxvt*internalBorder: 7
+
+! xft settings !
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.autohint: 1
+Xft.lcdfilter: lcddefault
+Xft.hinting: true
+Xft.hintstyle: hintfull
+
+! transparency !
+URxvt*inheritPixmap: false
+URxvt*tintColor: #FFFFFF
+URxvt*transparent: false
+! true transparency !
+!URxvt*depth: 32
+!URxvt*foreground: #7f8f9f
+!URxvt*background:rgba: 4000/4000/4000/cccc
+
+! clickable links, etc. !
+URxvt.perl-ext-common: default,selection,mark-yank-urls,matcher,keyboard-select
+URxvt.keysym.M-Escape:  perl:keyboard-select:activate
+URxvt.keysym.M-s:       perl:keyboard-select:search
+URxvt.matcher.button: 1
+URxvt.matcher.rend.0: Uline Bold fg8 bg1
+URxvt.matcher.pattern.1: \\b(mailto|http|https|ftp|file):[/]*[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt.matcher.pattern.2: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
+URxvt.underlineURLs: true
+URxvt.urlLauncher: chromium
+
+! fonts !
+URxvt.font:xft:envy code r:medium:pixelsize=13
+URxvt.boldFont:xft:envy code r:medium:pixelsize=13
+URxvt.italicFont:xft:envy code r:italic:pixelsize=13
+URxvt.boldItalicFont:xft:envy code r:italic:pixelsize=13
+
+! -- Colours -- !
+#include "/home/bohoomil/.colours/darkcourses"
+
+! -- Xterm settings -- !
+XTerm*termName: xterm-256color
+XTerm*toolBar: false
+XTerm*scrollBar: false
+XTerm*rightScrollBar: false
+XTerm*dynamicColors: true
+XTerm*background: #121212
+XTerm*foreground: #c6c6c6
+XTerm*faceName:Envy Code R:medium:pixelsize=13
+XTerm*boldMode:    false
+!XTerm*boldColors:  false
+!XTerm*colorBDMode: false
+!XTerm*colorBD:     yellow
+XTerm*utf8: 2
+XTerm*eitghtBitInput: true
+XTerm*geometry: 120x40
+
+xterm*VT100.translations:  #override \
+			   <Key>Home:  string("\033[1~")  \n\
+				<Key>End:  string("\033[4~")  \n\
+
+Xcursor.theme: Neutral
+
+
+! xscreensaver !
+! -- font settings -- !
+xscreensaver.Dialog.headingFont:terminus:bold:pixelsize=14
+xscreensaver.Dialog.bodyFont:terminus:medium:pixelsize=14
+xscreensaver.Dialog.labelFont:terminus:medium:pixelsize=14
+xscreensaver.Dialog.unameFont:terminus:medium:pixelsize=14
+xscreensaver.Dialog.buttonFont:terminus:bold:pixelsize=14
+xscreensaver.Dialog.dateFont:terminus:medium:pixelsize=12
+xscreensaver.passwd.passwdFont:terminus:bold:pixelsize=14
+
+! -- general dialog box -- !
+!xscreensaver.Dialog.foreground:         #CCCCCC
+!xscreensaver.Dialog.background:         #191717
+!xscreensaver.Dialog.topShadowColor:     #434343
+!xscreensaver.Dialog.bottomShadowColor:  #424242
+!xscreensaver.Dialog.Button.foreground:  #CCCCCC
+!xscreensaver.Dialog.Button.background:  #191717
+
+! -- username/password input box and date text colour -- !
+xscreensaver.Dialog.text.foreground:    #333333
+xscreensaver.Dialog.text.background:    #999999
+xscreensaver.Dialog.internalBorderWidth:24
+xscreensaver.Dialog.borderWidth:        20
+xscreensaver.Dialog.shadowThickness:    2
+
+! -- timeout bar -- !
+xscreensaver.passwd.thermometer.foreground:  #CCCCCC
+xscreensaver.passwd.thermometer.background:  #999999
+xscreensaver.passwd.thermometer.width:       8
+
+! -- datestamp format -- !
+xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
+
+! xdvi !
+xdvi.shrinkFactor: 7
+xdvi.keepPosition: True
+xdvi.gsAlpha: True
+xdvi.gamma: 1.200000
+xdvi.geometry: 802x991
+
+! xpdf !
+xpdf*enableFreetype:    yes
+xpdf*antialias:         yes
+xpdf*foreground:        black
+xpdf*background:        white
+xpdf*urlCommand:        chromium %s
+
+! xcalc !
+xcalc*geometry:                        200x275
+xcalc.ti.bevel.background:             #111111
+xcalc.ti.bevel.screen.background:      #000000
+xcalc.ti.bevel.screen.DEG.background:  #000000
+xcalc.ti.bevel.screen.DEG.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.GRAD.background: #000000
+xcalc.ti.bevel.screen.GRAD.foreground: LightSeaGreen
+xcalc.ti.bevel.screen.RAD.background:  #000000
+xcalc.ti.bevel.screen.RAD.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.INV.background:  #000000
+xcalc.ti.bevel.screen.INV.foreground:  Red
+xcalc.ti.bevel.screen.LCD.background:  #000000
+xcalc.ti.bevel.screen.LCD.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.LCD.shadowWidth: 0
+xcalc.ti.bevel.screen.M.background:    #000000
+xcalc.ti.bevel.screen.M.foreground:    LightSeaGreen
+xcalc.ti.bevel.screen.P.background:    #000000
+xcalc.ti.bevel.screen.P.foreground:    Yellow
+xcalc.ti.Command.foreground:  White
+xcalc.ti.Command.background:  #777777
+xcalc.ti.button5.background:  Orange3
+xcalc.ti.button19.background: #611161
+xcalc.ti.button18.background: #611161
+xcalc.ti.button20.background: #611111
+!uncomment to change label on division button
+!xcalc.ti.button20.label:      /
+xcalc.ti.button25.background: #722222
+xcalc.ti.button30.background: #833333
+xcalc.ti.button35.background: #944444
+xcalc.ti.button40.background: #a55555
+xcalc.ti.button22.background: #222262
+xcalc.ti.button23.background: #222262
+xcalc.ti.button24.background: #222272
+xcalc.ti.button27.background: #333373
+xcalc.ti.button28.background: #333373
+xcalc.ti.button29.background: #333373
+xcalc.ti.button32.background: #444484
+xcalc.ti.button33.background: #444484
+xcalc.ti.button34.background: #444484
+xcalc.ti.button37.background: #555595
+xcalc.ti.button38.background: #555595
+xcalc.ti.button39.background: #555595
+XCalc*Cursor:                 hand2
+XCalc*ShapeStyle:             rectangle
+
+! alsamixer scheme
+alsamixer*color1:   #ff2759
+alsamixer*color9:   #ff2759
+alsamixer*color2:   #52aebf
+alsamixer*color10:  #52aebf
+alsamixer*color7:   #ffffff
+alsamixer*color15:  #ffffff
+alsamixer*color11:  #777777
+alsamixer*color4:   #1b1d1e
+alsamixer*scrollBar:  false
+

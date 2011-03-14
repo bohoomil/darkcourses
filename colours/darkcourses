@@ -1,0 +1,33 @@
+! darkcourses by bohoomil
+! (once upon a time based on zenburn...)
+
+! bg / fg / cursor
+*background:  #bcbcbc
+*foreground:  #262626
+*cursorColor: #4a574d
+
+! black + red
+*color0:      #141414
+*color1:      #734545
+! green + yellow
+*color2:      #4A574D
+*color3:      #808045
+! blue + purple
+*color4:      #506070
+*color5:      #8C6981
+! cyan + white
+*color6:      #588385
+*color7:      #bdbdbd
+! bright-black + bright-red
+*color8:      #7e7c7e
+*color9:      #BF5F5F
+! bright-green + bright-yellow
+*color10:     #749174
+*color11:     #BDA45A
+! bright-blue + bright-purple
+*color12:     #768EA6
+*color13:     #bf7e9d
+! bright-cyan + bright-white
+*color14:     #6FBABD
+*color15:     #dcdccc
+
