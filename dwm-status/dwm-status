@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# Status script for dwm; use my custom screenpx font to display icons.
+# Original Screen font by SGI.
+# For details and instructions how to preview the font, see
+# Lokaltog's post https://bbs.archlinux.org/viewtopic.php?pid=724236#p724236
+# 
+
+mem(){
+	mem="$(free -m |awk '/cache:/ { print $3"M" }')"
+     echo -e "\x04$mem\x01"
+     }
+
+   # CPU line courtesy Procyon: https://bbs.archlinux.org/viewtopic.php?pid=661592
+cpu(){
+     cpu="$(eval $(awk '/^cpu /{print "previdle=" $5 "; prevtotal=" $2+$3+$4+$5 }' /proc/stat); sleep 0.4; 
+      eval $(awk '/^cpu /{print "idle=" $5 "; total=" $2+$3+$4+$5 }' /proc/stat); 
+      intervaltotal=$((total-${prevtotal:-0})); 
+      echo "$((100*( (intervaltotal) - ($idle-${previdle:-0}) ) / (intervaltotal) ))")"
+      echo -e "\x05$cpu%\x01"
+     }
+
+hdd(){     
+     #hdd="$(df -P | awk '/^\/dev/{printf "%s ", $5}' | sed '$s/.$//')"
+	 hdd1="$(df /dev/sda5 | awk '/^\/dev/{printf "%s ", $5}' | sed '$s/.$//')"
+	 hdd2="$(df /dev/sda3 | awk '/^\/dev/{printf "%s ", $5}' | sed '$s/.$//')"
+	 hddt="$(curl --connect-timeout 1 -fsm 3 telnet://127.0.0.1:7634 | cut -c 34-35)"
+	 echo -e "\x02/ $hdd1 ~/ $hdd2 \x06$hddt°C\x01"
+     }
+
+eml(){
+     maildirs="$HOME/.mail/*/INBOX/new/"
+     ml="$(find $maildirs -type f | wc -l)"
+     if [ $ml == 0 ]; then
+     echo "0"
+     else
+     echo -en "\x03$ml\x01"
+     fi
+     }
+
+loc(){
+	loc="$("$HOME/.scripts/loc.sh")"
+	if [ $loc == US ]; then
+	echo -e "\x03$loc\x01"
+	else
+	echo -e "\x04$loc\x01"
+	fi
+	}
+
+int(){
+     int="$("$HOME/.scripts/speed.sh")"
+     echo -e "\x05$int\x01"
+     }
+
+dte(){
+     dte="$(date "+%a %d.%m, %H:%M")"
+     echo -e "\x09$dte\x01"
+     }
+
+   # Pipe to status bar
+   xsetroot -name " $(int)  $(loc)  $(cpu)  $(mem)  $(hdd)   $(eml)  $(dte) "

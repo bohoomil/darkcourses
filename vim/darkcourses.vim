@@ -1,23 +1,21 @@
-" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Description:  darkcourses, once upon a time based on zenburn
-"               works with both gVim and Vim
-" Maintainer:   bohoomil [at] gmail dot com
-" Last Change:  March 02, 2011
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim color file by bohoomil
+" darkcourses, in the early days based on zenburn
 "
-
+" It's usable, but still needs lots of polish.
+"
 set background=dark
 hi clear
 if exists("syntax_on")
     syntax reset
 endif
 let g:colors_name="darkcourses"
+" gui
 hi Boolean         guifg=#d9ca9e
 hi Character       guifg=#d9ca9e 
 hi Comment         guifg=#6C6C6C
 hi Conditional     guifg=#afaf5f
 hi Constant        guifg=#dfafaf
-hi Cursor          guifg=#080808 guibg=#87afaf
+hi Cursor          guifg=#121212 guibg=#87afaf
 hi Debug           guifg=#dfafaf
 hi Define          guifg=#afaf5f 
 hi Delimiter       guifg=#585858
@@ -26,16 +24,16 @@ hi DiffChange      guibg=#333333
 hi DiffDelete      guifg=#333333 guibg=#464646
 hi DiffText        guifg=#dc91b4 guibg=#41363c
 hi Directory       guifg=#d7d7d7
-hi ErrorMsg        guifg=#87d7af guibg=#080808
+hi ErrorMsg        guifg=#87d7af guibg=#121212
 hi Exception       guifg=#d9ca9e
 hi Float           guifg=#c6c6c6
-hi FoldColumn      guifg=#87afaf guibg=#080808
-hi Folded          guifg=#87afaf guibg=#080808
+hi FoldColumn      guifg=#87afaf guibg=#121212
+hi Folded          guifg=#87afaf guibg=#121212
 hi Function        guifg=#d7af5f
 hi Identifier      guifg=#afaf5f
 hi IncSearch       guibg=#af5f00 guifg=#626262
 hi Keyword         guifg=#afaf5f
-hi Label           guifg=#d7d787 gui=underline
+hi Label           guifg=#d7d787
 hi LineNr          guifg=#626262
 hi Macro           guifg=#afaf5f
 hi ModeMsg         guifg=#afaf5f gui=none
@@ -73,33 +71,33 @@ hi SpellCap   guisp=#588385 guifg=#8c8cbc
 hi SpellRare  guisp=#8c6981 guifg=#bc8cbc
 hi SpellLocal guisp=#7f9f7f guifg=#9ccc9c
 
-" non-GUI 
+" term
 if &t_Co > 255
 	hi Boolean         ctermfg=181
 	hi Character       ctermfg=248
 	hi Comment         ctermfg=242
     hi Conditional     ctermfg=143
     hi Constant        ctermfg=181
-	hi Cursor          ctermfg=232   ctermbg=109
+	hi Cursor          ctermfg=233   ctermbg=109
 	hi Debug           ctermfg=181
     hi Define          ctermfg=143
     hi Delimiter       ctermfg=240
     hi DiffAdd         ctermfg=66    ctermbg=237
     hi DiffChange      ctermbg=236
-    hi DiffDelete      ctermfg=236   ctermbg=232
+    hi DiffDelete      ctermfg=236   ctermbg=233
     hi DiffText        ctermfg=217   ctermbg=237
     hi Directory       ctermfg=188
-	hi ErrorMsg        ctermfg=115   ctermbg=232
+	hi ErrorMsg        ctermfg=115   ctermbg=233
     hi Exception       ctermfg=249
     hi Float           ctermfg=251
-    hi FoldColumn      ctermfg=109   ctermbg=232
-    hi Folded          ctermfg=109   ctermbg=232
+    hi FoldColumn      ctermfg=109   ctermbg=233
+    hi Folded          ctermfg=109   ctermbg=233
     hi Function        ctermfg=179
     hi Identifier      ctermfg=143
     hi IncSearch       ctermbg=130   ctermfg=241
     hi Keyword         ctermfg=143
-    hi Label           ctermfg=186   cterm=underline
-	hi LineNr          ctermfg=241   ctermbg=232
+    hi Label           ctermfg=186
+	hi LineNr          ctermfg=241   ctermbg=233
     hi Macro           ctermfg=143
     hi ModeMsg         ctermfg=143   cterm=none
     hi MoreMsg         ctermfg=15
@@ -115,8 +113,8 @@ if &t_Co > 255
     hi Special         ctermfg=173
     hi SpecialKey      ctermfg=151
     hi Statement       ctermfg=60
-    hi StatusLine      ctermfg=242   ctermbg=214  cterm=none
-    hi StatusLineNC    ctermfg=242   ctermbg=214  
+    hi StatusLine      ctermfg=66    ctermbg=214  cterm=none
+    hi StatusLineNC    ctermfg=66    ctermbg=214  
     hi StorageClass    ctermfg=249   cterm=bold
     hi String          ctermfg=174
     hi Structure       ctermfg=229   cterm=bold
@@ -125,14 +123,14 @@ if &t_Co > 255
     hi Todo            ctermfg=108   ctermbg=234     cterm=bold
     hi Typedef         ctermfg=253   cterm=bold
     hi Type            ctermfg=96    cterm=none
-    hi Underlined      ctermfg=104   ctermbg=232     cterm=bold
+    hi Underlined      ctermfg=104   ctermbg=233     cterm=bold
     hi VertSplit       ctermfg=236   ctermbg=65
     hi VisualNOS       ctermfg=236   ctermbg=210     cterm=bold
     hi WarningMsg      ctermfg=15    ctermbg=236     cterm=bold
     hi WildMenu        ctermbg=236   ctermfg=194     cterm=bold
     hi CursorLine      ctermbg=236   cterm=none
 
-    " spellchecking, always "bright" background
+    " spellchecking
     hi SpellLocal ctermfg=14  ctermbg=237
     hi SpellBad   ctermfg=9   ctermbg=237
     hi SpellCap   ctermfg=12  ctermbg=237
@@ -140,62 +138,51 @@ if &t_Co > 255
 
     " pmenu
     hi PMenu      ctermfg=248  ctermbg=0
-	hi PMenuSel   ctermfg=223 ctermbg=232
+	hi PMenuSel   ctermfg=223 ctermbg=233
 
     if exists("g:darkcourses_high_Contrast")
-        hi Normal  ctermfg=248 ctermbg=232
-		hi NonText ctermfg=232
+        hi Normal  ctermfg=248 ctermbg=233
+		hi NonText ctermfg=233
 
         if exists("g:darkcourses_color_also_Ignore")
-            hi Ignore          ctermfg=232
+            hi Ignore          ctermfg=233
         endif
     else
-        hi Normal ctermfg=248 ctermbg=232
+        hi Normal ctermfg=248 ctermbg=233
         hi Cursor          ctermbg=109
-        hi diffadd         ctermbg=232
-        hi diffdelete      ctermbg=232
-        hi difftext        ctermbg=232
-        hi errormsg        ctermbg=232
-        hi foldcolumn      ctermbg=232
-        hi folded          ctermbg=232
+        hi diffadd         ctermbg=233
+        hi diffdelete      ctermbg=233
+        hi difftext        ctermbg=233
+        hi errormsg        ctermbg=233
+        hi foldcolumn      ctermbg=233
+        hi folded          ctermbg=233
         hi incsearch       ctermbg=179
-        hi linenr          ctermbg=232
-        hi search          ctermbg=232
-        hi statement       ctermbg=232
-        hi statusline      ctermbg=233
-        hi statuslinenc    ctermbg=233
-        hi title           ctermbg=232
-        hi todo            ctermbg=232
-        hi underlined      ctermbg=232
+        hi linenr          ctermbg=233
+        hi search          ctermbg=233
+        hi statement       ctermbg=233
+        hi statusline      ctermbg=234
+        hi statuslinenc    ctermbg=234
+        hi title           ctermbg=233
+        hi todo            ctermbg=233
+        hi underlined      ctermbg=233
         hi vertsplit       ctermbg=65
         hi visualnos       ctermbg=210
-		hi warningmsg      ctermbg=232
-        hi wildmenu        ctermbg=232
-        hi NonText         ctermfg=232
+		hi warningmsg      ctermbg=233
+        hi wildmenu        ctermbg=233
+        hi NonText         ctermfg=233
         
         if exists("g:darkcourses_color_also_Ignore")
-            hi Ignore          ctermfg=232
+            hi Ignore          ctermfg=233
         endif
-    endif
-
-    if exists("g:darkcourses_alternate_Error")
-        hi Error ctermfg=210 ctermbg=52 gui=bold
-    else
-        hi Error ctermfg=223 ctermbg=95 gui=bold
     endif
 endif
 
 if exists("g:darkcourses_force_dark_Background")
-    " Force dark background, because of a bug in VIM:  VIM sets background
-    " automatically during "hi Normal ctermfg=X"; it misinterprets the high
-    " value (234 or 237 above) as a light color, and wrongly sets background to
-    " light.  See ":help highlight" for details.
     set background=dark
 endif
 
 if exists("g:darkcourses_high_Contrast")
-    " use new darker background
-    hi Normal          guifg=#bdbdbd guibg=#080808
+    hi Normal          guifg=#bdbdbd guibg=#121212
     hi CursorLine      guibg=#121212
     hi Pmenu           guibg=#242424 guifg=#ccccbc
     hi PMenuSel        guibg=#353a37 guifg=#ccdc90
@@ -207,10 +194,9 @@ if exists("g:darkcourses_high_Contrast")
     hi TabLineSel      guifg=#efefef guibg=#1c1c1b
     hi TabLine         guifg=#b6bf98 guibg=#181818
     hi CursorColumn    guifg=#dcdccc guibg=#2b2b2b
-    hi NonText         guifg=#080808
+    hi NonText         guifg=#121212
 else
-    " Original, lighter background
-    hi Normal          guifg=#b8b8b8 guibg=#080808
+    hi Normal          guifg=#b8b8b8 guibg=#121212
     hi CursorLine      guibg=#434443
     hi Pmenu           guibg=#2c2e2e guifg=#9f9f9f
     hi PMenuSel        guibg=#242424 guifg=#d0d0a0
@@ -240,7 +226,7 @@ else
     hi Error        guifg=#e37170 guibg=#3d3535 gui=none
 endif
 
-if exists("g:darkfcourses_alternate_Include")
+if exists("g:darkcourses_alternate_Include")
     hi Include      guifg=#ffcfaf
 else
     hi Include      guifg=#dfaf8f

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+while true
+	do 
+	$HOME/.scripts/dwm-status
+	sleep 2s
+done &
+
+while true 
+	do
+	dwm 2> /dev/null
+done
+
