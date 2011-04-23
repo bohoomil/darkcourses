@@ -69,107 +69,78 @@ hi VisualNOS       guifg=#333333 guibg=#dc91b4 gui=none,underline
 hi WarningMsg      guifg=#dcdccc guibg=#333333 gui=none
 hi WildMenu        guibg=#2c302d guifg=#d7ffd7 gui=underline
 
-hi SpellBad   guisp=#bf5f5f guifg=#dc8c6c
-hi SpellCap   guisp=#588385 guifg=#8c8cbc
-hi SpellRare  guisp=#8c6981 guifg=#bc8cbc
-hi SpellLocal guisp=#7f9f7f guifg=#9ccc9c
+hi SpellBad        guisp=#bf5f5f guifg=#dc8c6c
+hi SpellCap        guisp=#588385 guifg=#8c8cbc
+hi SpellRare       guisp=#8c6981 guifg=#bc8cbc
+hi SpellLocal      guisp=#7f9f7f guifg=#9ccc9c
 
 " term
-hi Boolean         ctermfg=181
-hi Character       ctermfg=248
-hi Comment         ctermfg=242
-hi Conditional     ctermfg=143
-hi Constant        ctermfg=181
-hi Cursor          ctermfg=233   ctermbg=109
-hi Debug           ctermfg=181
-hi Define          ctermfg=143
-hi Delimiter       ctermfg=240
-hi DiffAdd         ctermfg=66    ctermbg=237
-hi DiffChange      ctermbg=236
-hi DiffDelete      ctermfg=236   ctermbg=233
-hi DiffText        ctermfg=217   ctermbg=237
-hi Directory       ctermfg=188
-hi Error           ctermfg=130   ctermbg=none
-hi ErrorMsg        ctermfg=130   ctermbg=233
-hi Exception       ctermfg=249
-hi Float           ctermfg=251
-hi FoldColumn      ctermfg=109   ctermbg=233
-hi Folded          ctermfg=109   ctermbg=233
-hi Function        ctermfg=179
-hi Identifier      ctermfg=143
+hi Normal          ctermfg=7
+hi Boolean         ctermfg=13
+hi Character       ctermfg=7
+hi Comment         ctermfg=8
+hi Conditional     ctermfg=11
+hi Constant        ctermfg=13
+hi Cursor          ctermfg=233   ctermbg=12
+hi Debug           ctermfg=13
+hi Define          ctermfg=11
+hi Delimiter       ctermfg=8
+hi DiffAdd         ctermfg=3
+hi DiffChange      ctermfg=13
+hi DiffDelete      ctermfg=10
+hi DiffText        ctermfg=6
+hi Directory       ctermfg=2
+hi Error           ctermfg=9     ctermbg=233
+hi ErrorMsg        ctermfg=9     ctermbg=233
+hi Exception       ctermfg=13
+hi Float           ctermfg=9
+hi FoldColumn      ctermfg=109
+hi Folded          ctermfg=109
+hi Function        ctermfg=3
+hi Identifier      ctermfg=11
 hi IncSearch       ctermbg=130   ctermfg=241
-hi Keyword         ctermfg=143
-hi Label           ctermfg=186
-hi LineNr          ctermfg=241   ctermbg=233
-hi Macro           ctermfg=143
-hi ModeMsg         ctermfg=143   cterm=none
-hi MoreMsg         ctermfg=15
-hi Number          ctermfg=60
+hi Keyword         ctermfg=11
+hi Label           ctermfg=11
+hi LineNr          ctermfg=8     ctermbg=233
+hi Macro           ctermfg=11
+hi ModeMsg         ctermfg=3
+hi MoreMsg         ctermfg=14
+hi Number          ctermfg=4
 hi Operator        ctermfg=64
-hi PreCondit       ctermfg=180
+hi PreCondit       ctermfg=10    cterm=none
 hi PreProc         ctermfg=130
-hi Question        ctermfg=15
-hi Repeat          ctermfg=143
+hi Question        ctermfg=14
+hi Repeat          ctermfg=14
 hi Search          ctermfg=171   ctermbg=241  cterm=none
-hi SpecialChar     ctermfg=181
+hi SpecialChar     ctermfg=13
 hi SpecialComment  ctermfg=108
-hi Special         ctermfg=173
-hi SpecialKey      ctermfg=151
-hi Statement       ctermfg=60
-hi StatusLine      ctermfg=66    ctermbg=234  cterm=none
-hi StatusLineNC    ctermfg=66    ctermbg=234  cterm=none 
-hi StorageClass    ctermfg=249   cterm=bold
-hi String          ctermfg=174
-hi Structure       ctermfg=229   cterm=bold
-hi Tag             ctermfg=181   cterm=bold
-hi Title           ctermfg=7     ctermbg=234     cterm=bold
-hi Todo            ctermfg=108   ctermbg=234     cterm=bold
-hi Typedef         ctermfg=253   cterm=bold
-hi Type            ctermfg=96    cterm=none
-hi Underlined      ctermfg=104   ctermbg=233     cterm=bold
-hi VertSplit       ctermfg=236   ctermbg=65
-hi VisualNOS       ctermfg=236   ctermbg=210     cterm=bold
-hi WarningMsg      ctermfg=15    ctermbg=236     cterm=bold
-hi WildMenu        ctermbg=236   ctermfg=194     cterm=bold
-hi CursorLine      ctermbg=236   cterm=none
+hi Special         ctermfg=5
+hi SpecialKey      ctermfg=10
+hi Statement       ctermfg=4
+hi StatusLine      ctermfg=66    ctermbg=0    cterm=none
+"hi StatusLineNC    ctermfg=0     ctermbg=0    cterm=none 
+hi StorageClass    ctermfg=6
+hi String          ctermfg=10
+hi Structure       ctermfg=12
+hi Tag             ctermfg=5
+hi Title           ctermfg=7     ctermbg=234   cterm=bold
+hi Todo            ctermfg=108   ctermbg=234
+hi Typedef         ctermfg=9
+hi Type            ctermfg=5
+hi Underlined      ctermfg=104   ctermbg=233
+hi VertSplit       ctermfg=65    ctermbg=236
+hi VisualNOS       ctermfg=210   ctermbg=236
+hi WarningMsg      ctermfg=9     ctermbg=0
+hi WildMenu        ctermbg=0     ctermfg=14
+hi CursorLine      ctermbg=0     cterm=none
 
 " spellchecking
-hi SpellLocal ctermfg=14  ctermbg=237
-hi SpellBad   ctermfg=9   ctermbg=237
-hi SpellCap   ctermfg=12  ctermbg=237
-hi SpellRare  ctermfg=13  ctermbg=237
+hi SpellLocal      ctermfg=14    ctermbg=237
+hi SpellBad        ctermfg=9     ctermbg=237
+hi SpellCap        ctermfg=12    ctermbg=237
+hi SpellRare       ctermfg=13    ctermbg=237
 
 " pmenu
-hi PMenu      ctermfg=248  ctermbg=0
-hi PMenuSel   ctermfg=223 ctermbg=233
-
-if exists("g:darkcourses_high_Contrast")
-    hi Normal          guifg=#bdbdbd guibg=#121212
-    hi CursorLine      guibg=#121212
-    hi Pmenu           guibg=#242424 guifg=#ccccbc
-    hi PMenuSel        guibg=#353a37 guifg=#ccdc90
-    hi PmenuSbar       guibg=#2e3330 guifg=#000000
-    hi PMenuThumb      guibg=#a0afa0 guifg=#040404
-    hi MatchParen      guifg=#f0f0c0 guibg=#383838
-    hi SignColumn      guifg=#9fafaf guibg=#181818
-    hi TabLineFill     guifg=#cfcfaf guibg=#181818
-    hi TabLineSel      guifg=#efefef guibg=#1c1c1b
-    hi TabLine         guifg=#b6bf98 guibg=#181818
-    hi CursorColumn    guifg=#dcdccc guibg=#2b2b2b
-    hi NonText         guifg=#121212
-else
-    hi Normal          guifg=#b8b8b8 guibg=#121212
-    hi CursorLine      guibg=#434443
-    hi Pmenu           guibg=#2c2e2e guifg=#9f9f9f
-    hi PMenuSel        guibg=#242424 guifg=#d0d0a0
-    hi PmenuSbar       guibg=#2e3330 guifg=#000000
-    hi PMenuThumb      guibg=#a0afa0 guifg=#040404
-    hi MatchParen      guifg=#b2b2a0 guibg=#2e2e2e
-    hi SignColumn      guifg=#9fafaf guibg=#343434
-    hi TabLineFill     guifg=#cfcfaf guibg=#353535
-    hi TabLineSel      guifg=#efefef guibg=#3a3a39
-    hi TabLine         guifg=#b6bf98 guibg=#353535
-    hi CursorColumn    guifg=#dcdccc guibg=#4f4f4f
-    hi NonText         guifg=#5b605e
-endif
+hi PMenu           ctermfg=7     ctermbg=0
+hi PMenuSel        ctermfg=223   ctermbg=233
 
