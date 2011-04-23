@@ -1,0 +1,40 @@
+# You can edit this file by hand.
+# The # character at the beginning of a line comments out the line.
+# Blank lines are ignored.
+
+# The Default color scheme is used for any directory that does not have
+# a specified scheme.  A color scheme set for a base directory will also
+# be used for the sub directories.
+
+# The standard ncurses colors are: 
+# Default = -1 can be used for transparency
+# Black = 0
+# Red = 1
+# Green = 2
+# Yellow = 3
+# Blue = 4
+# Magenta = 5
+# Cyan = 6
+# White = 7
+
+# Vifm supports 256 colors you can use color numbers 0-255
+#	(requires properly set up terminal).
+
+# COLORSCHEME=OneWordDescription
+# DIRECTORY=/Full/Path/To/Base/Directory
+# COLOR=Window_name=foreground_color_number=background_color_number
+
+COLORSCHEME=Default
+DIRECTORY=/home/bohoomil
+COLOR=MENU=4=-1
+COLOR=BORDER=4=-1
+COLOR=WIN=7=-1
+COLOR=STATUS_BAR=4=-1
+COLOR=CURR_LINE=7=2
+COLOR=DIRECTORY=2=-1
+COLOR=LINK=3=-1
+COLOR=SOCKET=22=-1
+COLOR=DEVICE=1=-1
+COLOR=EXECUTABLE=2=-1
+COLOR=SELECTED=5=-1
+COLOR=CURRENT=3=-1
