@@ -1,2 +1,8 @@
 
 darkcourses color scheme for urxvt / xterm, mc, ncmpcpp, dircolors, and (g)Vim.
+
+23.04.2010 -- changes:
+
+* modified vim colorscheme (basically lots of tiny fixes)
+* added vifm colorscheme
+
