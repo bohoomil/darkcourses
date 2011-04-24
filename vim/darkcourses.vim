@@ -44,7 +44,7 @@ hi FoldColumn      guifg=#87AFAF guibg=#121212
 hi Folded          guifg=#87AFAF guibg=#121212
 hi Function        guifg=#808045
 hi Identifier      guifg=#BDA45A
-hi IncSearch       guibg=#AF5F00 guifg=#626262
+hi IncSearch       guibg=#FF5FFF guifg=#2E2E2E
 hi Keyword         guifg=#BDA45A gui=none
 hi Label           guifg=#BDA45A
 hi LineNr          guifg=#5E5D5E 
@@ -58,7 +58,7 @@ hi PreCondit       guifg=#588C5C
 hi PreProc         guifg=#AF5F00
 hi Question        guifg=#47B3AE
 hi Repeat          guifg=#47B3AE
-hi Search          guifg=#D75FFF guibg=#626262
+hi Search          guifg=#FF5FFF guibg=#2E2E2E
 hi SpecialChar     guifg=#BF7397
 hi SpecialComment  guifg=#87AF87
 hi Special         guifg=#BF7397
@@ -82,10 +82,10 @@ hi WarningMsg      guifg=#BF5F5F guibg=#1C1C1C
 hi WildMenu        guibg=#1C1C1C guifg=#47B3AE
 
 " spellchecking
-hi SpellBad        guisp=#47B3AE guifg=#1C1C1C
-hi SpellCap        guisp=#BF5F5F guifg=#1C1C1C
-hi SpellRare       guisp=#6A8FB3 guifg=#1C1C1C
-hi SpellLocal      guisp=#BF7397 guifg=#1C1C1C
+hi SpellBad        guisp=#5E5D5E guifg=#5E5D5E
+hi SpellCap        guisp=#47B3AE guifg=#EF5F5F
+hi SpellRare       guisp=#6A8FB3 guifg=#6A8FB3
+hi SpellLocal      guisp=#BF7397 guifg=#BF7387
 
 " pmenu
 hi PMenu           guifg=#999999 guibg=#1C1C1C
@@ -120,7 +120,7 @@ hi FoldColumn      ctermfg=109
 hi Folded          ctermfg=109
 hi Function        ctermfg=3
 hi Identifier      ctermfg=11
-hi IncSearch       ctermbg=130 ctermfg=241
+hi IncSearch       ctermbg=207 ctermfg=236
 hi Keyword         ctermfg=11
 hi Label           ctermfg=11
 hi LineNr          ctermfg=8   ctermbg=233
@@ -134,7 +134,7 @@ hi PreCondit       ctermfg=10  cterm=none
 hi PreProc         ctermfg=130
 hi Question        ctermfg=14
 hi Repeat          ctermfg=14
-hi Search          ctermfg=171 ctermbg=241 cterm=none
+hi Search          ctermfg=207 ctermbg=236
 hi SpecialChar     ctermfg=13
 hi SpecialComment  ctermfg=108
 hi Special         ctermfg=13
@@ -159,10 +159,10 @@ hi WildMenu        ctermbg=0   ctermfg=14
 hi CursorLine      ctermbg=0   cterm=none
 
 " spellchecking
-hi SpellLocal      ctermfg=14  ctermbg=237
-hi SpellBad        ctermfg=9   ctermbg=237
-hi SpellCap        ctermfg=12  ctermbg=237
-hi SpellRare       ctermfg=13  ctermbg=237
+hi SpellLocal      ctermfg=14  ctermbg=14
+hi SpellBad        ctermfg=9   ctermbg=9
+hi SpellCap        ctermfg=12  ctermbg=12
+hi SpellRare       ctermfg=13  ctermbg=13
 
 " pmenu
 hi PMenu           ctermfg=7   ctermbg=0
