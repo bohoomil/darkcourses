@@ -6,27 +6,28 @@
 *cursorColor:  #466380
 
 ! black + red
-*color0:       #1c1c1c
-*color1:       #734545
+*color0:      #1c1c1c
+*color1:      #734545
 ! green + yellow
-*color2:       #3f6142
-*color3:       #808045
+*color2:      #3f6142
+*color3:      #808045
 ! blue + purple
-*color4:       #466380
-*color5:       #8C6981
+*color4:      #466380
+*color5:      #8C6981
 ! cyan + white
-*color6:       #588385
-*color7:       #999999
+*color6:      #588385
+*color7:      #999999
 ! bright-black + bright-red
-*color8:       #7e7c7e
-*color9:       #BF5F5F
+*color8:      #5E5D5E
+*color9:      #BF5F5F
 ! bright-green + bright-yellow
-*color10:      #588C5C
-*color11:      #BDA45A
+*color10:     #588C5C
+*color11:     #BDA45A
 !#bfbb7c C3CC8F
-! bright-blue + bright-purple
-*color12:      #6A8FB3
-*color13:      #BF7397
+*color12:     #6A8FB3
+*color13:     #BF7397
+!#DC91B4 CC86A7
 ! bright-cyan + bright-white
-*color14:      #47B3AE
-*color15:      #B8B8B8
+*color14:     #47B3AE
+*color15:     #B8B8B8
+
