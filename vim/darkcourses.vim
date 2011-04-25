@@ -29,7 +29,7 @@ hi Debug           guifg=#BF7397
 hi Define          guifg=#BDA45A 
 hi Delimiter       guifg=#5E5D5E
 hi DiffLine        guifg=#466380
-hi DiffOldLine     guifg=#734545 
+hi DiffOldLine     guifg=#734545
 hi DiffOldFile     guifg=#734545
 hi DiffNewFile     guifg=#3f6142 
 hi DiffAdded       guifg=#588C5C
@@ -40,8 +40,8 @@ hi Error           guifg=#BF5F5F guibg=#121212
 hi ErrorMsg        guifg=#BF5F5F guibg=#121212
 hi Exception       guifg=#BF7397
 hi Float           guifg=#BF5F5F
-hi FoldColumn      guifg=#87AFAF guibg=#121212
-hi Folded          guifg=#87AFAF guibg=#121212
+hi FoldColumn      guifg=#588385 guibg=#1C1C1C
+hi Folded          guifg=#588385 guibg=#1C1C1C
 hi Function        guifg=#808045
 hi Identifier      guifg=#BDA45A
 hi IncSearch       guibg=#FF5FFF guifg=#2E2E2E
@@ -116,8 +116,8 @@ hi Error           ctermfg=9   ctermbg=233
 hi ErrorMsg        ctermfg=9   ctermbg=233
 hi Exception       ctermfg=13
 hi Float           ctermfg=9
-hi FoldColumn      ctermfg=109
-hi Folded          ctermfg=109
+hi FoldColumn      ctermfg=6 ctermbg=0
+hi Folded          ctermfg=6 ctermbg=0
 hi Function        ctermfg=3
 hi Identifier      ctermfg=11
 hi IncSearch       ctermbg=207 ctermfg=236
