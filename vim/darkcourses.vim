@@ -39,7 +39,7 @@ hi Directory       guifg=#3F6142
 hi Error           guifg=#BF5F5F guibg=#121212
 hi ErrorMsg        guifg=#BF5F5F guibg=#121212
 hi Exception       guifg=#BF7397
-hi Float           guifg=#BF5F5F
+hi Float           guifg=#588385
 hi FoldColumn      guifg=#588385 guibg=#1C1C1C
 hi Folded          guifg=#588385 guibg=#1C1C1C
 hi Function        guifg=#808045
@@ -115,7 +115,7 @@ hi Directory       ctermfg=2
 hi Error           ctermfg=9   ctermbg=233
 hi ErrorMsg        ctermfg=9   ctermbg=233
 hi Exception       ctermfg=13
-hi Float           ctermfg=9
+hi Float           ctermfg=6
 hi FoldColumn      ctermfg=6 ctermbg=0
 hi Folded          ctermfg=6 ctermbg=0
 hi Function        ctermfg=3
