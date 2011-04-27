@@ -55,7 +55,7 @@ hi NonText         guifg=#5E5D5E
 hi Number          guifg=#466380
 hi Operator        guifg=#5F8700
 hi PreCondit       guifg=#588C5C
-hi PreProc         guifg=#AF5F00
+hi PreProc         guifg=#5F87D7
 hi Question        guifg=#47B3AE
 hi Repeat          guifg=#47B3AE
 hi Search          guifg=#FF5FFF guibg=#2E2E2E
@@ -73,7 +73,7 @@ hi Tag             guifg=#8C6981 gui=none
 hi Title           guifg=#999999
 hi Todo            guifg=#87AF87 guibg=#2E2E2E
 hi Typedef         guifg=#BF5F5F
-hi Type            guifg=#8C6981
+hi Type            guifg=#8C6981 gui=none
 hi Underlined      guifg=#8787D7 guibg=#1C1C1C
 hi VertSplit       guifg=#5F675F guibg=#2E2E2E
 hi Visual          guifg=#FF8787 guibg=#2E2E2E
@@ -94,12 +94,12 @@ hi PMenuSel        guifg=#FFD7AF guibg=#1C1C1C
 "
 " term zone
 "
-hi Normal          ctermfg=7
+hi Normal          ctermfg=15
 hi Boolean         ctermfg=13
 hi Character       ctermfg=7
-hi Comment         ctermfg=8
+hi Comment         ctermfg=8  cterm=standout
 hi Conditional     ctermfg=11
-hi Constant        ctermfg=13
+hi Constant        ctermfg=3
 hi Cursor          ctermfg=233 ctermbg=12
 hi Debug           ctermfg=13
 hi Define          ctermfg=11
@@ -115,7 +115,7 @@ hi Directory       ctermfg=2
 hi Error           ctermfg=9   ctermbg=233
 hi ErrorMsg        ctermfg=9   ctermbg=233
 hi Exception       ctermfg=13
-hi Float           ctermfg=6
+hi Float           ctermfg=14
 hi FoldColumn      ctermfg=6 ctermbg=0
 hi Folded          ctermfg=6 ctermbg=0
 hi Function        ctermfg=3
@@ -131,7 +131,7 @@ hi NonText         ctermfg=8   ctermbg=233
 hi Number          ctermfg=4
 hi Operator        ctermfg=64
 hi PreCondit       ctermfg=10  cterm=none
-hi PreProc         ctermfg=130
+hi PreProc         ctermfg=68
 hi Question        ctermfg=14
 hi Repeat          ctermfg=14
 hi Search          ctermfg=207 ctermbg=236
