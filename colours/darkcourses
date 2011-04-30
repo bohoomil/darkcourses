@@ -7,26 +7,25 @@
 
 ! black + red
 *color0:      #1c1c1c
-*color1:      #734545
+*color1:      #733939
 ! green + yellow
 *color2:      #3f6142
-*color3:      #5F8700
+*color3:      #87870D
 ! blue + purple
 *color4:      #466380
-*color5:      #8C6981
+*color5:      #8C627F
 ! cyan + white
 *color6:      #588385
 *color7:      #808080
 ! bright-black + bright-red
 *color8:      #5E5D5E
-*color9:      #BF5F5F
+*color9:      #BF4C4C
 ! bright-green + bright-yellow
 *color10:     #588C5C
-*color11:     #BDA45A
+*color11:     #CCB462
 ! bright-blue + bright-purple
 *color12:     #6A8FB3
-*color13:     #BF7397
-!#DC91B4 CC86A7
+*color13:     #BF6992
 ! bright-cyan + bright-white
 *color14:     #47B3AE
 *color15:     #ABABAB
