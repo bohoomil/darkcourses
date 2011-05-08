@@ -2,12 +2,13 @@
 darkcourses color scheme for urxvt / xterm, mc, ncmpcpp, ls (via dircolors), (g)Vim and vifm.
 
 Changes:
+========
 
 08.05.2010
 ----------
 
 * things get even darker
-* a fistful of little fixes, mainly in the vim and mc theme
+* a fistful of little fixes, mainly in the vim and mc themes
 
 27.04.2010
 ----------
@@ -25,7 +26,7 @@ Changes:
 
 
 Plans:
-------
+======
 
 * mutt colors for those who care (still tuning the file)
 
