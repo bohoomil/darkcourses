@@ -1,10 +1,10 @@
 ! Urxvt !
-URxvt*termName: screen-256color
-URxvt*buffered: true
-URxvt*geometry: 120x40
-URxvt*title: urxvt
-URxvt*background:  #121212
-URxvt*foreground:  #999999
+URxvt*termName:     screen-256color
+URxvt*buffered:     true
+URxvt*geometry:     110x40
+URxvt*title:        urxvt
+URxvt*background:   #080808
+URxvt*foreground:   #999999
 URxvt*urgentOnBell: true
 
 ! default fonts for xorg apps !
@@ -13,38 +13,48 @@ URxvt*urgentOnBell: true
 
 ! borderless and no scrollbar !
 URxvt*scrollBar_right: false
-URxvt*scrollBar: false
-URxvt*borderLess: false
-URxvt*internalBorder: 7
+URxvt*scrollBar:       false
+URxvt*borderLess:      false
+URxvt*internalBorder:  7
 
 ! xft settings !
-Xft.dpi: 96
+Xft.dpi:       96
 Xft.antialias: true
-Xft.rgba: rgb
-Xft.autohint: 1
+Xft.rgba:      rgb
+Xft.autohint:  1
 Xft.lcdfilter: lcddefault
-Xft.hinting: true
+Xft.hinting:   true
 Xft.hintstyle: hintfull
+!*fading: 80
+
+! transparency !
+URxvt*inheritPixmap: 0
+URxvt*tintColor:     #333333
+URxvt*transparent:   0
 
 ! clickable links, etc. !
-URxvt.perl-ext-common: default,selection,mark-yank-urls,matcher,keyboard-select
-URxvt.keysym.M-Escape:  perl:keyboard-select:activate
-URxvt.keysym.M-s:       perl:keyboard-select:search
-URxvt.matcher.button: 1
-URxvt.matcher.rend.0: Uline Bold fg4 bg1
+URxvt.perl-ext-common:   default,url-select,keyboard-select,matcher
+URxvt.keysym.M-Escape:   perl:keyboard-select:activate
+URxvt.keysym.M-s:        perl:keyboard-select:search
+URxvt.keysym.M-u:        perl:url-select:select_next
+URxvt.urlLauncher:       firefox
+URxvt.underlineURLs:     true
+URxvt.matcher.button:    1
+URxvt.matcher.rend.0:    Uline Bold fg4 bg1
 URxvt.matcher.pattern.1: \\b(mailto|http|https|ftp|file):[/]*[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt.matcher.pattern.2: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
-URxvt.keysym.M-u: perl:mark-yank-urls:activate_mark_mode
-URxvt.underlineURLs: true
-URxvt.urlLauncher: firefox
 
 ! fonts !
-URxvt.font:xft:envy code r:medium:pixelsize=13
-URxvt.boldFont:xft:envy code r:medium:pixelsize=13
-URxvt.italicFont:xft:envy code r:italic:pixelsize=13
-URxvt.boldItalicFont:xft:envy code r:italic:pixelsize=13
+!URxvt.font:xft:envy code r:medium:pixelsize=13
+!URxvt.boldFont:xft:envy code r:medium:pixelsize=13
+!URxvt.italicFont:xft:envy code r:italic:pixelsize=13
+!URxvt.boldItalicFont:xft:envy code r:italic:pixelsize=13
+URxvt*font:           -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
+URxvt*boldFont:       -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
+URxvt*italicFont:     -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
+URxvt*boldItalicFont: -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
 
-! -- Colours -- !
+! colours !
 #include "/home/bohoomil/.colours/darkcourses"
 
 Xcursor.theme: Neutrali++
@@ -75,24 +85,17 @@ xscreensaver.passwd.thermometer.width:       8
 xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
 
 ! xdvi !
-xdvi.background: #ffffff
-xdvi.foreground: #000000
+xdvi.background:   #ffffff
+xdvi.foreground:   #000000
 xdvi.shrinkFactor: 7
 xdvi.keepPosition: True
-xdvi.gsAlpha: True
-xdvi.gamma: 1.200000
-xdvi.geometry: 802x991
-
-! xpdf !
-xpdf*enableFreetype:    yes
-xpdf*antialias:         yes
-xpdf*foreground:        black
-xpdf*background:        white
-xpdf*urlCommand:        firefox %s
+xdvi.gsAlpha:      True
+xdvi.gamma:        1.200000
+xdvi.geometry:     802x991
 
 ! xcalc !
 XCalc.geometry:                        220x295
-XCalc*Font:                             -*-terminus-medium-r-*-*-14-*-*-*-*-*-*-*
+XCalc.Font:                             -*-terminus-medium-r-*-*-14-*-*-*-*-*-*-*
 XCalc.ti.bevel.background:             #111111
 XCalc.ti.bevel.screen.background:      #000000
 XCalc.ti.bevel.screen.DEG.background:  #000000

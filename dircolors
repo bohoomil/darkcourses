@@ -107,9 +107,13 @@ EIGHTBIT 1
 .odt 00;32
 .docx 00;32
 .doc 00;32
+.tex 00;32
 .rtf 00;32
 .sh 00;32
 .csh 00;32
+.log 01;30
+.aux 01;30
+.out 01;30
  # archives or compressed (bright red)
 .tar 01;31
 .tgz 01;31
@@ -210,6 +214,7 @@ EIGHTBIT 1
 .spx 00;36
 .xspf 00;36
 .t2t 00;36
+.rst 00;36
 MISSING 01;05;37;41 #...and the files they point to
 # Extra command line options for ls go here.
 # Basically these ones are:

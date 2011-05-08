@@ -1,32 +1,32 @@
-! darkcourses by bohoomil
+! darkcourses by bohoomi
 
 ! bg / fg / cursor
-*background:   #1c1c1c
-*foreground:   #b2b2b2
-*cursorColor:  #3f6142
+*background:   #080808
+*foreground:   #B2B2B2
+*cursorColor:  #3F6142
 
 ! black + red
-*color0:      #1c1c1c
-*color1:      #733939
+*color0:      #1C1C1C
+*color1:      #732E2E
 ! green + yellow
-*color2:      #3f6142
+*color2:      #356139
 *color3:      #87870D
 ! blue + purple
-*color4:      #466380
-*color5:      #8C627F
+*color4:      #406080
+*color5:      #733869
 ! cyan + white
-*color6:      #588385
+*color6:      #498285
 *color7:      #808080
 ! bright-black + bright-red
-*color8:      #5E5D5E
-*color9:      #BF4C4C
+*color8:      #595959
+*color9:      #B23535
 ! bright-green + bright-yellow
-*color10:     #588C5C
+*color10:     #4D8C51
 *color11:     #CCB462
 ! bright-blue + bright-purple
-*color12:     #6A8FB3
-*color13:     #BF6992
+*color12:     #5B88B3
+*color13:     #CC5C9B
 ! bright-cyan + bright-white
 *color14:     #47B3AE
-*color15:     #ABABAB
+*color15:     #B3B3B3
 
