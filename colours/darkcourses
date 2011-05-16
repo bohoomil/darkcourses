@@ -1,8 +1,9 @@
-! darkcourses by bohoomi
+! vim:ft=xdefaults
+! darkcourses by bohoomil
 
 ! bg / fg / cursor
 *background:   #080808
-*foreground:   #B2B2B2
+*foreground:   #999999
 *cursorColor:  #3F6142
 
 ! black + red
@@ -25,7 +26,7 @@
 *color11:     #CCB462
 ! bright-blue + bright-purple
 *color12:     #5B88B3
-*color13:     #CC5C9B
+*color13:     #CC5296
 ! bright-cyan + bright-white
 *color14:     #47B3AE
 *color15:     #B3B3B3

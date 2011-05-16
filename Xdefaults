@@ -1,63 +1,50 @@
-! Urxvt !
-URxvt*termName:     screen-256color
-URxvt*buffered:     true
-URxvt*geometry:     110x40
-URxvt*title:        urxvt
-URxvt*background:   #080808
-URxvt*foreground:   #999999
+! urxvt !
+URxvt*termName: screen-256color
+URxvt*buffered: true
+URxvt*geometry: 110x40
+URxvt*title: urxvt
 URxvt*urgentOnBell: true
-
-! default fonts for xorg apps !
-*font: -*-terminus-medium-r-*-*-14-*-*-*-*-*-*-*
-*boldFont: -*-terminus-bold-r-*-*-14-*-*-*-*-*-*-*
 
 ! borderless and no scrollbar !
 URxvt*scrollBar_right: false
-URxvt*scrollBar:       false
-URxvt*borderLess:      false
-URxvt*internalBorder:  7
+URxvt*scrollBar: false
+URxvt*borderLess: false
+URxvt*internalBorder: 7
 
 ! xft settings !
-Xft.dpi:       96
+Xft.dpi: 96
 Xft.antialias: true
-Xft.rgba:      rgb
-Xft.autohint:  1
+Xft.rgba: rgb
+Xft.autohint: 1
 Xft.lcdfilter: lcddefault
-Xft.hinting:   true
-Xft.hintstyle: hintfull
+Xft.hinting: true
+Xft.hintstyle: hintmedium
 !*fading: 80
 
-! transparency !
-URxvt*inheritPixmap: 0
-URxvt*tintColor:     #333333
-URxvt*transparent:   0
-
-! clickable links, etc. !
-URxvt.perl-ext-common:   default,url-select,keyboard-select,matcher
-URxvt.keysym.M-Escape:   perl:keyboard-select:activate
-URxvt.keysym.M-s:        perl:keyboard-select:search
-URxvt.keysym.M-u:        perl:url-select:select_next
-URxvt.urlLauncher:       firefox
-URxvt.underlineURLs:     true
-URxvt.matcher.button:    1
-URxvt.matcher.rend.0:    Uline Bold fg4 bg1
+! clickable urls !
+URxvt.perl-ext-common: default,url-select,matcher
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.urlLauncher: firefox
+URxvt.underlineURLs: true
+URxvt.matcher.button: 1
+URxvt.matcher.rend.0: Uline Bold fg4 bg1
 URxvt.matcher.pattern.1: \\b(mailto|http|https|ftp|file):[/]*[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt.matcher.pattern.2: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 
 ! fonts !
-!URxvt.font:xft:envy code r:medium:pixelsize=13
-!URxvt.boldFont:xft:envy code r:medium:pixelsize=13
-!URxvt.italicFont:xft:envy code r:italic:pixelsize=13
-!URxvt.boldItalicFont:xft:envy code r:italic:pixelsize=13
-URxvt*font:           -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
-URxvt*boldFont:       -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
-URxvt*italicFont:     -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
-URxvt*boldItalicFont: -*-terminus-medium-r-*-*-14-*-*-*-*-*-iso8859-*
+URxvt.font:xft: envy code r:medium:pixelsize=14
+URxvt.boldFont:xft: envy code r:medium:pixelsize=14
+URxvt.italicFont:xft: envy code r:italic:pixelsize=14
+URxvt.boldItalicFont:xft: envy code r:italic:pixelsize=14
 
 ! colours !
 #include "/home/bohoomil/.colours/darkcourses"
 
 Xcursor.theme: Neutrali++
+
+! default fonts for xorg apps !
+*font: -*-terminus-medium-r-*-*-14-*-*-*-*-*-*-*
+*boldFont: -*-terminus-bold-r-*-*-14-*-*-*-*-*-*-*
 
 ! xscreensaver !
 ! font settings !
@@ -82,7 +69,7 @@ xscreensaver.passwd.thermometer.background:  #999999
 xscreensaver.passwd.thermometer.width:       8
 
 ! datestamp format !
-xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
+xscreensaver.dateFormat:    %H:%M %a %b %d, %Y
 
 ! xdvi !
 xdvi.background:   #ffffff
