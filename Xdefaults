@@ -46,7 +46,6 @@ URxvt.italicFont:xft: envy code r:italic:pixelsize=14
 URxvt.boldItalicFont:xft: envy code r:italic:pixelsize=14
 
 ! colours !
-!#include "/home/bohoomil/.colours/tacticalbread"
 #include "/home/bohoomil/.colours/darkcourses"
 
 Xcursor.theme: Neutrali++
