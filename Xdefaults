@@ -1,8 +1,11 @@
-! urxvt !
+! Urxvt !
 URxvt*termName: screen-256color
 URxvt*buffered: true
 URxvt*geometry: 110x40
 URxvt*title: urxvt
+URxvt*background: #020202
+URxvt*foreground: #999999
+URxvt*cursorColor:#3F6142
 URxvt*urgentOnBell: true
 
 ! borderless and no scrollbar !
@@ -21,13 +24,18 @@ Xft.hinting: true
 Xft.hintstyle: hintmedium
 !*fading: 80
 
-! clickable urls !
+! transparency !
+!URxvt*inheritPixmap: 1
+!URxvt*tintColor: #080808
+!URxvt*transparent: 0
+
+! clickable links, etc. !
 URxvt.perl-ext-common: default,url-select,matcher
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
 URxvt.matcher.button: 1
-URxvt.matcher.rend.0: Uline Bold fg4 bg1
+URxvt.matcher.rend.0: Uline Bold fg4
 URxvt.matcher.pattern.1: \\b(mailto|http|https|ftp|file):[/]*[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 URxvt.matcher.pattern.2: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 
@@ -38,6 +46,7 @@ URxvt.italicFont:xft: envy code r:italic:pixelsize=14
 URxvt.boldItalicFont:xft: envy code r:italic:pixelsize=14
 
 ! colours !
+!#include "/home/bohoomil/.colours/tacticalbread"
 #include "/home/bohoomil/.colours/darkcourses"
 
 Xcursor.theme: Neutrali++
@@ -82,7 +91,6 @@ xdvi.geometry:     802x991
 
 ! xcalc !
 XCalc.geometry:                        220x295
-XCalc.Font:                             -*-terminus-medium-r-*-*-14-*-*-*-*-*-*-*
 XCalc.ti.bevel.background:             #111111
 XCalc.ti.bevel.screen.background:      #000000
 XCalc.ti.bevel.screen.DEG.background:  #000000
