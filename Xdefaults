@@ -5,7 +5,7 @@ URxvt*geometry: 110x40
 URxvt*title: urxvt
 URxvt*background: #020202
 URxvt*foreground: #999999
-URxvt*cursorColor:#3F6142
+URxvt*cursorColor: #335A80
 URxvt*urgentOnBell: true
 
 ! borderless and no scrollbar !
@@ -18,7 +18,7 @@ URxvt*internalBorder: 7
 Xft.dpi: 96
 Xft.antialias: true
 Xft.rgba: rgb
-Xft.autohint: 1
+Xft.autohint: 0
 Xft.lcdfilter: lcddefault
 Xft.hinting: true
 Xft.hintstyle: hintmedium
@@ -33,11 +33,8 @@ Xft.hintstyle: hintmedium
 URxvt.perl-ext-common: default,url-select,matcher
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.urlLauncher: firefox
-URxvt.underlineURLs: true
 URxvt.matcher.button: 1
-URxvt.matcher.rend.0: Uline Bold fg4
-URxvt.matcher.pattern.1: \\b(mailto|http|https|ftp|file):[/]*[\\w-]\\.[\\w./?&@#-]*[\\w/-]
-URxvt.matcher.pattern.2: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt.matcher.rend.0: RS_Uline fg99
 
 ! fonts !
 URxvt.font:xft: envy code r:medium:pixelsize=14
@@ -46,6 +43,7 @@ URxvt.italicFont:xft: envy code r:italic:pixelsize=14
 URxvt.boldItalicFont:xft: envy code r:italic:pixelsize=14
 
 ! colours !
+!#include "/home/bohoomil/.colours/dc-stdl"
 #include "/home/bohoomil/.colours/darkcourses"
 
 Xcursor.theme: Neutrali++
@@ -133,3 +131,4 @@ XCalc.ti.button38.background: #555595
 XCalc.ti.button39.background: #555595
 XCalc*Cursor:                 hand2
 XCalc*ShapeStyle:             rectangle
+

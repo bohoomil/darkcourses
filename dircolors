@@ -39,7 +39,7 @@ TERM rxvt-256color
 TERM rxvt-cygwin
 TERM rxvt-cygwin-native
 TERM rxvt-unicode
-TERM rxvt-unicode256
+TERM rxvt-unicode-256color
 TERM screen
 TERM screen-256color
 TERM screen-256color-bce
@@ -97,8 +97,10 @@ EIGHTBIT 1
 #
 # Or if you want to colorize scripts even if they do not have the
 # executable bit actually set.
+
 .pdf 00;35
 .djvu 00;35
+
 .chm 00;33
 .htm 00;33
 .html 00;33
@@ -111,15 +113,14 @@ EIGHTBIT 1
 .rtf 00;32
 .sh 00;32
 .csh 00;32
-.log 01;30
-.aux 01;30
-.out 01;30
- # archives or compressed (bright red)
+
+# archives or compressed (bright red)
 .tar 01;31
 .tgz 01;31
 .arj 01;31
 .taz 01;31
 .lzh 01;31
+.lha 01;31
 .lzma 01;31
 .tlz 01;31
 .txz 01;31
@@ -144,7 +145,18 @@ EIGHTBIT 1
 .cpio 01;31
 .7z 01;31
 .rz 01;31
-.pacnew 00;31
+
+# backup, log, etc.
+.pacnew 01;30
+.pacsave 01;30
+.tmp 01;30
+.bak 01;30
+.bkp 01;30
+.$$$ 01;30
+.aux 01;30
+.out 01;30
+.log 01;30
+
 # image formats
 .jpg 01;35
 .jpeg 01;35
@@ -163,6 +175,13 @@ EIGHTBIT 1
 .svgz 01;35
 .mng 01;35
 .pcx 01;35
+.xcf 01;35
+.xwd 01;35
+.yuv 01;35
+.cgm 01;35
+.emf 01;35
+
+# media format
 .mov 01;35
 .mpg 01;35
 .mpeg 01;35
@@ -185,16 +204,12 @@ EIGHTBIT 1
 .flv 01;35
 .gl 01;35
 .dl 01;35
-.xcf 01;35
-.xwd 01;35
-.yuv 01;35
-.cgm 01;35
-.emf 01;35
-# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
+
 .axv 01;35
 .anx 01;35
 .ogv 01;35
 .ogx 01;35
+
 # audio formats
 .aac 00;36
 .ape 00;36
@@ -208,6 +223,7 @@ EIGHTBIT 1
 .ogg 00;36
 .ra 00;36
 .wav 00;36
+
 # http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
 .axa 00;36
 .oga 00;36
