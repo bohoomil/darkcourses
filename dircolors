@@ -182,33 +182,33 @@ EIGHTBIT 1
 .emf 01;35
 
 # media format
-.mov 01;35
-.mpg 01;35
-.mpeg 01;35
-.m2v 01;35
-.mkv 01;35
-.ogm 01;35
-.mp4 01;35
-.m4v 01;35
-.mp4v 01;35
-.vob 01;35
-.qt 01;35
-.nuv 01;35
-.wmv 01;35
-.asf 01;35
-.rm 01;35
-.rmvb 01;35
-.flc 01;35
-.avi 00;35
-.fli 01;35
-.flv 01;35
-.gl 01;35
-.dl 01;35
+.mov 00;32
+.mpg 00;32
+.mpeg 00;32
+.m2v 01;32
+.mkv 01;32
+.ogm 00;32
+.mp4 01;32
+.m4v 01;32
+.mp4v 01;32
+.vob 00;32
+.qt 01;32
+.nuv 01;32
+.wmv 01;32
+.asf 01;32
+.rm 01;32
+.rmvb 01;32
+.flc 01;32
+.avi 00;32
+.fli 01;32
+.flv 01;32
+.gl 01;32
+.dl 01;32
 
-.axv 01;35
-.anx 01;35
-.ogv 01;35
-.ogx 01;35
+.axv 00;32
+.anx 00;32
+.ogv 00;32
+.ogx 00;32
 
 # audio formats
 .aac 00;36
