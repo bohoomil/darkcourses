@@ -3,8 +3,7 @@
 
 ![darkcourses (shot)](https://github.com/bohoomil/darkcourses/raw/master/darkcourses.png "darkcourses")
 
-Changes:
---------
+##Changes:##
 
 03.06.2010
 ----------
