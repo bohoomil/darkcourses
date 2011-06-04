@@ -1,7 +1,7 @@
 
 darkcourses color scheme for urxvt / xterm, mc, ncmpcpp, ls (via dircolors), (g)Vim and vifm.
 
-![darkcourses (shot)](https://github.com/bohoomil/darkcourses/blob/master/darkcourses.png "darkcourses")
+![darkcourses (shot)](https://github.com/bohoomil/darkcourses/raw/master/darkcourses.png "darkcourses")
 
 Changes:
 ========
