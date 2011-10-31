@@ -1,0 +1,7 @@
+
+URxvt.font:xft:consolas:medium:pixelsize=14
+URxvt.boldFont:xft:consolas:medium:pixelsize=14
+URxvt.italicFont:xft:consolas:italic:pixelsize=14
+URxvt.boldItalicFont:xft:consolas:italic:pixelsize=14
+
+! vim:ft=xdefaults

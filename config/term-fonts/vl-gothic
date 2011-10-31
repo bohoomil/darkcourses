@@ -1,0 +1,7 @@
+
+URxvt.font:xft:vl gothic:regular:pixelsize=14
+URxvt.boldFont:xft:vl gothic:regular:pixelsize=14
+URxvt.italicFont:xft:vl gothic:italic:pixelsize=14
+URxvt.boldItalicFont:xft:vl gothic:italic:pixelsize=14
+
+! vim:ft=xdefaults

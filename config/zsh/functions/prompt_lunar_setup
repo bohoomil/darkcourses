@@ -1,0 +1,185 @@
+# -*- mode: sh -*-
+# Copyright (c) 2009, 2010, 2011 Sebastian Wiesner <lunaryorn@googlemail.com>
+
+# This program is free software. It comes without any warranty, to
+# the extent permitted by applicable law. You can redistribute it
+# and/or modify it under the terms of the Do What The Fuck You Want
+# To Public License, Version 2, as published by Sam Hocevar. See
+# http://sam.zoy.org/wtfpl/COPYING for more details.
+
+
+prompt_lunar_help () {
+      cat <<'EOF'
+This prompt is color-scheme-able.  You can invoke it thus:
+
+  prompt lunar [textcolor [statecolor [delimcolor]]]
+
+"textcolor" defaults to magenta, "statecolor" to blue and bracketcolor to
+"white".
+
+Additionally this prompt is configurable through styles:
+
+  Context: :prompt:lunar
+
+  show_battery - show information about battery state using HAL
+  show_wifi    - show wireless state using Wicd
+  show_vcs     - include vcs info
+
+You can set styles in the current terminal to test things out, values will
+be updated.
+
+A UTF-8 font is recommended, otherwise dashes may look ugly.
+
+EOF
+}
+
+
+prompt_lunar_termtitle () {
+    local title="[%~]–[%n@%M on %l]"
+    # include command in title, if given
+    if [[ -n "$1" ]]; then
+        title="$title –> $1"
+    fi
+    # set window title on xterm-compatible emulators
+    case $TERM in (xterm*|rxvt|screen)
+        print -Pn "\e]0;${title}\a" ;;
+    esac
+    # set screen window title
+    if [[ "$TERM" == "screen" ]]; then
+        print -Pn "\ek${title}\e\\"
+    fi
+}
+
+
+prompt_lunar_precmd() {
+    # resest the color
+    local reset="%{${reset_color}%}"
+    # light color for forground text
+    local text="%{${fg[${prompt_lunar_colors[text]}]}%}"
+    # color for brackets around foreground text
+    local delim="%{${fg[${prompt_lunar_colors[delim]}]}%}"
+    # color for good values (e.g. successful commands)
+    local state="%{${fg[${prompt_lunar_colors[state]}]}%}"
+    # open bracket
+    local open="${delim}[${reset}"
+    # closing bracket
+    local close="${delim}]${reset}"
+    # the dash (delimiter between values)
+    local dash="${text}–${reset}"
+    # smilie for successful commands
+    local smile="${state}:)${reset}"
+    # smilie for failed commands
+    local cry="${state}:(${reset}"
+    # red color for uid 0 logins
+    local root="%{${fg[red]}%}"
+    local battery=""
+    local wifi=""
+    local vcs=""
+
+    if zstyle -t ":prompt:lunar" show_battery; then
+        update_battery_information
+        # the charge indicator, + is charging, - is discharging
+        if [[ "${battery_state[state]}" == "charging" ]]; then
+            # battery is charging -> that's good
+            battery="${state}+"
+        else
+            # battery is discharing -> that's bad ;)
+            battery="${state}–"
+        fi
+        if [[ "${battery_state[level]}" == "critical" ]]; then
+            # crititcal state, highlight the percentage value
+            battery="${battery}%S${state}"
+        elif [[ "${battery_state[level]}" == "warning" ]]; then
+            # warning state, underline the percentage value
+            battery="${battery}%U${state}"
+        else
+            # otherwise don't mark anything
+            battery="${battery}${state}"
+        fi
+        # insert the charge level
+        battery="${battery}${battery_state[percentage]}%%${reset}"
+        # and add delimiter and brackets
+        battery="${dash}${open}${battery}${close}"
+    fi
+
+    if zstyle -t ":prompt:lunar" show_wifi; then
+        update_wifi_information
+        if [[ "${wifi_state[up]}" == "true" ]]; then
+            wifi="${dash}${open}${text}${wifi_state[ip]}${reset}${close}"
+            wifi="${wifi}${dash}${open}${text}${wifi_state[ssid]//\%/%%}"
+            wifi="${wifi}${delim}@${reset}"
+
+            if [[ "${wifi_state[signal]}" -gt 50 ]]; then
+                wifi="${wifi}${state}"
+            else
+                # standout, if the signal is low
+                wifi="${wifi}%S${state}"
+            fi
+            wifi="${wifi}${wifi_state[signal]}%%${reset}${close}"
+        fi
+    fi
+
+    if zstyle -t ":prompt:lunar" show_vcs; then
+        vcs_info 'prompt_lunar'
+
+        if [[ -n "${vcs_info_msg_0_}" ]]; then
+            vcs="${dash}${open}${vcs_info_msg_0_}${close}"
+        fi
+    fi
+
+    PS1="${text}/\
+${open}${text}%~${close}${dash}\
+${open}%(!,${root},${text})%n${text}@%M on %l${close}${dash}\
+${open}${text}%T${close}${dash}\
+${open}${text}%?${close}${battery}${wifi}${vcs}
+${light}\\${open}%(?,${smile},${cry})${close}${text}–>${reset} "
+}
+
+
+prompt_lunar_preexec() {
+    prompt_lunar_termtitle "$1"
+}
+
+
+prompt_lunar_preview() {
+    if (( ! $#* )); then
+        prompt_preview_theme lunar
+        print
+        prompt_preview_theme lunar green red magenta
+    else
+        prompt_preview_theme lunar "$@"
+    fi
+}
+
+
+prompt_lunar_setup() {
+    # a global array which stores the given colors
+    declare -Ag prompt_lunar_colors
+    prompt_lunar_colors[text]="${1:-magenta}"
+    prompt_lunar_colors[state]="${2:-blue}"
+    prompt_lunar_colors[delim]="${3:-white}"
+
+    autoload -U update_battery_information
+    autoload -U update_wifi_information
+    autoload -U vcs_info
+
+    # configure vcs_info for this prompt
+    # FIXME: nasty copy n paste
+    local reset="%{${reset_color}%}"
+    local text="%{${fg[${prompt_lunar_colors[text]}]}%}"
+    local delim="%{${fg[${prompt_lunar_colors[delim]}]}%}"
+    local state="%{${fg[${prompt_lunar_colors[state]}]}%}"
+    zstyle ':vcs_info:*:prompt_lunar:*' formats \
+        "${text}%r${delim}@${state}%b%u%c${text}(%s)${reset}"
+    zstyle ':vcs_info:*:prompt_lunar:*' branchformat "%r(%b)"
+    zstyle ':vcs_info:*:prompt_lunar:*' unstagedstr '⁎'
+    zstyle ':vcs_info:*:prompt_lunar:*' stagedstr '⁺'
+
+    autoload -U add-zsh-hook
+    add-zsh-hook precmd prompt_lunar_precmd
+    add-zsh-hook precmd prompt_lunar_termtitle
+    add-zsh-hook preexec prompt_lunar_preexec
+}
+
+
+prompt_lunar_setup "$@"

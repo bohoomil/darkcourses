@@ -1,0 +1,6 @@
+# Surfraw -- Shell Users' Revolutionary Front Against the World wide web
+SURFRAW_text_browser=/usr/bin/w3m
+SURFRAW_graphical=0
+SURFRAW_screen=tmux
+SURFRAW_new_screen=no
+

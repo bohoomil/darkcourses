@@ -1,0 +1,1357 @@
+: 1315455907:0;echo 1 | sudo tee pwm1_enable
+: 1315496416:0;twmnc -i info_icon -t twmn test -c "Testing twmn with custom icons"
+: 1315527198:0;echo ${VAR//b/-dd-}
+: 1315527209:0;echo ${VAR/b//-dd-}
+: 1315527266:0;echo ${VAR/b/-dd-}
+: 1315599452:0;lsmod | grep net-pf
+: 1315621968:0;fc-cache ~/.fonts/MS/
+: 1315622019:0;mkfontdir ~/.fonts/MS/
+: 1315622020:0;mkfontscale ~/.fonts/MS/
+: 1315771426:0;cat zshtips.html | w3m -dump -T text/html > zshtips.txt
+: 1315788236:0;xset dpms force off
+: 1315790517:0;xset -q
+: 1315798050:0;xset dpms on
+: 1315891272:0;sudo mkdir sd{a5,a6}
+: 1315891670:0;xterm -fn xft:vl gothic:regular:size=10
+: 1315891689:0;urxvt -fn xft:vl gothic:regular:size=10
+: 1315950935:0;du -ch ~/documents/eBooks/Video-Tutorials/** | grep total
+: 1315952281:0;touch mp{2,3}
+: 1315952314:0;touch file.{ape,flac}
+: 1315966463:0;sr google "bash hackers"
+: 1316025469:0;urxvt -fn "xft:PragmataPro:pixelsize=11" -geometry 100x30 -e vim "$1" .xinitrc
+: 1316025483:0;urxvt -fn "xft:PragmataPro:size=11" -geometry 100x30 -e vim "$1" .xinitrc
+: 1316097307:0;pdftex -ini -jobname=pdflatex -progname=pdflatex -translate-file=cp227.tcx *pdflatex.ini
+: 1316146458:0;mplayer -playlist swiss-internet-radio.m3u
+: 1316188956:0;grep -i filesystem /var/log/pacman.log
+: 1316295542:0;uptime | cut -d" " -f4-8 | sed 's/,//g'
+: 1316295696:0;uptime | sed 's/.*up \(.*\),.user.*/\1/'
+: 1316295717:0;uptime | sed 's/.*up \(.*\),.user*.*/\1/'
+: 1316295722:0;uptime | sed 's/.*up \(.*\),.user*/\1/'
+: 1316295741:0;uptime | sed 's/, *[0-9]* users.*$//'
+: 1316295779:0;uptime | sed 's/.*up \(.*\),.*user.*/\1/' | awk -F: '{print "uptime: " $1" h "$2" m"}'
+: 1316295794:0;uptime | sed 's/.*up \(.*\),.*user.*/\1/' | awk -F: '{print " $1" h "$2" m"}'
+: 1316305643:0;uptime | sed 's/.*up \(.*\),.*user.*/\1/'|awk -F: '{print $1" h "$2" m"}'
+: 1316305652:0;uptime | sed 's/.*up \(.*\),.*user.*/\/' | awk -F: '{print $1" h "$2" m"}'
+: 1316305714:0;uptime | sed 's/.*up \(.*\),.*user.*/\0/' | awk -F: '{print $1" h "$2" m"}'
+: 1316305781:0;uptime | sed 's/.*up\(.*\),.*user.*/\1/' | awk -F: '{print $1" h "$2" m"}'
+: 1316305787:0;uptime | sed 's/.*up \(.*\),.*user.*/\1/' | awk -F: '{print $1" h "$2" m"}'
+: 1316360323:0;xset +fp ~/.fonts/sgi
+: 1316360652:0;xset -fp ~/.fonts/sgi
+: 1316458743:0;echo ${browser##*/}
+: 1316458863:0;awk '{ sub(/,/,""); if (NF==10) print $3; else if (NF>10) print $3,$4}' <(uptime)
+: 1316458898:0;uptime|sed -e "s/.*: \([^,]*\).*/\1/" -e "s/ //g"
+: 1316458907:0;uptime | sed 's/.*up \(.*\),.*user.*/\1/'
+: 1316458920:0;uptime | sed 's/.*up\(.*\),.*user.*/\1/' | awk -F: '{print $1"h "$2"m"}'
+: 1316471914:0;xrandr -q | grep ' connected ' | cut -d' ' -f1
+: 1316544542:0;convert *.jpg *.pdf
+: 1316544546:0;convert *.jpg .pdf
+: 1316544621:0;convert CCE20110920_00000.jpg 00.pdf
+: 1316544721:0;gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=combinedpdf.pdf -dBATCH 00.pdf 01.pdf 02.pdf 03.pdf 04.pdf 05.pdf 06.pdf
+: 1316545470:0;ps2pdf mail2-p1.ps mail2-p1.pdf
+: 1316611183:0;convert *.jpg foo.pdf
+: 1316613468:0;ssh -p 22 filip@filip-1005PX
+: 1316647111:0;dd_rescue linuxmint-201109-gnome-dvd-32bit.iso /dev/sdb
+: 1316662638:0;ssh -p 22 filip@192.168.1.3
+: 1316758786:0;fc-match monotype
+: 1316786003:0;xset q
+: 1316786771:0;mplm3u soma_u80s.m3u
+: 1316796493:0;iconv --from-code=WINDOWS-1250 --to-code=UTF8 input.txt > output.txt
+: 1316865334:0;find /dev/shm/ff-cache/Cache -regex '.*Cache.*' -a -not -regex '.*_CACHE_.*' -printf '%T+ %p\n' | sort -n | awk '{ print $2 }' | xargs file | grep -i "Video" | tail -1 | awk -F : '{ print $1 }'
+: 1316874814:0;subdl -i --lang=pol Shutter\ Island\ \(2010\)\ 720p.mkv
+: 1316877990:0;amixer get PCM | grep "Playback:" | awk '{print $4}' | tr -d '[]%'
+: 1316882839:0;ps -ejH
+: 1316942831:0;sudo swapoff /dev/sda4
+: 1316942886:0;cat /proc/swaps
+: 1316975901:0;ssh-keygen
+: 1316977718:0;sudo mount -t davfs https://bohoomil.webdav.hidrive.strato.com/ /media/cifs.bohoomil
+: 1317255885:0;xclip -i < cat bookmarks-2011-09-29.json
+: 1317255899:0;cat bookmarks-2011-09-29.json| xclip -i
+: 1317304285:0;sl -lh
+: 1317336857:0;xset r rate 200 30
+: 1317385101:0;fc-list | grep Ubuntu
+: 1317427923:0;ldd $(which $1) | grep -q '\(libX11\|libxcb\)\.so' && exec "$@" || exec Terminal -x "$@"
+: 1317427942:0;ldd $(which $1) | egrep -q '\(libX11\|libxcb\)\.so' && exec "$@" || exec Terminal -x "$@"
+: 1317430017:0;pstree.x11
+: 1317432590:0;date | cut -d ' ' -f 2,3
+: 1317432607:0;date | cut -d ' ' -f 2,3,4
+: 1317432641:0;date | cut -d ' '
+: 1317432652:0;date | cut -d ' ' -f 2
+: 1317432655:0;date | cut -d ' ' -f 2,4
+: 1317472295:0;du -ch ~/.java | grep total
+: 1317493175:0;ps -eo user,cmd | grep dbus
+: 1317507419:0;xsetroot -name Firefox
+: 1317513166:0;sudo wpa_supplicant -i wlan0 -c /etc/wpa_supplicant.conf
+: 1317513297:0;ip addr add 192.168.0.2/24 dev wlan0
+: 1317513408:0;sudo iwconfig wlan0 channel auto
+: 1317513645:0;sudo ip addr add 192.168.0.2/24 dev wlan0
+: 1317513661:0;sudo ip route add default via 192.168.0.1
+: 1317513895:0;sudo wpa_supplicant -iwlan0 -c /etc/wpa_supplicant.conf
+: 1317513911:0;sudo ip addr add 192.168.1.2/24 dev wlan0
+: 1317513932:0;sudo ip route add default via 192.168.1.1
+: 1317569335:0;mogrify -resize 48x48 folder-recent.svg folder-recent.png
+: 1317569341:0;mogrify -resize 48x48 folder-recent.svg
+: 1317569439:0;convert -size 48x48 *.svg
+: 1317569451:0;convert -size 48x48 folder-recent.svg
+: 1317569468:0;convert -size 48x48 folder-recent.svg folder-recent.png
+: 1317683516:0;sh ~/.fehbg&
+: 1317738670:0;sudo chown -R bohoomil:users gnome
+: 1317846139:0;Xephyr -ac -br -screen 1366x768 :1 &
+: 1317846257:0;DISPLAY=:1.0 cwm
+: 1317885898:0;sudo pip2 install beets
+: 1317925355:0;du -ch /usr/lib | grep total
+: 1317930699:0;sudo pip2 uninstall beep
+: 1318009482:0;mpd ~/.mpd/mpd.conf &
+: 1318017636:0;acpi | awk 'NR==1 {print $4}' | sed 's/,//g' | sed 's/%//g'
+: 1318097867:0;fc-cache -f -v
+: 1318109234:0;sudo chown -R bohoomil:users Clearlooks
+: 1318147505:0;xrdb -load $HOME/.Xresources
+: 1318189372:0;mplayer cdda://
+: 1318189425:0;mplayer dvd://
+: 1318189641:0;mplayer -cdrom-device /dev/sr0 cdda://
+: 1318189679:0;mplayer -cdrom-device /dev/sr0 cdda:// -cache 5000
+: 1318203686:0;abcde -1 -o flac -a default,cue
+: 1318232557:0;wget --limit-rate=90k http://r-36.net/9front/9front-1031.17c699f59338.iso.bz2
+: 1318234739:0;startx -- :2
+: 1318282686:0;xbindkeys --defaults > ~/.xbindkeysrc
+: 1318282866:0;xbindkeys --key
+: 1318364814:0;curl -s http://api.hostip.info/ | grep "<ip>" | sed -e 's/ <ip>//' -e 's/<.*$//'
+: 1318364819:0;curl -s http://api.hostip.info/
+: 1318373924:0;sudo mkinitcpio -p linux
+: 1318406848:0;awk /opt/ { print }
+: 1318406903:0;cat .bashrc | gawk '/opt/ { print }'
+: 1318461250:0;w3m /home/bohoomil/documents/eBooks/it/linux/0_Linux_Journal_Archive_1994-2007/LJ/025/1156.html
+: 1318471271:0;dmesg | awk '/[Ff]ailed/ { print }'
+: 1318490610:0;mplayer dvd://
+: 1318490660:0;mplayer dvd:// -dumpstream -dumpfile ~/rips/niebo.vob
+: 1318494321:0;dvdxchap -t /dev/dvd ~/rips/chapters.txt
+: 1318494355:0;dvdxchap -t ${TRACK} /dev/dvd ~/rips/chapters.txt
+: 1318494559:0;dvdxchap -t /dev/dvd > ~/rips/chapters.txt
+: 1318494615:0;dvdxchap -t VTS_01_0.VOB /dev/dvd > ~/rips/chapters.txt
+: 1318494649:0;dvdxchap -t 1 /dev/dvd > ~/rips/chapters.txt
+: 1318494914:0;mplayer -v dvd://
+: 1318495073:0;mplayer dvd://
+: 1318495128:0;mplayer -sid 0 ~/rips/niebo.vob
+: 1318495595:0;tccat -i ~/rips/niebo.vob | tcextract -x ps1 -t vob -a 0x20 > ~/rips/sub-0
+: 1318495727:0;subtitle2vobsub -o ~/rips/vobsubs -i ~/rips/vts_01_0.ifo -a 0 < ~/rips/sub-0
+: 1318496563:0;subtitle2pgm -o ~/rips/vobpgm-0 -c 255,0,0,255 < ~/rips/sub-0
+: 1318496879:0;mplayer -aid 0 ~/rips/niebo.vob
+: 1318496889:0;mplayer -aid 1 ~/rips/niebo.vob
+: 1318496977:0;mplayer ~/rips/niebo.vob -aid 0 -dumpaudio -dumpfile ~/rips/audio0.ac3
+: 1318497427:0;mplayer ~/rips/niebo.vob -vf cropdetect -sb 50000000
+: 1318498707:0;./bitrate.py -o 0.5 -t 1400 2:02:17 ~/rips/audio0.ac3 ~/rips/vobsubs.idx ~/rips/vobsubs.sub
+: 1318498769:0;./bitrate.py -o 0.5 -t 1400 2:02:17 ~/rips/audio1.ac3 ~/rips/vobsubs.idx ~/rips/vobsubs.sub
+: 1318499198:0;mencoder ~/rips/niebo.vob -nosub -vf pullup,softskip,crop=720:576:0:0,harddup -oac copy -ovc x264 -x264encopts bitrate=1142: subq=5:bframes=3: b_pyramid=normal:weight_b:turbo=1:threads=auto:pass=1 -o /dev/null
+: 1318544511:0;mencoder ~/rips/niebo.vob -nosub -vf crop=720:576:0:0,harddup -oac copy -ovc x264 -x264encopts bitrate=1100: subq=5:bframes=3: b_pyramid=normal:weight_b:turbo=1:threads=auto:pass=1 -o /dev/null
+: 1318556746:0;wget --limit-rate=90k http://releases.ubuntu.com/oneiric/ubuntu-11.10-alternate-i386.iso
+: 1318569764:0;mencoder ~/rips/niebo.vob -nosub -vf crop=720:576:0:0,harddup -oac copy -ovc x264 -x264encopts bitrate=1100: subq=5:8x8dct:frameref=2:bframes=3:b_pyramid=normal:weight_b:threads=auto:pass=2 -o ~/rips/niebo.264
+: 1318590792:0;mkvmerge --title "Niebo nad Berlinem" -o ~/rips/niebo.mkv -chapters ~/rips/chapters.txt --default-duriation 0:25fps -A ~/rips/niebo.264 ~/rips/de.ac3 ~/rips/pl.ac3 ~/rips/vobsubs.idx
+: 1318590818:0;mkvmerge --title "Niebo nad Berlinem" -o ~/rips/niebo.mkv --chapters ~/rips/chapters.txt --default-duriation 0:25fps -A ~/rips/niebo.264 ~/rips/de.ac3 ~/rips/pl.ac3 ~/rips/vobsubs.idx
+: 1318590849:0;mkvmerge --title "Niebo nad Berlinem" -o ~/rips/niebo.mkv --chapters ~/rips/chapters.txt --default-duration 0:25fps -A ~/rips/niebo.264 ~/rips/de.ac3 ~/rips/pl.ac3 ~/rips/vobsubs.idx
+: 1319933486:0;mc
+: 1319933553:0;vim .cache/mc/history
+: 1319933844:0;pacman -R qt
+: 1319933893:0;pacman -Qi qt
+: 1319934139:0;pacman -Syu
+: 1319934148:0;exit
+: 1319934215:0;vpnd
+: 1319934223:0;plowdown http://www.fileserve.com/file/5J4Kdbg/Apollo.13.Kulisy.dramatu.rar
+: 1319935390:0;exit
+: 1319935416:0;eb
+: 1319935420:0;it/linux
+: 1319935460:0;firefox index.html
+: 1319935758:0;set | grep PS
+: 1319935763:0;bash
+: 1319935812:0;exit
+: 1319935850:0;projects
+: 1319935853:0;cd bash_examples
+: 1319935870:0;vim select1.sh
+: 1319936518:0;cd projects/bash_examples
+: 1319936523:0;./select1.sh
+: 1319936533:0;exit
+: 1319936631:0;cp select1.sh select2.sh
+: 1319936635:0;vim select2.sh
+: 1319936681:0;cd /var/log
+: 1319936683:0;ls
+: 1319936688:0;vim messages.log
+: 1319936695:0;vim daemon.log
+: 1319936698:0;exit
+: 1319936734:0;./select2.sh
+: 1319936813:0;vim select2.sh
+: 1319938215:0;extract Apollo.13.Kulisy.dramatu.rar
+: 1319938247:0;mc
+: 1319938262:0;vpnu
+: 1319938330:0;u[grade
+: 1319938333:0;upgrade
+: 1319938455:0;cp .fehbg .fehbg.bkp
+: 1319938479:0;feh Lake\ McDonald\ 1920x1080.jpg
+: 1319938531:0;cp .fehbg.bkp .fehbg
+: 1319938534:0;sh ~/.fehbg&
+: 1319941297:0;plowdown http://www.filesonic.com/file/2312024411/Pobratymcy.rar
+: 1319942351:0;vim movemany.sh
+: 1319943266:0;extract Pobratymcy.rar
+: 1319943516:0;vid
+: 1319945175:0;ls -l /dev/sr0
+: 1319945191:0;ls -l /dev/sr*
+: 1319945263:0;pkgstat
+: 1319945269:0;pacman -Qm
+: 1319945317:0;exit
+: 1319946354:0;pacman -S gthumb
+: 1319946394:0;pacman -S geeqie
+: 1319946404:0;pacman -S gqview
+: 1319946425:0;pacman -Rs xnview
+: 1319946433:0;pacman -Qi xnview
+: 1319946441:0;pacman -R libxp
+: 1319946445:0;pacman -R libxt
+: 1319946560:0;pacman -Ss gthumb
+: 1319946579:0;pacman gtkimageview
+: 1319946584:0;pacman -Ss gtkimageview
+: 1319946587:0;pacman -S gtkimageview
+: 1319946596:0;gtkimageview
+: 1319946602:0;pacman -Ql gtkimageview
+: 1319946614:0;pacman -Rs gtkimageview
+: 1319946635:0;pic
+: 1319946639:0;ls *.gif
+: 1319946645:0;animate jack-shining-knock.gif
+: 1319946667:0;animate the_complete_lunar_cycle_by_dan0128-d37l7cl.gif
+: 1319946873:0;xnview .
+: 1319947048:0;cd
+: 1319947061:0;pacman -Qi xnview
+: 1319947071:0;pacman -Rs xnview libxp
+: 1319947245:0;mc
+: 1319947286:0;pacman -Si gthumb
+: 1319947399:0;pacman -S gqview
+: 1319947580:0;display Glacier_National_Park_3200_x_1200_Dual_Monitor.jpg
+: 1319947755:0;pacman -Ss xv
+: 1319947774:0;pacman -S xv
+: 1319947817:0;xv hill.jpg
+: 1319948177:0;xv .
+: 1319948188:0;xv fyre2.png
+: 1319948357:0;sh ~/.fehbg&
+: 1319948362:0;pacman -R xv
+: 1319948401:0;feh fyre2.png
+: 1319948441:0;pacman -R gqview
+: 1319948457:0;rm -r .gqview
+: 1319948808:0;pic
+: 1319948811:0;ls *.gif
+: 1319948815:0;feh counter_strike_by_dan0128-d37l8z8.gif
+: 1319948859:0;cd
+: 1319948863:0;vim .config/zsh
+: 1319948968:0;animate
+: 1319948971:0;animate --help
+: 1319949132:0;pic
+: 1319949143:0;animate Linux\ register.gif
+: 1319949218:0;pacman -S mirage
+: 1319949253:0;pacman -S gpicview
+: 1319949260:0;gpicview Linux\ register.gif
+: 1319949278:0;gpicview the_complete_lunar_cycle_by_dan0128-d37l7cl.gif
+: 1319949355:0;pacman -S gimmage
+: 1319949513:0;pic
+: 1319949521:0;ls *.gif
+: 1319949526:0;the_complete_lunar_cycle_by_dan0128-d37l7cl.gif
+: 1319949551:0;cd
+: 1319950739:0;mc
+: 1319950742:0;pic
+: 1319950960:0;pkgstat
+: 1319950973:0;pacman -Qdt
+: 1319952433:0;aurget -Ss browser viewer
+: 1319952718:0;aurget -Ss viewer > vk
+: 1319952732:0;mv vk viewer.txt
+: 1319952738:0;vim viewer.txt
+: 1319953625:0;mc
+: 1319953681:0;exit
+: 1319954600:0;mutt
+: 1319954682:0;exit
+: 1319960071:0;pacman -S pcmanfm
+: 1319960104:0;pacman -S rox
+: 1319960121:0;vim viewer.txt
+: 1319960251:0;pacman -S viewnior
+: 1319960264:0;viewenior 141.jpg
+: 1319960278:0;viewnior 141.jpg
+: 1319960602:0;pacman -Rs gpicview
+: 1319960724:0;vim viewer.txt
+: 1319960811:0;aurget -S gtksee
+: 1319960856:0;pacman -S gx
+: 1319960866:0;aurget -S gx
+: 1319960947:0;aurget -S imgv
+: 1319960972:0;pacman -S python-pygame pil
+: 1319961012:0;exit
+: 1319961027:0;pacman -S hd2u
+: 1319961042:0;exit
+: 1319961045:0;aurget -S imgv
+: 1319961207:0;exit
+: 1319961214:0;pacman -Rs hd2u
+: 1319961225:0;pacman -Rs python-pygame pil
+: 1319961235:0;pacman -Rs python-pygame
+: 1319961248:0;pacman -Qs pil
+: 1319961271:0;pacman -Rs python-imaging
+: 1319961281:0;pkgstat
+: 1319961368:0;aurget -S neonview
+: 1319961399:0;neonview 141.jpg
+: 1319961483:0;pacman -Rs neonview
+: 1319961519:0;aurget -S pho
+: 1319961548:0;pho 141.jpg
+: 1319961571:0;pho
+: 1319961601:0;pacman -Rs pho
+: 1319961683:0;pacman -S ristretto
+: 1319961703:0;ristretto 141.jpg
+: 1319961790:0;pacman -Rs ristretto
+: 1319961795:0;upgrade
+: 1319962106:0;aurget -S uiv
+: 1319962123:0;pacman -S tkimg
+: 1319962133:0;aurget -S tkimg
+: 1319962164:0;exit
+: 1319962222:0;aurget -S viewnior-wp
+: 1319962324:0;pacman -S gconf
+: 1319962356:0;y
+: 1319962385:0;aurget -S viewnior-wp
+: 1319991270:0;pacman -Qs geo
+: 1319991277:0;upgrade
+: 1319991372:0;pacman -Qs recode
+: 1319992722:0;pacman -Ss u7z
+: 1319992755:0;exit
+: 1319992784:0;dw
+: 1319992807:0;pacman -Ss virtualbox
+: 1319994034:0;logout
+: 1319994047:0;vim bin/xorg
+: 1319994266:0;n linux-cli-tasks/logout
+: 1319994377:0;not
+: 1319994490:0;rst2html logout.rst > logout.rst.html
+: 1319994494:0;firefox logout.rst.html
+: 1319994690:0;rst2html linux_tips.rst > linux_tips.rst.html
+: 1319994693:0;firefox linux_tips.rst.html
+: 1319995101:0;mc
+: 1319995104:0;dw
+: 1319995110:0;pkg
+: 1319995152:0;make
+: 1319995276:0;sudo make install
+: 1319996457:0;pacman -Qs lesstif
+: 1319996463:0;pacman -Ss lesstif
+: 1319996466:0;dw
+: 1319996468:0;cd aur
+: 1319996473:0;pkg
+: 1319996474:0;cd aur
+: 1319996484:0;cd xnview
+: 1319996485:0;ls
+: 1319996490:0;pacman -U xnview-1.70-5-i686.pkg.tar.xz
+: 1319996517:0;pacman -S lesstif
+: 1319996521:0;mc
+: 1319996525:0;pic
+: 1319996531:0;xnview Saturn-V_engines_and_Von_Braun.jpg
+: 1319996582:0;xnview 03.jpg
+: 1319996753:0;dw
+: 1319996755:0;pkg
+: 1319996818:0;pic
+: 1319996833:0;pacman -Ql xnview
+: 1319996838:0;nconvert
+: 1319996858:0;xnview --help
+: 1319996869:0;man xnview
+: 1319996885:0;xnview -browser
+: 1319996903:0;xnview -browser 344.jpg
+: 1319997114:0;pacman -Qdt
+: 1319999479:0;xorg
+: 1319999514:0;exit
+: 1319999601:0;upgrade
+: 1320000271:0;pacman -Qi live-media
+: 1320000291:0;pacman -Rs live-media
+: 1320000295:0;mc
+: 1320000298:0;pic
+: 1320000438:0;pkg
+: 1320000500:0;mv xnview-1.70-5-i686.pkg.tar.xz xnview-1.70-5-i686.pkg.tar.xz.old
+: 1320000502:0;dw
+: 1320000537:0;makepkg
+: 1320000546:0;pacman -Qs lesstif
+: 1320000570:0;makepkg
+: 1320000591:0;pacman -R xnview
+: 1320000597:0;pacman -U xnview-1.70-5-i686.pkg.tar.xz
+: 1320000602:0;pic
+: 1320000870:0;pacman -Rs viewnior
+: 1320000876:0;pacman -Qdt
+: 1320000982:0;pacman -Qs xfce
+: 1320001011:0;pkgstat
+: 1320001016:0;exit
+: 1320003968:0;pogoda
+: 1320003978:0;upgrade
+: 1320007482:0;scrot -s
+: 1320007673:0;upgrade
+: 1320008446:0;vim bin/xorg
+: 1320008472:0;xorg
+: 1320008497:0;exit
+: 1320008506:0;vim bin/xorg
+: 1320008525:0;exit
+: 1320008536:0;xorg
+: 1320008558:0;exit
+: 1320008567:0;vim bin/xorg
+: 1320008578:0;exit
+: 1320008976:0;vim bin/xorg
+: 1320008987:0;exit
+: 1320008997:0;xorg
+: 1320009025:0;vim bin/xorg
+: 1320009051:0;exit
+: 1320009104:0;mc
+: 1320009105:0;not
+: 1320009122:0;vim bin/xorg
+: 1320009154:0;xorg
+: 1320009528:0;mc
+: 1320013148:0;sudo powertop
+: 1320013206:0;htop
+: 1320013589:0;pacman -Syu
+: 1320013645:0;mc
+: 1320013677:0;not
+: 1320013890:0;2
+: 1320013952:0;vimdiff ~/.local/share/mc/mc.ext /etc/mc/mc.ext
+: 1320014973:0;exit
+: 1320014983:0;pacman -S xchm
+: 1320014992:0;eb
+: 1320015020:0;xchm Learning.Perl.Objects.References.and.Modules.chm
+: 1320015359:0;xchm Mastering.Perl.Tk.Jan.2002.chm
+: 1320015423:0;pacman -Rs xchm
+: 1320015429:0;pacman -Qdt
+: 1320015441:0;rm -r .xchm
+: 1320015475:0;acpi -v
+: 1320015478:0;acpi -V
+: 1320015513:0;htop
+: 1320015546:0;sudo powertop
+: 1320015584:0;cd .config/zsh
+: 1320015587:0;cd lib
+: 1320015591:0;vim misc.zsh
+: 1320015625:0;mc
+: 1320015888:0;su -
+: 1320015959:0;spectrum_ls
+: 1320015965:0;tmux
+: 1320015968:0;spectrum_ls
+: 1320015975:0;colortest -w
+: 1320015985:0;colortheme
+: 1320015999:0;echo $TERM
+: 1320016000:0;exit
+: 1320016003:0;echo $TERM
+: 1320016008:0;colortheme
+: 1320016017:0;cd
+: 1320016023:0;vim .vimrc
+: 1320016190:0;cd .vim/colors
+: 1320016195:0;vim miro8.vim
+: 1320016207:0;vim dc3.vim
+: 1320016211:0;vim miro8.vim
+: 1320016253:0;cd
+: 1320016255:0;vim .zshrc
+: 1320016359:0;xorg
+: 1320016571:0;exit
+: 1320016577:0;pacman -Ss glisp
+: 1320016581:0;aurget -Ss glisp
+: 1320017156:0;mc
+: 1320017157:0;dw
+: 1320017188:0;soft
+: 1320017905:0;gfv AB
+: 1320017909:0;gfv 0100to25ff
+: 1320018497:0;aurget -Ss plan9
+: 1320018677:0;vim .config/mc/ini
+: 1320018696:0;cd .local/share/mc/skins
+: 1320018710:0;cp dcbrown.ini dcbrown256.ini
+: 1320018738:0;vim .local/share/mc/skins/dcbrown256.ini
+: 1320018752:0;cd
+: 1320018758:0;colortest -w
+: 1320018784:0;mc
+: 1320018786:0;dw
+: 1320018804:0;mc
+: 1320018806:0;dw
+: 1320018819:0;soft
+: 1320018850:0;mc
+: 1320018852:0;dw
+: 1320018857:0;soft
+: 1320018901:0;mc
+: 1320018902:0;dw
+: 1320018910:0;rec
+: 1320018940:0;mc
+: 1320018941:0;dw
+: 1320018945:0;rec
+: 1320018967:0;mc
+: 1320018968:0;dw
+: 1320018973:0;rec
+: 1320018979:0;soft
+: 1320019260:0;extract briss-0.0.13-bin.tar.gz
+: 1320019280:0;java -jar jpedal-4.47b53.jar
+: 1320019333:0;java -jar itextpdf-5.0.6.jar
+: 1320019346:0;java -jar briss-0.0.13.jar
+: 1320019985:0;eb
+: 1320019993:0;it/linux
+: 1320020025:0;firefox index.html
+: 1320020105:0;cd projects/bash_examples
+: 1320020120:0;vim netchecker.sh
+: 1320020202:0;vim movemany.sh
+: 1320020223:0;echo $TERM
+: 1320020227:0;vim ~/.vimrc
+: 1320020270:0;vim movemany.sh
+: 1320020287:0;vim ~/.vimrc
+: 1320020303:0;cd git/jwr/eeepc
+: 1320020307:0;vim .vimrc
+: 1320020382:0;vim movemany.sh
+: 1320020388:0;vim .vimrc
+: 1320020394:0;vim ~/.vimrc
+: 1320020500:0;vim movemany.sh
+: 1320020505:0;vim ~/.vimrc
+: 1320021253:0;vim netchecker.sh
+: 1320022034:0;./netchecker.sh
+: 1320022037:0;vim netchecker.sh
+: 1320022045:0;./netchecker.sh
+: 1320022055:0;echo $?
+: 1320022058:0;vim netchecker.sh
+: 1320022354:0;hgp
+: 1320022359:0;cd
+: 1320022404:0;pacman -Syu
+: 1320022653:0;pacman -Ss ttf2bdf
+: 1320022660:0;aurget -Ss ttf2bdf
+: 1320022758:0;aurget -Ss efont
+: 1320022794:0;pacman -Ss efont
+: 1320023066:0;extract efont-unicode-bdf-0.4.2.tar.bz2
+: 1320023088:0;gfv b10_bi.bdf
+: 1320023122:0;gfv b16_i.bdf
+: 1320023135:0;gfv b16.bdf
+: 1320023215:0;mc
+: 1320023217:0;dw
+: 1320023259:0;sudo mkdir efont
+: 1320023315:0;pacman -Ss bdfresize
+: 1320023320:0;aurget -Ss bdfresize
+: 1320023368:0;extract olgl19.pcf.gz
+: 1320023471:0;mc
+: 1320023472:0;dw
+: 1320023478:0;extract bdfresize-1.5.tar.gz
+: 1320023483:0;./configure
+: 1320023491:0;make
+: 1320023558:0;ls
+: 1320023776:0;sudo cp *.bdf /usr/share/fonts/efont
+: 1320023798:0;sudo mkfontdir /usr/share/fonts/efont
+: 1320023805:0;sudo mkfontscale /usr/share/fonts/efont
+: 1320023881:0;sudo vim config
+: 1320023907:0;fc-cache -f -v
+: 1320024040:0;exit
+: 1320024055:0;xorg
+: 1320024695:0;mc
+: 1320024708:0;sudo vim 30-fonts.conf
+: 1320024729:0;exit
+: 1320024741:0;xorg
+: 1320024819:0;pkg
+: 1320024822:0;cd custom/dwm-sprinkles
+: 1320024824:0;vim config.h
+: 1320024845:0;make
+: 1320024848:0;vim config.h
+: 1320024856:0;make
+: 1320024860:0;sudo make install
+: 1320024863:0;exit
+: 1320024884:0;pkg
+: 1320024887:0;cd custom/dwm-sprinkles
+: 1320024888:0;vim config.h
+: 1320024905:0;cd
+: 1320024906:0;xorg
+: 1320024924:0;pkg
+: 1320024926:0;cd custom/dwm-sprinkles
+: 1320024929:0;vim config.h
+: 1320024945:0;make
+: 1320024950:0;sudo make install
+: 1320025039:0;vim config.h
+: 1320025058:0;make
+: 1320025063:0;sudo make install
+: 1320025068:0;vim config.h
+: 1320025080:0;make
+: 1320025084:0;sudo make install
+: 1320025090:0;vim config.h
+: 1320025101:0;make
+: 1320025105:0;sudo make install
+: 1320025115:0;vim config.h
+: 1320025130:0;make
+: 1320025134:0;sudo make install
+: 1320025139:0;vim config.h
+: 1320025146:0;make
+: 1320025150:0;sudo make install
+: 1320025189:0;mc
+: 1320025467:0;make
+: 1320025471:0;sudo make install
+: 1320025497:0;make
+: 1320025502:0;sudo make install
+: 1320025520:0;make
+: 1320025524:0;sudo make install
+: 1320025547:0;gfv h10.bdf
+: 1320025566:0;gfv h12.bdf
+: 1320025586:0;gfv h14.bdf
+: 1320025603:0;gfv b12.bdf
+: 1320025611:0;gfv b14.bdf
+: 1320025625:0;sudo rm -r efont
+: 1320025633:0;sudo vim config
+: 1320025644:0;sudo vim 30-fonts.conf
+: 1320025661:0;exit
+: 1320025671:0;xorg
+: 1320025683:0;pkg
+: 1320025685:0;cd custom/dwm-sprinkles
+: 1320025687:0;vim config.h
+: 1320025699:0;make
+: 1320025703:0;sudo make install
+: 1320025750:0;vim config.h
+: 1320025769:0;make
+: 1320025773:0;sudo make install
+: 1320025800:0;vim config.h
+: 1320025809:0;make
+: 1320025813:0;sudo make install
+: 1320025831:0;exit
+: 1320025834:0;vim config.h
+: 1320025860:0;make
+: 1320025866:0;sudo make install
+: 1320025994:0;exit
+: 1320026008:0;mc
+: 1320026038:0;soft
+: 1320026460:0;vim .Xresources
+: 1320026555:0;ls
+: 1320026557:0;mc
+: 1320026564:0;exit
+: 1320026576:0;ls
+: 1320026577:0;mc
+: 1320026580:0;eb
+: 1320026584:0;it/linux
+: 1320026588:0;extxit
+: 1320026591:0;exit
+: 1320026639:0;ls
+: 1320026642:0;mc
+: 1320026650:0;exit
+: 1320026664:0;ls
+: 1320026666:0;exit
+: 1320026670:0;xrdb -load $HOME/.Xresources
+: 1320026672:0;xterm
+: 1320026674:0;exit
+: 1320026692:0;ls
+: 1320026694:0;exit
+: 1320026711:0;ls
+: 1320026714:0;xrdb -load $HOME/.Xresources
+: 1320026715:0;xterm
+: 1320026717:0;exit
+: 1320026723:0;xterm
+: 1320026725:0;exit
+: 1320026765:0;ls
+: 1320026767:0;mc
+: 1320026773:0;exit
+: 1320026783:0;ls
+: 1320026787:0;exit
+: 1320026865:0;xrdb -load $HOME/.Xresources
+: 1320026868:0;ls
+: 1320026869:0;exit
+: 1320026870:0;xterm
+: 1320026876:0;mc
+: 1320026884:0;exit
+: 1320026893:0;vim .Xresources
+: 1320026904:0;xrdb -load $HOME/.Xresources
+: 1320026906:0;xterm
+: 1320026907:0;ls
+: 1320026911:0;mc
+: 1320026927:0;exit
+: 1320026931:0;vim .Xresources
+: 1320026936:0;xrdb -load $HOME/.Xresources
+: 1320026937:0;xterm
+: 1320026938:0;mc
+: 1320026954:0;exit
+: 1320026984:0;upgrade
+: 1320028179:0;eb
+: 1320028183:0;it/linux
+: 1320028197:0;firefox index.html
+: 1320028263:0;tmux
+: 1320028272:0;cd projects/bash_examples
+: 1320028313:0;vim vim filediff.sh
+: 1320028327:0;vim filediff.sh
+: 1320030236:0;wget http://blip.tv/file/get/Jupiterbroadcasting-ArchMadeEasyLASS19e03270.m4v
+: 1320030320:0;vim monitorservice.sh
+: 1320032520:0;exit
+: 1320036151:0;cd git
+: 1320036161:0;mkdir philthomson
+: 1320036165:0;cd philthomson
+: 1320036180:0;git clone git://github.com/philthomson/Bits-of-bash.git
+: 1320036199:0;git clone git://github.com/philthomson/Debian-Scripts.git
+: 1320036211:0;git clone git://github.com/philthomson/bits-of-bash-vm.git
+: 1320036234:0;xdcp crshd
+: 1320036335:0;cd
+: 1320036338:0;vim .Xresources
+: 1320036364:0;ls
+: 1320036365:0;ls -lh
+: 1320036367:0;mc
+: 1320036378:0;vim .bashrc
+: 1320036383:0;exit
+: 1320036404:0;ls
+: 1320036407:0;ls -lh
+: 1320036409:0;mc
+: 1320036423:0;vim .zshrc
+: 1320036435:0;vim .bashrc
+: 1320036447:0;exit
+: 1320036476:0;ls
+: 1320036477:0;ls -lha
+: 1320036479:0;mc
+: 1320036484:0;vim .bashrc
+: 1320036493:0;exit
+: 1320036505:0;ls
+: 1320036507:0;ls -lha
+: 1320036508:0;mc
+: 1320036517:0;vim .bashrc
+: 1320036524:0;exit
+: 1320036565:0;ls
+: 1320036566:0;ls -lh
+: 1320036567:0;mc
+: 1320036572:0;vim .bashrc
+: 1320036576:0;exit
+: 1320036621:0;cp look-zenburn.xrdb look-zenburn
+: 1320036782:0;ls
+: 1320036783:0;ls -lh
+: 1320036785:0;mc
+: 1320036792:0;vim .bashrc
+: 1320036807:0;exit
+: 1320036821:0;ls
+: 1320036822:0;ls -lh
+: 1320036826:0;exit
+: 1320036922:0;ls
+: 1320036924:0;ls -lh
+: 1320036925:0;mc
+: 1320036934:0;vim .bashrc
+: 1320036942:0;ls -lha
+: 1320036956:0;vim .zshrc
+: 1320036963:0;exit
+: 1320036973:0;ls
+: 1320036974:0;ls -lh
+: 1320036976:0;nx
+: 1320036977:0;mc
+: 1320036980:0;exit
+: 1320037001:0;vim .bashrc
+: 1320037030:0;exit
+: 1320037157:0;ls
+: 1320037158:0;ls -lh
+: 1320037160:0;mc
+: 1320037164:0;exit
+: 1320037185:0;ls
+: 1320037186:0;ls -lh
+: 1320037188:0;mc
+: 1320037194:0;vim .bashrc
+: 1320037203:0;vim .zshrc
+: 1320037209:0;exit
+: 1320037225:0;ls
+: 1320037226:0;ls -lh
+: 1320037228:0;mc
+: 1320037233:0;vim .bashrc
+: 1320037238:0;exit
+: 1320037260:0;ls
+: 1320037261:0;ls -lh
+: 1320037262:0;mc
+: 1320037267:0;vim .bashrc
+: 1320037275:0;exit
+: 1320037292:0;ls
+: 1320037293:0;ls -lh
+: 1320037294:0;mc
+: 1320037298:0;exotxot
+: 1320037301:0;exit
+: 1320037327:0;ls
+: 1320037328:0;ls -lh
+: 1320037329:0;mc
+: 1320037333:0;vim .bashrc
+: 1320037336:0;exit
+: 1320037352:0;ls
+: 1320037354:0;ls -A
+: 1320037357:0;exit
+: 1320037408:0;./xbattcheck
+: 1320037450:0;./tmauto
+: 1320037607:0;colorlist2
+: 1320037609:0;colorlist
+: 1320037790:0;;q
+: 1320037796:0;aurget -Ss artwiz
+: 1320037839:0;aurget -Ss lime
+: 1320037910:0;pacman -Ss artwiz
+: 1320037916:0;pacman -S artwiz-fonts
+: 1320037969:0;xorg
+: 1320037995:0;mc
+: 1320038027:0;gfv lime.pcf
+: 1320038034:0;gfv lime.de.pcf
+: 1320038042:0;gfv lime.se.pcf
+: 1320038267:0;pkg
+: 1320038271:0;cd custom/dwm-sprinkles
+: 1320038273:0;vim config.h
+: 1320038304:0;make
+: 1320038310:0;sudo make install
+: 1320038350:0;vim config.h
+: 1320038364:0;make
+: 1320038368:0;sudo make install
+: 1320038395:0;vim config.h
+: 1320038404:0;make
+: 1320038408:0;sudo make install
+: 1320038418:0;vim config.h
+: 1320038423:0;make
+: 1320038427:0;sudo make install
+: 1320038453:0;vim config.h
+: 1320038462:0;make
+: 1320038466:0;sudo make instal
+: 1320038468:0;sudo make install
+: 1320038486:0;sudo vim config
+: 1320038502:0;exit
+: 1320038516:0;startx
+: 1320038552:0;fc-list | artwiz
+: 1320038557:0;fc-list | grep artwiz
+: 1320038571:0;cd /etc/X11/xorg.conf.d
+: 1320038579:0;sudo vim 30-fonts.conf
+: 1320038599:0;cd
+: 1320038601:0;startx
+: 1320038624:0;cd packages/custom/dwm-sprinkles
+: 1320038650:0;vim config.h
+: 1320038655:0;make
+: 1320038659:0;sudo make install
+: 1320038709:0;vim config.h
+: 1320038722:0;make
+: 1320038725:0;sudo make install
+: 1320038765:0;vim config.h
+: 1320038776:0;make
+: 1320038780:0;sudo make install
+: 1320038808:0;vim config.h
+: 1320038825:0;make
+: 1320038828:0;sudo make install
+: 1320038857:0;vim config.h
+: 1320038864:0;make
+: 1320038868:0;sudo make install
+: 1320038894:0;vim config.h
+: 1320038903:0;make
+: 1320038906:0;sudo make install
+: 1320038970:0;vim config.h
+: 1320038977:0;make
+: 1320038980:0;sudo make install
+: 1320039004:0;vim config.h
+: 1320039009:0;make
+: 1320039012:0;sudo make install
+: 1320039038:0;vim config.h
+: 1320039043:0;make
+: 1320039046:0;sudo make install
+: 1320039068:0;vim config.h
+: 1320039076:0;make
+: 1320039080:0;sudo make install
+: 1320039081:0;exit
+: 1320039090:0;xorg
+: 1320041116:0;dw
+: 1320045486:0;upgrade
+: 1320045503:0;pacman -R ruby
+: 1320045517:0;pacman -Rs ruby
+: 1320045526:0;boom
+: 1320045562:0;vim .zshrc
+: 1320046984:0;pacman -Rs artwiz-fonts
+: 1320047001:0;sudo vim /etc/X11/fs/config
+: 1320047026:0;cd /usr/share/fonts
+: 1320047031:0;ls -l
+: 1320047159:0;sudo vim /etc/X11/xorg.conf.d/30-fonts.conf
+: 1320047185:0;xorg
+: 1320047227:0;fc
+: 1320047232:0;xorg
+: 1320047280:0;sudo vim -o /etc/X11/fs/config /etc/X11/xorg.conf.d/30-fonts.conf
+: 1320047462:0;xorg
+: 1320047500:0;sudo init 3 && sudo init 5 && exit
+: 1320047512:0;startx
+: 1320047538:0;sudo htop
+: 1320047585:0;sudo init 3
+: 1320047624:0;mc
+: 1320047642:0;sudo init 1
+: 1320047710:0;mc
+: 1320047788:0;cd /etc/X11
+: 1320047792:0;cd fs
+: 1320047799:0;cd ..
+: 1320047812:0;cd fs
+: 1320047817:0;sudo vim config
+: 1320047862:0;cd ..
+: 1320047864:0;cd xorg.conf.d
+: 1320047868:0;sudo vim 30-fonts.conf
+: 1320047912:0;pacman -Qi xorg-font-util
+: 1320047918:0;pacman -Ql xorg-font-util
+: 1320047960:0;pacman -Qi xorg-xfs
+: 1320047972:0;pacman -Ql xorg-xfs
+: 1320048023:0;sudo rc.d xfs status
+: 1320048049:0;sudo rc.d status xfs
+: 1320048059:0;rc.d list
+: 1320048073:0;sudo rc.d start xfs
+: 1320048105:0;xorg
+: 1320048156:0;pacman -Rs xorg-xfs
+: 1320048164:0;exit
+: 1320048241:0;xfs
+: 1320048251:0;showfont
+: 1320048275:0;man xfs
+: 1320048342:0;xfsinfo
+: 1320048350:0;xfsinfo xorg
+: 1320048365:0;xfsinfo -server xfs
+: 1320048378:0;man xfsinfo
+: 1320048478:0;pacm
+: 1320048500:0;pacman -Qi xorg-xfontsel
+: 1320048536:0;xfsinfo -server homer
+: 1320048548:0;xfsinfo -server homer:7100
+: 1320048645:0;sudo rc.d xfs stop
+: 1320048660:0;sudo rc.d stop xfs
+: 1320048681:0;pacman -Rs xorg-xfs
+: 1320048696:0;pacman -Qdt
+: 1320048745:0;xorg
+: 1320048780:0;pkgstat
+: 1320078584:0;upgrade
+: 1320079726:0;n linux/builtin-commands
+: 1320079918:0;mc
+: 1320079924:0;not
+: 1320079935:0;rst2html builtin-commands.rst builtin-commands.rst.html
+: 1320079939:0;firefox builtin-commands.rst.html
+: 1320080947:0;vim /var/log/Xorg.0.log
+: 1320081014:0;mc
+: 1320081251:0;sudo vim 20-server.conf
+: 1320081310:0;xorg
+: 1320081324:0;vim /var/log/Xorg.0.log
+: 1320081390:0;sudo rm /var/log/Xorg.0.log
+: 1320081404:0;xorg
+: 1320081412:0;vim /var/log/Xorg.0.log
+: 1320081425:0;cd /usr/share/fonts
+: 1320081426:0;ls
+: 1320081450:0;mkfontdir /usr/share/fonts/OTF
+: 1320081462:0;mkfontscale /usr/share/fonts/OTF
+: 1320081468:0;fc-cache /usr/share/fonts/OTF
+: 1320081489:0;xorg
+: 1320081498:0;vim /var/log/Xorg.0.log
+: 1320081538:0;mc
+: 1320081649:0;exit
+: 1320081650:0;mutt
+: 1320081670:0;xorg
+: 1320081678:0;vim /var/log/Xorg.0.log
+: 1320081703:0;mc
+: 1320081908:0;bkp
+: 1320081945:0;sudo rm -r fs
+: 1320083029:0;cd .config/term-fonts
+: 1320083030:0;ls
+: 1320083049:0;cp pragmata-pro anonymous-pro
+: 1320083052:0;vim anonymous-pro
+: 1320083090:0;vim ~/.Xresources
+: 1320083103:0;xrdb -load $HOME/.Xresources
+: 1320083109:0;ls
+: 1320083113:0;vim .config/term-fonts
+: 1320083119:0;vim .config/term-fonts/anonymous-pro
+: 1320083128:0;xrdb -load $HOME/.Xresources
+: 1320083133:0;mc
+: 1320083141:0;vim .config/term-fonts/anonymous-pro
+: 1320083152:0;xrdb -load $HOME/.Xresources
+: 1320083156:0;mc
+: 1320083169:0;vim .zshrc
+: 1320083181:0;vim .Xresources
+: 1320083185:0;xrdb -load $HOME/.Xresources
+: 1320083194:0;mc
+: 1320083264:0;cd .config/term-fonts
+: 1320083267:0;ls
+: 1320083276:0;cp consolas vt323
+: 1320083280:0;vim vt323
+: 1320083319:0;vim ~/.Xresources
+: 1320083331:0;xrdb -load $HOME/.Xresources
+: 1320083339:0;mc
+: 1320083357:0;cd .config/term-fonts
+: 1320083366:0;rm vt323
+: 1320083369:0;vim ~/.Xresources
+: 1320083374:0;xrdb -load $HOME/.Xresources
+: 1320083506:0;cd .config/term-fonts
+: 1320083507:0;ls
+: 1320083515:0;cp consolas terminal-dosis
+: 1320083517:0;vim termin
+: 1320083520:0;vim terminal-dosis
+: 1320083545:0;xrdb -load $HOME/.Xresources
+: 1320083549:0;ls
+: 1320083551:0;ls -lh
+: 1320083554:0;vim .Xresources
+: 1320083567:0;xrdb -load $HOME/.Xresources
+: 1320083571:0;ls
+: 1320083578:0;mc
+: 1320083671:0;cd .config/term-fonts
+: 1320083679:0;mv terminal-dosis shanti
+: 1320083681:0;vim shanti
+: 1320083698:0;vim ~/.Xresources
+: 1320083705:0;xrdb -load $HOME/.Xresources
+: 1320083712:0;ls
+: 1320083770:0;cd .config/term-fonts
+: 1320083770:0;ls
+: 1320083798:0;mv shanti vl-gothic
+: 1320083801:0;vim vl-gothic
+: 1320083818:0;vim ~/.Xresources
+: 1320083825:0;xrdb -load $HOME/.Xresources
+: 1320083828:0;ls -lh
+: 1320083831:0;mc
+: 1320083847:0;ls
+: 1320083850:0;ls -lh
+: 1320083857:0;exit
+: 1320083870:0;vim ~/.Xresources
+: 1320083887:0;xrdb -load $HOME/.Xresources
+: 1320083894:0;ls
+: 1320083896:0;exit
+: 1320083904:0;vim ~/.Xresources
+: 1320083918:0;xrdb -load $HOME/.Xresources
+: 1320083920:0;ls
+: 1320083922:0;exit
+: 1320083924:0;vim ~/.Xresources
+: 1320083947:0;xrdb -load $HOME/.Xresources
+: 1320083949:0;exit
+: 1320083950:0;vim ~/.Xresources
+: 1320083965:0;xrdb -load $HOME/.Xresources
+: 1320083967:0;ls
+: 1320083968:0;mc
+: 1320083976:0;exit
+: 1320083983:0;vim ~/.config/term-fonts/vl-gothic
+: 1320083994:0;vim .Xresources
+: 1320084001:0;xrdb -load $HOME/.Xresources
+: 1320084003:0;ls
+: 1320084005:0;ls -lh
+: 1320084007:0;exit
+: 1320084008:0;xterm
+: 1320084013:0;exit
+: 1320084016:0;vim .Xresources
+: 1320084029:0;xrdb -load $HOME/.Xresources
+: 1320084031:0;xterm
+: 1320084033:0;ls
+: 1320084034:0;exit
+: 1320084085:0;vim .Xresources
+: 1320084100:0;xrdb -load $HOME/.Xresources
+: 1320084101:0;xterm
+: 1320084103:0;exit
+: 1320084105:0;xrdb -load $HOME/.Xresources
+: 1320084108:0;vim .Xresources
+: 1320084124:0;xrdb -load $HOME/.Xresources
+: 1320084126:0;xterm
+: 1320084127:0;ls
+: 1320084129:0;exit
+: 1320084131:0;vim .Xresources
+: 1320084144:0;xrdb -load $HOME/.Xresources
+: 1320084145:0;xterm
+: 1320084146:0;ls
+: 1320084147:0;exit
+: 1320084162:0;xorg
+: 1320084172:0;vim .Xresources
+: 1320084189:0;xrdb -load $HOME/.Xresources
+: 1320084192:0;exit
+: 1320084195:0;ls
+: 1320084196:0;mc
+: 1320084211:0;fc-list | grep VL Gothic
+: 1320084214:0;fc-list | grep VL
+: 1320084226:0;vim .Xresources
+: 1320084237:0;xrdb -load $HOME/.Xresources
+: 1320084240:0;exit
+: 1320084254:0;mc
+: 1320084265:0;vim .Xresources
+: 1320084315:0;xrdb -load $HOME/.Xresources
+: 1320084317:0;xterm
+: 1320084318:0;ls
+: 1320084320:0;ls -lh
+: 1320084327:0;exit
+: 1320084329:0;urxvt
+: 1320084331:0;ls
+: 1320084334:0;exit
+: 1320084366:0;xrdb -load $HOME/.Xresources
+: 1320084368:0;xterm
+: 1320084370:0;ls
+: 1320084371:0;ls -lh
+: 1320084372:0;exit
+: 1320084374:0;urxvt
+: 1320084375:0;ls
+: 1320084377:0;exit
+: 1320084386:0;xrdb -load $HOME/.Xresources
+: 1320084388:0;xterm
+: 1320084389:0;ls
+: 1320084390:0;ls -lh
+: 1320084393:0;exit
+: 1320084396:0;urxvt
+: 1320084399:0;ls
+: 1320084400:0;exit
+: 1320084412:0;xrdb -load $HOME/.Xresources
+: 1320084413:0;xterm
+: 1320084415:0;ls
+: 1320084416:0;exit
+: 1320084418:0;urxvt
+: 1320084419:0;ls
+: 1320084421:0;exit
+: 1320084444:0;ls
+: 1320084479:0;exit
+: 1320084502:0;xrdb -load $HOME/.Xresources
+: 1320084504:0;ls
+: 1320084507:0;exit
+: 1320084512:0;xrdb -load $HOME/.Xresources
+: 1320084516:0;xterm
+: 1320084519:0;exit
+: 1320084533:0;xrdb -load $HOME/.Xresources
+: 1320084534:0;xterm
+: 1320084536:0;ls
+: 1320084537:0;exit
+: 1320084559:0;xrdb -load $HOME/.Xresources
+: 1320084561:0;xterm
+: 1320084562:0;ls
+: 1320084563:0;exit
+: 1320084582:0;xrdb -load $HOME/.Xresources
+: 1320084584:0;urxvt
+: 1320084585:0;ls
+: 1320084587:0;ls -lh
+: 1320084593:0;exit
+: 1320084609:0;xrdb -load $HOME/.Xresources
+: 1320084611:0;xterm
+: 1320084612:0;exit
+: 1320084620:0;xterm -fn "VL Gothic"
+: 1320084621:0;ls
+: 1320084622:0;exit
+: 1320084628:0;xterm -fn "DejaVu Sans Mono"
+: 1320084630:0;ls
+: 1320084631:0;exit
+: 1320084637:0;xterm -fn xft "DejaVu Sans Mono"
+: 1320084645:0;xterm -font "DejaVu Sans Mono"
+: 1320084646:0;ls
+: 1320084648:0;exit
+: 1320084650:0;man xterm
+: 1320084734:0;xterm -fn "DejaVu Sans Mono"
+: 1320084736:0;exit
+: 1320084768:0;xterm -fn "Envy Code R"
+: 1320084769:0;ls
+: 1320084771:0;exit
+: 1320084823:0;xrdb -load $HOME/.Xresources
+: 1320084824:0;xterm
+: 1320084826:0;ls
+: 1320084827:0;exit
+: 1320084831:0;xterm -fn "Envy Code R"
+: 1320084833:0;ls
+: 1320084834:0;exit
+: 1320084862:0;xrdb -load $HOME/.Xresources
+: 1320084865:0;xterm
+: 1320084866:0;ls
+: 1320084879:0;exit
+: 1320084882:0;mc
+: 1320084903:0;xrdb -load $HOME/.Xresources
+: 1320084904:0;xterm
+: 1320084906:0;ls
+: 1320084907:0;exit
+: 1320084911:0;xrdb -merge $HOME/.Xresources
+: 1320084913:0;xterm
+: 1320084918:0;exit
+: 1320084935:0;xrdb -merge $HOME/.Xresources
+: 1320084937:0;xterm
+: 1320084939:0;ls
+: 1320084940:0;exit
+: 1320084953:0;xrdb -load $HOME/.Xresources
+: 1320085091:0;exit
+: 1320085143:0;xterm -fn '-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
+: 1320085145:0;xterm -fn '-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1'
+: 1320085148:0;ls
+: 1320085150:0;exit
+: 1320085203:0;xterm -fa '-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1'
+: 1320085205:0;ls
+: 1320085211:0;exit
+: 1320085218:0;xterm -fa fixed
+: 1320085221:0;ls
+: 1320085224:0;mc
+: 1320085235:0;exit
+: 1320085246:0;xterm -fa 'VL Gothic'
+: 1320085248:0;ls
+: 1320085251:0;exit
+: 1320085256:0;xterm -fa 'DejaVu Sans Mono'
+: 1320085258:0;ls
+: 1320085259:0;exit
+: 1320085264:0;xterm -fa 'DejaVu Sans Mono' -fs 12
+: 1320085265:0;ls
+: 1320085266:0;exit
+: 1320085268:0;xterm -fa 'DejaVu Sans Mono' -fs 10
+: 1320085269:0;ls
+: 1320085271:0;exit
+: 1320085375:0;xterm -fa "VL Gothic 10"
+: 1320085378:0;ls
+: 1320085380:0;exit
+: 1320085386:0;xterm -fn "VL Gothic 10"
+: 1320085388:0;ls
+: 1320085415:0;exit
+: 1320085418:0;xterm -fn "VL Gothic"
+: 1320085420:0;ls
+: 1320085422:0;mc
+: 1320085430:0;exit
+: 1320085450:0;xterm -fn "DejaVu Sans Mono"
+: 1320085451:0;ls
+: 1320085453:0;exit
+: 1320085457:0;xterm -fn 'DejaVu Sans Mono'
+: 1320085458:0;ls
+: 1320085460:0;exit
+: 1320085471:0;xterm -fn 'VL Gothic'
+: 1320085473:0;ls
+: 1320085474:0;mc
+: 1320085479:0;exit
+: 1320085493:0;vim .Xresources
+: 1320085514:0;xrdb -load $HOME/.Xresources
+: 1320085515:0;xterm
+: 1320085520:0;exit
+: 1320085534:0;mc
+: 1320085575:0;xrdb -load $HOME/.Xresources
+: 1320085576:0;xterm
+: 1320085577:0;ls
+: 1320085579:0;exit
+: 1320085589:0;xrdb -load $HOME/.Xresources
+: 1320085590:0;xterm
+: 1320085592:0;ls
+: 1320085593:0;ls -lh
+: 1320085601:0;exit
+: 1320085609:0;xrdb -load $HOME/.Xresources
+: 1320085611:0;xterm
+: 1320085612:0;ls
+: 1320085615:0;exit
+: 1320085627:0;xrdb -load $HOME/.Xresources
+: 1320085628:0;xterm
+: 1320085630:0;ls
+: 1320085631:0;exit
+: 1320085786:0;xrdb -load $HOME/.Xresources
+: 1320085787:0;xterm
+: 1320085789:0;ls
+: 1320085790:0;exit
+: 1320085837:0;xrdb -load $HOME/.Xresources
+: 1320085839:0;xterm
+: 1320085841:0;ls
+: 1320085844:0;exit
+: 1320085858:0;xrdb -load $HOME/.Xresources
+: 1320085860:0;xterm
+: 1320085861:0;ls
+: 1320085865:0;mc
+: 1320085872:0;exit
+: 1320085909:0;xrdb -load $HOME/.Xresources
+: 1320085910:0;xterm
+: 1320085912:0;ls
+: 1320085913:0;exit
+: 1320085969:0;xrdb -load $HOME/.Xresources
+: 1320085970:0;xterm
+: 1320085972:0;ls
+: 1320085973:0;exit
+: 1320086005:0;xrdb -load $HOME/.Xresources
+: 1320086006:0;xterm
+: 1320086008:0;exit
+: 1320086028:0;xrdb -load $HOME/.Xresources
+: 1320086029:0;xterm
+: 1320086031:0;ls
+: 1320086031:0;exit
+: 1320086063:0;xrdb -load $HOME/.Xresources
+: 1320086066:0;ls
+: 1320086067:0;exit
+: 1320086098:0;mc
+: 1320086100:0;exit
+: 1320086243:0;xterm -fn 'Liberation Mono'
+: 1320086244:0;ls
+: 1320086245:0;exit
+: 1320086247:0;xterm -fa 'Liberation Mono'
+: 1320086248:0;ls
+: 1320086250:0;exit
+: 1320086257:0;xterm -fa 'VL Gothic'
+: 1320086258:0;ls
+: 1320086262:0;exit
+: 1320086269:0;xterm -fa 'Luxi Mono'
+: 1320086270:0;ls
+: 1320086275:0;exit
+: 1320086279:0;xterm -fa 'Luxi Mono' -fs 10
+: 1320086280:0;ls
+: 1320086281:0;exit
+: 1320086287:0;xterm -fa 'Liberation Mono' -fs 10
+: 1320086288:0;ls
+: 1320086291:0;exit
+: 1320086296:0;xterm -fa 'Droid Sans Mono' -fs 10
+: 1320086298:0;ls
+: 1320086299:0;mc
+: 1320086307:0;exit
+: 1320086314:0;xterm -fa 'VL Gothic' -fs 10
+: 1320086315:0;ls
+: 1320086319:0;exit
+: 1320086901:0;upgrade
+: 1320086920:0;htop
+: 1320088364:0;upgrade
+: 1320089252:0;pogoda
+: 1320090178:0;xterm -fa "VL Gothic"
+: 1320090180:0;ls
+: 1320090194:0;exit
+: 1320090199:0;xterm -fa "xft:VL Gothic"
+: 1320090201:0;ls
+: 1320090204:0;exit
+: 1320090216:0;urxvt -fn "VL Gothic"
+: 1320090222:0;urxvt -fa "VL Gothic"
+: 1320090227:0;urxvt -font "VL Gothic"
+: 1320090232:0;urxvt -fn "xft:VL Gothic"
+: 1320090233:0;ls
+: 1320090235:0;ls -lh
+: 1320090242:0;exit
+: 1320090245:0;urxvt -fn "xft:VL Gothic" -fs 10
+: 1320090257:0;urxvt -fn "xft:VL Gothic:pixelsize=10"
+: 1320090259:0;ls
+: 1320090260:0;exit
+: 1320090263:0;urxvt -fn "xft:VL Gothic:pixelsize=14"
+: 1320090264:0;ls
+: 1320090267:0;exit
+: 1320090722:0;pacman -Syu
+: 1320091653:0;watch -d -n 2 "df; ls -FlAt;"
+: 1320091674:0;ls
+: 1320091701:0;n linux-cli-tasks/monitor-file-changes
+: 1320091799:0;mc
+: 1320091829:0;mkfontdir /usr/share/fonts/OSX
+: 1320091836:0;mkfontscale /usr/share/fonts/OSX
+: 1320091851:0;mkfontdir /usr/share/fonts/T1
+: 1320091856:0;mkfontscale /usr/share/fonts/T1
+: 1320091864:0;mkfontdir /usr/share/fonts/TTF2
+: 1320091868:0;mkfontscale /usr/share/fonts/TTF2
+: 1320091875:0;sudo rm -r artwiz-fonts
+: 1320091922:0;pkgstat
+: 1320092187:0;pacman -Syu
+: 1320092384:0;xorg
+: 1320093377:0;mc
+: 1320093428:0;colortheme
+: 1320093465:0;scrot -c 5
+: 1320093473:0;scrot --help
+: 1320093487:0;scrot -c -d 5
+: 1320093511:0;xnview 2011-10-31-213812_1680x1050_scrot.png
+: 1320093630:0;mc
+: 1320093632:0;not
+: 1320093653:0;cd git/darkcourses
+: 1320093688:0;git add darkcourses.png
+: 1320093695:0;git commint -m 'update'
+: 1320093700:0;git commit -m 'update'
+: 1320093710:0;git push origin master
+: 1320093987:0;git add vimrc
+: 1320093992:0;git commit -m 'update'
+: 1320093995:0;git push origin master
+: 1320094044:0;git add xinitrc
+: 1320094046:0;git commit -m 'update'
+: 1320094048:0;git push origin master
+: 1320094097:0;git add xinitrc
+: 1320094098:0;git commit -m 'update'
+: 1320094140:0;git push origin master
+: 1320094159:0;git add zshrc
+: 1320094161:0;git commit -m 'update'
+: 1320094163:0;git push origin master
+: 1320094201:0;git add urlview
+: 1320094203:0;git commit -m 'update'
+: 1320094205:0;git push origin master
+: 1320094228:0;git add toprc
+: 1320094230:0;git commit -m 'update'
+: 1320094231:0;git push origin master
+: 1320094301:0;git add tmux.conf
+: 1320094302:0;git commit -m 'update'
+: 1320094305:0;git push origin master
+: 1320094387:0;git add gtkrc-2.0
+: 1320094389:0;git commit -m 'update'
+: 1320094391:0;git push origin master
+: 1320094435:0;git add fonts.conf
+: 1320094436:0;git commit -m 'update'
+: 1320094437:0;git push origin master
+: 1320094460:0;git add dircolors
+: 1320094462:0;git commit -m 'update'
+: 1320094463:0;git push origin master
+: 1320094538:0;git add Xresources
+: 1320094540:0;git commit -m 'update'
+: 1320094541:0;git push origin master
+: 1320094568:0;git rm Xdefaults
+: 1320094576:0;git commit --ammend
+: 1320094593:0;git commit -m 'update'
+: 1320094610:0;git push origin master
+: 1320094710:0;cd vim
+: 1320094716:0;cd colors
+: 1320094724:0;git add dc3.vim
+: 1320094733:0;git commit -m 'update'
+: 1320094742:0;git push origin master
+: 1320094780:0;cd ..
+: 1320094783:0;cd syntax
+: 1320094788:0;git add zsh.vim
+: 1320094794:0;git commit -m 'update'
+: 1320094800:0;git push origin master
+: 1320094943:0;cd ..
+: 1320094951:0;git add mplayer
+: 1320094959:0;git commit -m 'update'
+: 1320094963:0;git push origin master
+: 1320095178:0;git add local
+: 1320095180:0;git commit -m 'update'
+: 1320095183:0;git push origin master
+: 1320095202:0;git rm mc
+: 1320095208:0;git rm -r mc
+: 1320095215:0;git push origin master
+: 1320095243:0;git commit -m 'update'
+: 1320095246:0;git push origin master
+: 1320095517:0;vim .Xresources
+: 1320095521:0;exit

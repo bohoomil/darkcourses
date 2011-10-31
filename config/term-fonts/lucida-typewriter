@@ -1,0 +1,12 @@
+
+!URxvt.font:xft:lucida sans typewriter:medium:size=10:antialias=false
+!URxvt.boldFont:xft:lucida sans typewriter:medium:size=10:antialias=false
+!URxvt.italicFont:xft:lucida sans typewriter:italic:size=10:antialias=false
+!URxvt.boldItalicFont:xft:lucida sans typewriter:italic:size=10:antialias=false
+
+URxvt.font:xft:lucida sans typewriter:medium:pixelsize=13
+URxvt.boldFont:xft:lucida sans typewriter:medium:pixelsize=13
+URxvt.italicFont:xft:lucida sans typewriter:italic:pixelsize=13
+URxvt.boldItalicFont:xft:lucida sans typewriter:italic:pixelsize=13
+
+! vim:ft=xdefaults

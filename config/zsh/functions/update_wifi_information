@@ -1,0 +1,53 @@
+# -*- mode: sh -*-
+# Copyright (c) 2009 Sebastian Wiesner <lunaryorn@googlemail.com>
+
+# This program is free software. It comes without any warranty, to
+# the extent permitted by applicable law. You can redistribute it
+# and/or modify it under the terms of the Do What The Fuck You Want
+# To Public License, Version 2, as published by Sam Hocevar. See
+# http://sam.zoy.org/wtfpl/COPYING for more details.
+
+# This function creates a global associative array "${wifi_status}" with the
+# following keys:
+#
+# - signal: The percentual wifi signal strength
+# - ssid:   The network name
+# - ip:     The IP address
+# - up:     "yes", if WIFI is connected, "no" otherwise
+#
+# This array is updated from wicd, thus wicd must be installed and running.
+# NetworkManager is *not* supported.  Moreover the qdbus utility from Qt4
+# must be installed.
+
+
+local -a version
+version=(${(ps:.:)$(qdbus --system org.wicd.daemon /org/wicd/daemon Hello)})
+[[ $? -eq 0 ]] || { echo "wicd not running!"; return 1 }
+
+
+if [[ version[1] -eq 1 && version[2] -le 5 ]]; then
+    # wicd <= 1.5.x
+    __wicd_call() {
+        local service=org.wicd.daemon
+        local object=/org/wicd/daemon
+        qdbus --system ${service} ${object} "${1}" 2>/dev/null
+        return $?
+    }
+else
+    # wicd >= 1.6.x
+    __wicd_call() {
+        local service=org.wicd.daemon
+        local object=/org/wicd/daemon/wireless
+        qdbus --system ${service} ${object} "${1}" 2>/dev/null
+        return $?
+    }
+fi
+
+
+declare -Ag wifi_state
+wifi_state[up]="$(__wicd_call IsWirelessUp)"
+if [[ "${wifi_state[up]}" == "true" ]]; then
+    wifi_state[signal]="$(__wicd_call GetCurrentSignalStrength)"
+    wifi_state[ip]="$(__wicd_call GetWirelessIP)"
+    wifi_state[ssid]="$(__wicd_call GetCurrentNetwork)"
+fi

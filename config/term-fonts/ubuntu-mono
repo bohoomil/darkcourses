@@ -1,0 +1,7 @@
+
+URxvt.font:xft:ubuntu mono:medium:pixelsize=15
+URxvt.boldFont:xft:ubuntu mono:medium:pixelsize=15
+URxvt.italicFont:xft:ubuntu mono:italic:pixelsize=15
+URxvt.boldItalicFont:xft:ubuntu mono:italic:pixelsize=15
+
+! vim:ft=xdefaults

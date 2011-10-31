@@ -1,0 +1,21 @@
+
+Add the following to the .zshrc file to enable lunar prompt:
+------------------------------------------------------------
+
+fpath=("${HOME}/.config/zsh/functions" "${fpath[@]}")
+
+autoload -U promptinit
+promptinit
+
+# prompt configuration
+# no battery and no wifi information by default
+zstyle ':prompt:*' show_battery false
+zstyle ':prompt:*' show_wifi false
+# show vcs information (including changes)
+zstyle ':prompt:*' show_vcs true
+zstyle ':vcs_info:*:prompt_lunar:*' check-for-changes true
+
+# enable prompt theme
+prompt lunar
+
+

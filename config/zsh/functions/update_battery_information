@@ -1,0 +1,75 @@
+# -*- mode: sh -*-
+# Copyright (c) 2009, 2011 Sebastian Wiesner <lunaryorn@googlemail.com>
+
+# This program is free software. It comes without any warranty, to
+# the extent permitted by applicable law. You can redistribute it
+# and/or modify it under the terms of the Do What The Fuck You Want
+# To Public License, Version 2, as published by Sam Hocevar. See
+# http://sam.zoy.org/wtfpl/COPYING for more details.
+
+# This function creates a global associative array "${battery_status}" with
+# following keys:
+#
+# - percentage:    The percentual capacity of the battery
+# - state:         "discharging", if the battery is discharging, "charging"
+#                  otherwise
+# - level:         "critical", if the charge_level is below critical
+#                  threshold, "warning", if charge_level is below warning
+#                  threshold, "normal" otherwise
+#
+# Battery information is retrieved through UPower, which must consequently be
+# up and running in order to use this function.
+#
+# This function is configured through the following zstyles:
+#
+# - :battery:information critical
+#      critical threshold for the given battery
+# - :battery:information warning
+#      warning threshold for the given battery
+
+# get configuration
+local warning_threshold
+local critical_threshold
+zstyle -s ':battery:information' critical critical_threshold
+zstyle -s ':battery:information' warning warning_threshold
+
+# define percentual defaults
+[[ -n "${critical_threshold}" ]] || critical_threshold=10
+[[ -n "${warning_threshold}" ]] || warning_threshold=20
+
+# stores the output of upower --show-info
+local info
+# local variables for some certain fields of device information
+local state
+local percentage
+local level
+
+# global associative array for battery status
+declare -Ag battery_state
+
+for device in $(upower --enumerate); do
+    info="$(upower --show-info "${device}")"
+    if ! grep -q battery <<< "${info}" &> /dev/null; then
+        # skip non-battery (e.g. the AC adapter)
+        continue
+    fi
+    state="$(grep state <<< "${info}" | cut -d: -f2)"
+    state="${state// /}"
+    percentage="$(grep percentage <<< "${info}" | cut -d: -f2)"
+    # strip whitespace and percentage fractions
+    percentage="${percentage// /}"
+    percentage="${percentage%%.*}"
+    if [[ "${percentage}" -lt "${critical_threshold}" ]]; then
+        level="critical"
+    elif [[ "${percentage}" -lt "${warning_threshold}" ]]; then
+        level="warning"
+    else
+        level="normal"
+    fi
+    # set global values
+    battery_state[state]="${state}"
+    battery_state[percentage]="${percentage}"
+    battery_state[level]="${level}"
+    # exit, once the first battery was found
+    return 0
+done
