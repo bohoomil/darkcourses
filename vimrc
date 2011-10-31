@@ -1,11 +1,12 @@
 " vimrc by bohoomil
-" vim:fenc=utf-8:nu:ai:si:et:ts=4:sw=4:fdm=indent:fdn=1:ft=vim:
+" vim:ft=vim:
 
 " pathogen
 filetype off 
 call pathogen#infect()
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
+let Vimplate = "/usr/bin/vimplate"
 
 set nocompatible
 set encoding=utf8
@@ -17,20 +18,16 @@ syntax on
 "    "
 " ui "
 "    "
-"if &t_Co < 256
-if &term=~'linux'
-"if ($TERM) == 'linux'
+" wrap'n'jump by display lines
+"set background=dark
+
+if $TERM =~ '^linux'
 	colorscheme miro8     " colourscheme for the 8 colour linux term
 else
-	colorscheme darkcourses
+	colorscheme dc3
 endif
 
-set background=dark
-set guicursor=a:blinkon0
-set nu!                    " line numbering
-set smartindent
-
-" wrap'n'jump by display lines
+set tw=0 
 set wrap
 set linebreak
 set display+=lastline
@@ -56,6 +53,14 @@ set showcmd         " show partial commands in status line
 " fileformat, encoding, type, buffer num, RO/HELP/PREVIEW, mod flag, filepath; spacer;  line pos, line/total, percentage
 set statusline=%{&ff}\ \%{&fenc}\ \b%1.3n\ \%#StatusFTP#\%Y\ \%#StatusRO#\%R\ \%#StatusHLP#\%H\ \%#StatusPRV#\%W\ \%#StatusModFlag#\%M\ \%#StatusLine#\%f\%=\%1.7c\ \%1.7l/%L\ \%p%%
 
+" NERDTree config
+nmap <silent> <F9> :NERDTreeToggle<CR>
+let NERDTreeChDirMode=2
+let NERDTreeIgnore=['\env','\.vim$', '\~$', '\.pyc$', '\.swp$', '\.egg-info$', '^dist$', '^build$']
+let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\~$']
+let NERDTreeShowBookmarks=1
+let NERDTreeHightlightCursorline=1
+
 
 "           "
 " filetypes "
@@ -66,10 +71,8 @@ au Filetype txt2tags source $HOME/.vim/syntax/txt2tags.vim
 "au BufNewFile,BufRead *.t2t set spell
 au BufNewFile,BufRead *.t2t set wrap
 au BufNewFile,BufRead *.t2t set lbr
+au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax 
 "au Filetype txt2tags noremap <F10> :TlistToggle<Enter>
-
-" txt2tags taglist support
-let tlist_txt2tags_settings='txt2tags;d:Titles'
 
 " latex
 filetype plugin indent on
@@ -78,6 +81,15 @@ let g:tex_flavor = "xetex"
 let g:Tex_DefaultTargetFormat = "pdf"
 let g:Tex_CompileRule_pdf = "xelatex -interaction=nonstopmode $*"
 let g:Tex_ViewRule_pdf = "acroread"
+
+" Gentoo-specific settings for ebuilds.  These are the federally-mandated
+" required tab settings.  See the following for more information:
+" http://www.gentoo.org/proj/en/devrel/handbook/handbook.xml
+" Note that the rules below are very minimal and don't cover everything.
+" Better to emerge app-vim/gentoo-syntax, which provides full syntax,
+" filetype and indent settings for all things Gentoo.
+au BufRead,BufNewFile *.e{build,class} let is_bash=1|setfiletype sh
+au BufRead,BufNewFile *.e{build,class} set ts=4 sw=4 noexpandtab
 
 " tmux
 let tmux = "/usr/share/vim/vim73/syntax/tmux.vim"
@@ -88,36 +100,30 @@ au Syntax newlang source /usr/share/vim/vim73/syntax/tmux.vim
 au BufNewFile,BufRead *.log set ft=messages
 au BufNewFile,BufRead *.log{.*} set ft=messages
 
+" Syntax highlighting for subtitle files 
+au BufNewFile,BufRead *.srt setf srt
+au BufNewFile,BufRead *.mpsub setf mpsub
+au BufNewFile,BufRead *.sub setf sub
+
+au BufNewFile,BufRead Trolltech.conf,.mpdasrc,.xchm,.*toprc setf cfg
+
 " other file types
 if has("autocmd")
-	" always jump to the last cursor position
+	"always jump to the last cursor position
 	autocmd BufReadPost * if line("'\"")>0 && line("'\"")<=line("$")|exe "normal g`\""|endif
 	autocmd BufRead *.txt set tw=80 " limit width to n cols for txt files
-    "autocmd FileType eml set tw=80  " limit width to n cols for email files
-    autocmd BufRead *.eml set tw=0 fo=cq wm=0 " no automatic wrapping, rewrapping will wrap to 80
-    autocmd BufRead ~/.mutt/temp/mutt-* set tw=80 ft=mail " nocindent spell   " width, mail syntax hilight, spellcheck
-    "autocmd FileType tex set tw=197   " wrap at 197 chars for LaTeX files
+	"autocmd FileType eml set tw=80  " limit width to n cols for email files
+	autocmd BufRead *.eml set tw=0 fo=cq wm=0 " no automatic wrapping, rewrapping will wrap to 80
+	autocmd BufRead ~/.mutt/temp/mutt-* set tw=80 ft=mail " nocindent spell   " width, mail syntax hilight, spellcheck
+	"autocmd FileType tex set tw=197   " wrap at 197 chars for LaTeX files
 endif
-
-" highlight all characters past 75 columns
-"augroup vimrc_autocmds
-"  autocmd BufEnter * highlight OverLength ctermbg=0 guibg=#1A1A1A
-"  autocmd BufEnter * match OverLength /\%75v.*/
-"augroup END
 
 " automatically give executable permissions if file 
 " begins with #! and contains '/bin/' in the path
-function ModeChange()
-	if getline(1) =~ "^#!"
-		if getline(1) =~ "/bin/"
-			silent !chmod a+x <afile> 
-		endif
-	endif
-endfunction
-au BufWritePost * call ModeChange()
+au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent execute "!chmod a+x <afile>" | endif | endif
 
 augroup mkd
-	autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
+autocmd BufRead *.mkd  set ai formatoptions=tcroqn2 comments=n:&gt;
 augroup END
 
 " html conversion (:help 2html.vim)
@@ -132,9 +138,9 @@ let g:html_number_lines = 1
 "          "
 " map keys to toggle functions
 function! MapToggle(key, opt)
-    let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-    exec 'nnoremap '.a:key.' '.cmd
-    exec 'inoremap '.a:key." \<C-O>".cmd
+	let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+	exec 'nnoremap '.a:key.' '.cmd
+	exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
 command! -nargs=+ MapToggle call MapToggle(<f-args>)
 
@@ -149,12 +155,13 @@ MapToggle <F5> spell
 MapToggle <F6> hlsearch
 
 set noexpandtab
-set tabstop=4        " set tab keys to 4 spaces
-set shiftwidth=4
 set noautoindent     " set noautoindent to prevent vim from
                      " inserting unwanted indents when pasting
-" backspace
-set bs=2
+set tabstop=2        " set tab keys to 2 spaces
+set shiftwidth=2
+set nu!              " line numbering
+set smartindent
+set bs=2             " backspace
 
 " tab key in visual mode
 vmap <tab> >gv
@@ -213,15 +220,6 @@ set noswapfile        " don't create swap file
 set history=50        " keep 50 lines of command line history
 set incsearch         " do incremental searching
 
-let MRU_File = "/home/bohoomil/.vim/vim_mru_files"
-let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
-let MRU_Max_Entries = 20
-let MRU_Max_Menu_Entries = 4
-
-map <C-f> :FufFile /home/bohoomil/<CR>
-
-set tags+=ftags
-
 
 "      "
 " misc "
@@ -229,55 +227,12 @@ set tags+=ftags
 " allows writing to files with root priviledges
 cmap w!! w !sudo tee % > /dev/null
 
-let tumblr_email = ''
-let tumblr_password = ''
-let tumblr_tumblelog = ''
-
-
-"                        "
-" gvim specific settings "
-"                        "
-if has ("gui_running")
-    " only initialize window size if it has not been initialized yet
-	if !exists ("s:my_windowInitialized_variable")
-		let s:my_windowInitialized_variable=1
-
-	" feel free to :set background=light for a different style
-	set background=dark
-	colorscheme darkcourses
-
-	set guifont=Envy\ Code\ R\ 10.5
-
-	" geometry
-	set lines=70 columns=120
-
-	set winaltkeys=no
-
-    " menubar / toolbar on / off
-    map <silent> <F2> :if &guioptions =~# 'T' <Bar>
-	\set guioptions-=T <Bar>
-	\set guioptions-=m <bar>
-	\else <Bar>
-	\set guioptions+=T <Bar>
-	\set guioptions+=m <Bar>
-	\endif<CR>
-	
-    " remove scrollbars in gVim
-	set guioptions+=LlRrb
-	set guioptions-=LlRrb
-	
-    " turn off toolbar
-    set guioptions+=T
-	set guioptions-=T
-
-	" toolbar -- exclusions
-	aunmenu ToolBar.Make
-	aunmenu ToolBar.RunCtags
-	aunmenu ToolBar.SaveSesn
-	aunmenu ToolBar.LoadSesn
-	aunmenu ToolBar.SaveAll
-	aunmenu ToolBar.FindHelp
-
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+	if !exists("*synstack")
+		return
 	endif
-endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
