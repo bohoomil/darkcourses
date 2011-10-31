@@ -31,9 +31,6 @@ alias hist="grep '$1' /home/bohoomil/.config/zsh/zsh_history"
 alias irssi="irssi -c irc.freenode.net -n yyz"
 alias mem="free -m"
 #alias xterm='xterm -geometry 120x50 -e /bin/bash'
-#alias grep='grep --color=auto'
-#alias fgrep='fgrep --color=auto'
-#alias egrep='egrep --color=auto'
 alias xdvi='LC_ALL=C xdvi'
 alias IP='$HOME/bin/iploc.sh'
 alias mplayer='mplayer -noass'
