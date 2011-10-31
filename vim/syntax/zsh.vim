@@ -33,7 +33,7 @@ if !exists("b:is_kornshell") && !exists("b:is_zsh")
       unlet b:is_sh
     endif
   elseif exists("g:is_zsh")
-    let b:is_bash= 1
+    let b:is_zsh= 1
     if exists("b:is_sh")
       unlet b:is_sh
     endif
@@ -71,7 +71,7 @@ syn cluster shErrorList	contains=shDoError,shIfError,shInError,shCaseError,shEsa
 if exists("b:is_kornshell")
  syn cluster ErrorList add=shDTestError
 endif
-syn cluster shArithParenList	contains=shArithmetic,shCaseEsac,shDeref,shDerefSimple,shEcho,shEscape,shNumber,shOperator,shPosnParm,shExSingleQuote,shExDoubleQuote,shRedir,shSingleQuote,shDoubleQuote,shStatement,shVariable,shAlias,shTest,shCtrlSeq,shSpecial,shParen,zshSpecialVariables,zshStatement
+syn cluster shArithParenList	contains=shArithmetic,shCaseEsac,shDeref,shDerefSimple,shEcho,shEscape,shNumber,shOperator,shPosnParm,shExSingleQuote,shExDoubleQuote,shRedir,shSingleQuote,shDoubleQuote,shStatement,shVariable,shAlias,shTest,shCtrlSeq,shSpecial,shParen,bashSpecialVariables,bashStatement,zshStatement,zshSoecialVariables
 syn cluster shArithList	contains=@shArithParenList,shParenError
 syn cluster shCaseEsacList	contains=shCaseStart,shCase,shCaseBar,shCaseIn,shComment,shDeref,shDerefSimple,shCaseCommandSub,shCaseExSingleQuote,shCaseSingleQuote,shCaseDoubleQuote,shCtrlSeq,@shErrorList,shStringSpecial,shCaseRange
 syn cluster shCaseList	contains=@shCommandSubList,shCaseEsac,shColon,shCommandSub,shCommandSub,shComment,shDo,shEcho,shExpr,shFor,shHereDoc,shIf,shRedir,shSetList,shSource,shStatement,shVariable,shCtrlSeq
@@ -207,7 +207,7 @@ if (g:sh_fold_enabled % (s:sh_fold_ifdofor * 2))/s:sh_fold_ifdofor
  syn region  shCaseEsac	fold matchgroup=shConditional start="\<case\>" end="\<esac\>"	contains=@shCaseEsacList
 else
  syn region  shCase	contained skipwhite skipnl matchgroup=shSnglCase start="\%(\\.\|[^#$()'" \t]\)\{-}\zs)"  end=";;" end="esac"me=s-1 contains=@shCaseList nextgroup=shCaseStart,shCase,shComment
- syn region  shCaseEsac	matchgroup=shConditional start="\<case\>" end="\<esac\>"	contains=@shCaseEsacList
+ syn region  shCaseEsac	matchgroup=shRepeat start="\<case\>" end="\<esac\>"	contains=@shCaseEsacList
 endif
 syn keyword shCaseIn	contained skipwhite skipnl in			nextgroup=shCase,shCaseStart,shCaseBar,shComment,shCaseExSingleQuote,shCaseSingleQuote,shCaseDoubleQuote
 if exists("b:is_zsh")
@@ -240,12 +240,13 @@ else
  syn region shCommandSub matchgroup=Error start="\$(" end=")" contains=@shCommandSubList
 endif
 
-if exists("b:is_zsh")
- syn cluster shCommandSubList add=zshSpecialVariables,zshStatement
- syn cluster shCaseList add=zshAdminStatement,zshStatement
- syn keyword zshSpecialVariables contained BASH BASH_ENV BASH_VERSINFO BASH_VERSION CDPATH DIRSTACK EUID FCEDIT FIGNORE GLOBIGNORE GROUPS HISTCMD HISTCONTROL HISTFILE HISTFILESIZE HISTIGNORE HISTSIZE HOME HOSTFILE HOSTNAME HOSTTYPE IFS IGNOREEOF INPUTRC LANG LC_ALL LC_COLLATE LC_MESSAGES LINENO MACHTYPE MAIL MAILCHECK MAILPATH OLDPWD OPTARG OPTERR OPTIND OSTYPE PATH PIPESTATUS PPID PROMPT_COMMAND PS1 PS2 PS3 PS4 PWD RANDOM REPLY SECONDS SHELLOPTS SHLVL TIMEFORMAT TIMEOUT UID auto_resume histchars
- syn keyword zshStatement chmod clear complete du egrep expr fgrep find gnufind gnugrep grep install less ls mkdir mv rm rmdir rpm sed sleep sort strip tail touch
- syn keyword zshAdminStatement daemon killall killproc nice reload restart start status stop
+if exists("b:is_bash")
+ syn cluster shCommandSubList add=bashSpecialVariables,bashStatement
+ syn cluster shCaseList add=bashAdminStatement,bashStatement
+ syn keyword bashSpecialVariables contained BASH BASH_ENV BASH_VERSINFO BASH_VERSION CDPATH DIRSTACK EUID FCEDIT FIGNORE GLOBIGNORE GROUPS HISTCMD HISTCONTROL HISTFILE HISTFILESIZE HISTIGNORE HISTSIZE HOME HOSTFILE HOSTNAME HOSTTYPE IFS IGNOREEOF INPUTRC LANG LC_ALL LC_COLLATE LC_MESSAGES LINENO MACHTYPE MAIL MAILCHECK MAILPATH OLDPWD OPTARG OPTERR OPTIND OSTYPE PATH PIPESTATUS PPID PROMPT_COMMAND PS1 PS2 PS3 PS4 PWD RANDOM REPLY SECONDS SHELLOPTS SHLVL TIMEFORMAT TIMEOUT UID auto_resume histchars
+ syn keyword bashStatement chmod clear complete du egrep expr fgrep find gnufind gnugrep grep install less ls mkdir mv rm rmdir rpm sed sleep sort strip tail touch
+ syn keyword bashAdminStatement daemon killall killproc nice reload restart start status stop
+syn match   shPreProc          '^\%1l#\%(!\|compdef\|autoload\).*$'
 endif
 
 if exists("b:is_kornshell")
@@ -263,7 +264,7 @@ syn region  shColon	start="^\s*\zs:" end="$" end="\s#"me=e-2
 " String And Character Constants: {{{1
 "================================
 syn match   shNumber	"-\=\<\d\+\>#\="
-syn match   shCtrlSeq	"\\\d\d\d\|\\[abcfnrtv0]"		contained
+syn match   shCtrlSeq	"\\\d\d\d\|\\[abcefnrtv0]"		contained
 if exists("b:is_zsh")
  syn match   shSpecial	"\\\o\o\o\|\\x\x\x\|\\c[^"]\|\\[abefnrtv]"	contained
 endif
@@ -314,6 +315,8 @@ elseif (g:sh_fold_enabled % (s:sh_fold_heredoc * 2))/s:sh_fold_heredoc
  syn region shHereDoc matchgroup=shRedir fold start="<<-\s*\\\_$\_s*\"\z(\S*\)\""	matchgroup=shRedir end="^\s*\z1\s*$"
  syn region shHereDoc matchgroup=shRedir fold start="<<\s*\\\_$\_s*'\z(\S*\)'"		matchgroup=shRedir end="^\z1\s*$"
  syn region shHereDoc matchgroup=shRedir fold start="<<\\\z(\S*\)"		matchgroup=shRedir end="^\z1\s*$"
+ syn region shHereDoc matchgroup=shRedir start="<<\s*\**EOF\**"	matchgroup=shRedir	end="^EOF$"	contains=@shDblQuoteList
+ syn region shHereDoc matchgroup=shRedir start="<<-\s*\**EOF\**" matchgroup=shRedir	end="^\s*EOF$"	contains=@shDblQuoteList
 
 else
  syn region shHereDoc matchgroup=shRedir start="<<\s*\\\=\z(\S*\)"	matchgroup=shRedir end="^\z1\s*$"    contains=@shDblQuoteList
@@ -329,6 +332,8 @@ else
  syn region shHereDoc matchgroup=shRedir start="<<\s*\\\_$\_s*\"\z(\S*\)\""	matchgroup=shRedir end="^\z1\s*$"
  syn region shHereDoc matchgroup=shRedir start="<<-\s*\\\_$\_s*\"\z(\S*\)\""	matchgroup=shRedir end="^\s*\z1\s*$"
  syn region shHereDoc matchgroup=shRedir start="<<\\\z(\S*\)"		matchgroup=shRedir end="^\z1\s*$"
+ syn region shHereDoc matchgroup=shRedir start="<<\s*\**EOF\**"	matchgroup=shRedir	end="^EOF$"	contains=@shDblQuoteList
+ syn region shHereDoc matchgroup=shRedir start="<<-\s*\**EOF\**" matchgroup=shRedir	end="^\s*EOF$"	contains=@shDblQuoteList
 endif
 
 " Here Strings: {{{1
@@ -410,6 +415,10 @@ syn region  shDerefVarArray   contained	matchgroup=shDeref start="\[" end="]"	co
 "    ksh bash : ${parameter##pattern} remove large left  pattern
 "    ksh bash : ${parameter%pattern}  remove small right pattern
 "    ksh bash : ${parameter%%pattern} remove large right pattern
+"    ksh bash : ${parameter^pattern}  Case modification
+"    ksh bash : ${parameter^^pattern} Case modification
+"    ksh bash : ${parameter,pattern}  Case modification
+"    ksh bash : ${parameter,,pattern} Case modification
 syn cluster shDerefPatternList	contains=shDerefPattern,shDerefString
 syn match shDerefOpError	contained	":[[:punct:]]"
 syn match  shDerefOp	contained	":\=[-=?]"	nextgroup=@shDerefPatternList
@@ -417,6 +426,8 @@ syn match  shDerefOp	contained	":\=+"	nextgroup=@shDerefPatternList
 if exists("b:is_zsh") || exists("b:is_kornshell")
  syn match  shDerefOp	contained	"#\{1,2}"	nextgroup=@shDerefPatternList
  syn match  shDerefOp	contained	"%\{1,2}"	nextgroup=@shDerefPatternList
+ syn match  shDerefOp	contained	"\^\{1,2}"	nextgroup=@shDerefPatternList
+ syn match  shDerefOp	contained	",\{1,2}"	nextgroup=@shDerefPatternList
  syn match  shDerefPattern	contained	"[^{}]\+"	contains=shDeref,shDerefSimple,shDerefPattern,shDerefString,shCommandSub,shDerefEscape nextgroup=shDerefPattern
  syn region shDerefPattern	contained	start="{" end="}"	contains=shDeref,shDerefSimple,shDerefString,shCommandSub nextgroup=shDerefPattern
  syn match  shDerefEscape	contained	'\%(\\\\\)*\\.'
@@ -443,9 +454,9 @@ syn region shParen matchgroup=shArithRegion start='(\ze[^(]' end=')' contains=@s
 
 " Useful sh Keywords: {{{1
 " ===================
-syn keyword shStatement alias bindkey break cd chdir continue eval exec exit kill newgrp pwd read readonly return setopt unsetopt zmodload zstyle autoload compinit hift test trap ulimit umask wait
+syn keyword shStatement alias bindkey break cd chdir continue eval exec exit kill newgrp pwd read readonly return setopt unsetopt zmodload zstyle autoload compinit hift test trap ulimit umask wait local shift history sort grep ls rm sed clear source sleep
 syn keyword shConditional contained elif else then
-syn keyword shCondError elif else then source
+syn keyword shCondError elif else then
 
 " Useful ksh Keywords: {{{1
 " ====================
