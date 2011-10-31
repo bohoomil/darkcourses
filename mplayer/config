@@ -1,0 +1,55 @@
+# MPlayer preferences
+# -------------------
+
+[default]
+# general prefs
+#really-quiet=1           # silence console output
+ontop=1                  # always keep mplayer on top
+
+# Disable screensaver.
+#heartbeat-cmd="xscreensaver-command -deactivate >&- 2>&- &"
+stop-xscreensaver=1
+
+#geometry=50%:50%         # position window (50%:50%: center of screen)
+
+# sets postprocessing into overdrive using all 
+# possible spare cpu cycles to make the movie look better
+autoq=100
+vf=pp=de,hqdn3d
+
+# audio prefs
+#volstep=5                # step size of mixer volume changes in %
+ao=alsa                  # audio out
+
+# video prefs
+vo=xv                    # video out method
+zoom=yes                 # sofware scaling
+sid=0                    # subtitle set
+double=yes               # double buffering (recommended for subtitles)
+monitoraspect=16:9       # 16:9 or or 4:3 
+framedrop=1              # for slower machines
+hardframedrop=0          # toggle hard frame drop
+cache=5000               # cache size
+#cache-min=4              # fill 4% of cache before playback
+
+# subtitle prefs
+#osdlevel=3               # start with all osd elements enabled (time/remaining)
+subpos=90                # by default subtitles are too low (100 is lowest)
+subalign=2               # alignment (2 is bottom)
+sub-fuzziness=1          # find subtitle files (1: load all subs containing movie name)
+slang=en,eng,english     # language priorities (format varies by standard)
+unicode=yes              # subtitle file encoding
+utf8=yes                 # subtitle file encoding
+spuaa=4                  # vobsub antialias subs (4: best and slowest)
+spualign=-1              # vobsub align subs. (-1: as they want to align themselves)
+ffactor=1                # sub outline size (1: narrow black outline)
+subfont-blur=1           # font blur radius. (default: 2)
+subfont-outline=2        # font outline thickness. (default: 2)
+subfont-text-scale=3     # ttf scaling autoscale coefficient. (default: 5)
+subfont-osd-scale=2.7    # osd autoscale coefficient. (default: 6)
+subfont-encoding=unicode # font encoding
+
+# provide colorized terminal output
+msgmodule=1
+msgcolor=1
+
