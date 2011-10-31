@@ -1,1 +1,0 @@
-modules=( 'vboxdrv' 'vboxnetadp' 'vboxnetflt' )
