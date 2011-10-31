@@ -1,0 +1,1456 @@
+#!/bin/zsh
+
+# zomg: ZOMG
+#   Copyright (C) 2005, 2006, 2007, 2008, 2009  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+ZOMG_VERSION="0.5.13"
+zomgconfdir=~/.config/zomg
+zomgdatadir=~/.config/zomg
+
+typeset -A sessionid submit npurl submiturl
+
+cat <<EOF;
+zomg version ${ZOMG_VERSION}, Copyright (C) 2005, 2006, 2007, 2008, 2009  Clint Adams
+zomg comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+EOF
+
+emulate -R zsh
+
+zmodload -i zsh/zselect || exit 244
+zmodload -i zsh/datetime || exit 245
+zmodload -i zsh/parameter || exit 246
+autoload -Uz is-at-least
+if ! is-at-least 4.3.4; then
+   print "Your copy of zsh is ancient.  Upgrade."
+   exit 1
+fi
+(( $#commands[wget] )) || { print "wget is now required for both radio and submission" ; exit 1; }
+
+setopt extendedglob nonomatch nonotify
+
+TCP_SILENT=yes
+TCP_PROMPT=
+ctrlc=0
+
+skippy()
+{
+  (( ctrlc++ ))
+  if (( ctrlc > 1 ))
+  then
+    exit 0
+  fi
+}
+
+zomg_scriptname=$0
+
+#include screenoutput functions
+# screenoutput: ZOMG screen output functions
+#   Copyright (C) 2008, 2009  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+zomgcurses_drawwindows() {
+  # This should be more dynamic; tw probably only needs to be this long
+  # if the window is narrow.
+  zcurses addwin tw 11 $(( COLUMNS )) 0 0
+  zcurses border tw
+  zcurses move tw 1 1
+  zcurses attr tw green/black
+  zcurses refresh tw
+  zcurses addwin mw 3 $(( COLUMNS )) 11 0
+  zcurses border mw
+  zcurses move mw 1 1
+  zcurses attr mw cyan/black
+  zcurses refresh mw
+  zcurses addwin bw $(( LINES - 14 )) $(( COLUMNS )) 14 0
+  zcurses border bw
+  zcurses move bw 1 1
+  zcurses refresh bw
+}
+
+zomgcurses_init() {
+  if (( COLUMNS < 40 )) || (( LINES < 20 )); then
+    print "Your screen is too small for the curses interface."
+    return 1
+  fi
+  zcurses init || return 1
+  wehavecurses=1
+
+  zomgcurses_drawwindows
+  trap 'zcurses refresh' WINCH
+}
+
+writetowindow() {
+# check for right number of args
+#
+local win="$1"
+local str="$2"
+local frag mark
+
+zcurses position $win winloc
+# y x cornery cornerx sizey sizex
+
+if (( $winloc[2] + $#str < $winloc[6] )); then
+  if (( $winloc[1] + 3 > $winloc[5] )); then
+    zcurses scroll $win -1
+    zcurses scroll $win 3
+    zcurses border $win
+    zcurses move $win $(( $winloc[1] - 2 )) 1
+  fi
+  zcurses string $win "$str"
+  zcurses position $win winloc
+  zcurses move $win $(( $winloc[1] + 1 )) 1
+  zcurses refresh $win
+else
+  mark=${${str[1,$winloc[6]]}[(I) ]}
+  if (( $mark < 1 )) || (( $mark > $winloc[6] - 2 )); then
+    (( mark = $winloc[6] - 2 ))
+  fi
+  frag=$str[1,$mark]
+  str=$str[$mark+1,-1]
+  writetowindow $win "${frag}"
+  writetowindow $win "${str}"
+fi
+}
+
+status_msg() {
+  if (( wehavecurses == 1 )); then
+    writetowindow bw "$1"
+    zcurses refresh bw
+  else
+    print "$1"
+  fi
+}
+
+play_msg() {
+  if (( wehavecurses == 1 )); then
+    writetowindow tw "$1"
+    zcurses refresh tw
+  else
+    print "$1"
+  fi
+}
+
+current_msg() {
+  if (( wehavecurses == 1 )); then
+    writetowindow mw "$1"
+    zcurses refresh mw
+  else
+    print "Station: $1"
+  fi
+}
+
+time_status_msg() {
+  status_msg "$(strftime "[%H:%M]" $EPOCHSECONDS) $1"
+}
+
+log_msg() {
+  print -r  -- "$(strftime "[%H:%M:%S]" $EPOCHSECONDS) $1" >>$zomgdatadir/log
+}
+
+scrollclear() {
+  case "$1" in
+    (tw)
+      zcurses scroll tw 11 && zcurses move tw 1 1 && zcurses border tw
+      ;;
+    (mw)
+      zcurses scroll mw 3 && zcurses move mw 1 1 && zcurses border mw
+      ;;
+    (*)
+      zcurses scroll $i 20 && zcurses move $i 1 1 && zcurses border $i
+      ;;
+  esac
+}
+
+truncate_log_new() {
+  zmodload -F zsh/stat b:zstat
+  if [[ $(zstat +size $zomgdatadir/log) -gt 100000 ]]; then
+    tail -n 1000 $zomgdatadir/log >$zomgdatadir/log.tmp
+    mv $zomgdatadir/log.tmp $zomgdatadir/log
+  fi
+}
+
+truncate_log_ancient() {
+    tail -n 1000 $zomgdatadir/log >$zomgdatadir/log.tmp
+    mv $zomgdatadir/log.tmp $zomgdatadir/log
+}
+
+autoload -Uz is-at-least
+if is-at-least 4.3.9; then
+  truncate_log() { truncate_log_new "$@"; };
+else
+  truncate_log() { truncate_log_ancient "$@"; };
+fi
+
+
+#include audioscrobbler functions
+# audioscrobbler: ZOMG audioscrobbler functions
+#   Copyright (C) 2005, 2006, 2007, 2008, 2009  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+audioscrobbler_handshake() {
+  local site="$1"
+  local username="$2"
+  local password="$3"
+  local -a response
+  local ret local xferencoding tstamp authtoken
+
+  log_msg "Connecting to $handshake_host[$site] for handshaking.."
+  tstamp=$(export TZ=UTC; print ${EPOCHSECONDS})
+  local pwsum="$(print -n "${password}" | md5sum | awk '{print $1}')${tstamp}"
+  authtoken="$(print -n "${pwsum}" | md5sum | awk '{print $1}')"
+  log_msg "Sending GET /?hs=true&p=1.2&c=zom&v=0.1&u=$(audioscrobbler_urlencode ${username})&t=${tstamp}&a=${authtoken} HTTP/1.1" 2>/dev/null
+
+  ret="$(wget -q -O - --header 'Accept-Charset: utf-8' http://$handshake_host[$site]/\?hs=true\&p=1.2\&c=zom\&v=0.1\&u=$(audioscrobbler_urlencode ${username})\&t=${tstamp}\&a=${authtoken})"
+  response=(${(f)ret})
+
+  local rstatus=${response[1]}
+  case "$rstatus" in
+    (OK)
+    sessionid[$site]="${response[2]/(#e)/}"
+    npurl[$site]="$response[3]"
+    submiturl[$site]="$response[4]"
+    ;;
+    (BANNED)
+    status_msg "Client is banned.  Try getting a newer version at http://zomg.alioth.debian.org/"
+    exit 1
+    ;;
+    (BADAUTH)
+    status_msg "Bad authentication.  Check your credentials in $zomgconfdir/conf"
+    exit 1
+    ;;
+    (BADTIME)
+    status_msg "Time mismatch.  Check your system clock."
+    exit 1
+    ;;
+    (FAILED *)
+    status_msg "FAILURE."
+
+    status_msg $rstatus
+    return 1
+    ;;
+    (*)
+    status_msg "$rstatus what the fuck"
+    print '{{{'
+    print -l ${response}
+    print '}}}'
+    return 1
+
+    ;;
+  esac
+
+  as_cache_credentials "$site" "$username" "$sessionid[$site]" "$npurl[$site]" "$submiturl[$site]"
+}
+
+as_cache_credentials() {
+  status_msg "Caching credentials for $2 @ $1..."
+  cat >$zomgdatadir/ascreds.${1}.${2} <<EOF
+sessionid[$1]="${3}"
+npurl[$1]="${4}"
+submiturl[$1]="${5}"
+EOF
+
+}
+
+as_validate_handshake() {
+  local credfile
+  credfile=( $zomgdatadir/ascreds.${1}.${2}(Nmm-30) )
+  if [[ -f $zomgdatadir/ascreds."$1"."$2" ]] && [[ -n $credfile ]];
+  then
+    status_msg "Refreshing credentials for $2 @ $1..."
+  else
+    status_msg "Handshaking for $2 @ $1..."
+    audioscrobbler_handshake "$@" || return 1
+  fi
+
+  source $zomgdatadir/ascreds."${1}.${2}"
+  return 0
+}
+
+as_invalidate_handshake() {
+  status_msg "Invalidating credentials for $2 @ $1."
+  rm -f $zomgdatadir/ascreds."${1}.${2}"
+}
+
+audioscrobbler_urlencode() {
+  if (( $+options[multibyte] )); then
+    setopt localoptions extendedglob nomultibyte
+  else
+    setopt localoptions extendedglob
+  fi
+
+  input=( ${(s::)1} )
+  print -- ${(j::)input//(#b)([^A-Za-z0-9_.!*\'\(\)-])/%$(([##16]#match))}
+}
+
+audioscrobbler_constructauthtoken() {
+  local password=$1
+  local cr="$(print -n "${password}" | md5sum | awk '{print $1}')${challenge}"
+  local challengeresponse="$(print -n "${cr}" | md5sum | awk '{print $1}')"
+
+  print $challengeresponse
+}
+
+audioscrobbler_construct_np_query() {
+  local username=$(audioscrobbler_urlencode "$1") #unused
+  local sid="$2"
+  local artist=$(audioscrobbler_urlencode "$3")
+  local track=$(audioscrobbler_urlencode "$4")
+  local album=$(audioscrobbler_urlencode "$5")
+  local mbid=$(audioscrobbler_urlencode "$6")
+  local length=$(audioscrobbler_urlencode "$7")
+  local ttime=$(audioscrobbler_urlencode "$8") #unused
+  # need tracknum
+
+  reply=("&s=${sid}" "&a=${artist}&t=${track}&b=${album}&l=${length}&n=${tracknum}&m=${mbid}")
+}
+
+audioscrobbler_np_submit() {
+  local site="$1"
+  local poststr="$2"
+  local username="$3"
+  local conlen=$(( $#poststr + 2 ))
+  local sstatus
+
+  if (( submit[$site] == 1 ));
+  then
+
+    log_msg "connecting to np submission site ${np_submithost[$site]}:${np_submitport[$site]}"
+
+    sstatus=$(wget -q -O - --header 'Accept-Charset: utf-8' --post-data=$poststr http://$np_submithost[$site]:$np_submitport[$site]/${np_submitcgi[$site]})
+
+    log_msg "Status: $sstatus"
+
+    case "$sstatus" in
+    (OK)
+    ;;
+    (BADSESSION)
+    status_msg "BADSESSION"
+    as_invalidate_handshake "$site" "$username"
+    ;;
+    (*)
+    submit[$site]=0
+    status_msg "FAILED ($sstatus)"
+    return 8
+    ;;
+    esac
+  else
+    return 9
+  fi
+}
+
+audioscrobbler_constructquery() {
+  local sid="$1"
+  local artist=$(audioscrobbler_urlencode "$2")
+  local track=$(audioscrobbler_urlencode "$3")
+  local album=$(audioscrobbler_urlencode "$4")
+  local mbid=$(audioscrobbler_urlencode "$5")
+  local length=$(audioscrobbler_urlencode "$6")
+  local ttime=$(audioscrobbler_urlencode "$7")
+  local source="$8"
+#need tracknum
+
+  reply=("&s=${sid}" "&a[0]=${artist}&t[0]=${track}&i[0]=${ttime}&o[0]=${source}&r[0]=&l[0]=${length}&b[0]=${album}&n[0]=${tracknum}&m[0]=${mbid}")
+}
+
+audioscrobbler_submit() {
+  local site="$1"
+  local poststr="$2"
+  local username="$3"
+  local conlen=$(( $#poststr + 2 ))
+  local -a response
+  local ret sstatus
+
+  if (( submit[$site] == 1 ));
+  then
+
+    log_msg "connecting to submission site ${submithost[$site]}:${submitport[$site]}"
+
+    ret="$(wget -q -O - --header 'Accept-Charset: utf-8' --post-data=$poststr http://$submithost[$site]:$submitport[$site]/${submitcgi[$site]})"
+    response=(${(f)ret})
+    sstatus=${response[1]}
+# INTERVAL might be under this
+
+    log_msg "Status: $sstatus"
+    case "$sstatus" in
+	(OK) ;;
+	(BADSESSION)
+          status_msg "BADSESSION"
+          as_invalidate_handshake "$site" "$username"
+	  return 8
+         ;;
+        (*)
+      submit[$site]=0
+      status_msg "FAILED ($sstatus)"
+      as_invalidate_handshake "$site" "$username"
+      return 9
+        ;;
+     esac
+  else
+    return 10
+  fi
+ }
+
+
+#include caching functions
+# caching: ZOMG audioscrobbler cache functions
+#   Copyright (C) 2005, 2006, 2007, 2008, 2009  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+audioscrobbler_cache() {
+  local site="$1"
+  local poststr="$2"
+  local LOCK
+
+  status_msg "Caching submission for $site."
+  log_msg "Caching to $site $poststr"
+  lockfile-create $zomgdatadir/cache.$site
+  lockfile-touch $zomgdatadir/cache.$site &
+  LOCK="$!"
+  print -r "${poststr}" >> $zomgdatadir/cache.$site
+  kill "${LOCK}"
+  lockfile-remove $zomgdatadir/cache.$site
+}
+
+audioscrobbler_flushcache() {
+  local site="$1"
+  local username="$2" #unused
+  local sid="$3"
+  local i=0
+  local query LOCK
+  local authinfo="&s=${sid}"
+
+  submit[$site]=1
+
+  lockfile-create $zomgdatadir/cache.$site
+  lockfile-touch $zomgdatadir/cache.$site &
+  LOCK="$!"
+
+  while read line
+  do
+    query+=${line//\[0\]/[$i]}
+    if (( i==49 ));
+    then
+      if audioscrobbler_submit $site "$authinfo$query" "$username"; then
+        : here, purge successful submissions
+      else
+        kill "${LOCK}"
+        lockfile-remove $zomgdatadir/cache.$site
+
+        return 1
+      fi
+      query=""
+      i=0
+    else
+      (( i++ ))
+    fi
+  done < $zomgdatadir/cache.$site
+
+  kill "${LOCK}"
+  lockfile-remove $zomgdatadir/cache.$site
+
+  (( i == 0 )) ||	{ audioscrobbler_submit $site "$authinfo$query" "$username" || return 1 }
+  return
+}
+
+
+#include urlparse functions
+# urlparse: ZOMG functions for parsing URLs returned by last.fm
+#   Copyright (C) 2005, 2006, 2007, 2009  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+typeset -A submithost submitport submitcgi np_submithost np_submitport np_submitcgi
+
+parse_submiturl() {
+  local site="$1"
+
+  if [[ "$submiturl[$site]" == http://(#b)(*):(*)/(*) ]];
+  then
+    submithost[$site]=$match[1]
+    submitport[$site]=$match[2]
+    submitcgi[$site]=$match[3]
+  elif [[ "$submiturl[$site]" == http://(#b)([^/]##)/(*) ]];
+  then
+    submithost[$site]=$match[1]
+    submitport[$site]=80
+    submitcgi[$site]=$match[2]
+  else
+    status_msg "Error parsing submission URL."
+    sleep 1
+    exit 1
+  fi
+}
+
+parse_np_submiturl() {
+  local site="$1"
+
+  if [[ "$npurl[$site]" == http://(#b)(*):(*)/(*) ]];
+  then
+    np_submithost[$site]=$match[1]
+    np_submitport[$site]=$match[2]
+    np_submitcgi[$site]=$match[3]
+  elif [[ "$npurl[$site]" == http://(#b)([^/]##)/(*) ]];
+    np_submithost[$site]=$match[1]
+    np_submitport[$site]=80
+    np_submitcgi[$site]=$match[2]
+  then
+  else
+    status_msg "Error parsing nowplaying URL."
+    sleep 1
+    exit 1
+  fi
+}
+
+
+#include parsemedium functions
+# parsemedium: ZOMG functions for parsing media files
+#   Copyright (C) 2005, 2006, 2007  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+parse_ogginfo() {
+  local output album artist mbid title len tstamp
+
+  output=(${(f)"$(ogginfo $1)"})
+
+  album=${${(M)output:#(#i)*ALBUM=*}#(#i)*ALBUM=}
+  artist=${${(M)output:#(#i)*ARTIST=*}#(#i)*ARTIST=}
+  mbid=${${(M)output:#(#i)*MUSICBRAINZ_TRACKID=*}#(#i)*MUSICBRAINZ_TRACKID=}
+  title=${${(M)output:#(#i)*TITLE=*}#(#i)*TITLE=}
+  len=${${(M)output:#*Playback length:*}#*Playback length: }
+
+  if [[ "$len" == (#b)([0-9]##)m:([0-9.]##)s ]]
+  then
+    (( len = $match[1] * 60 + $match[2] + 1 ))
+  else
+    (( len = 0 ))
+  fi
+
+  typeset -i len
+  tstamp=$(export TZ=UTC; strftime "%Y-%m-%d %H:%M:%S" ${EPOCHSECONDS})
+  reply=("${artist}" "${title}" "${album}" "${mbid}" "${len}")
+}
+
+parse_zomghelper() {
+  local output album artist mbid title len tstamp
+
+  output=(${(f)"$(zomghelper $1)"})
+
+  album=${${(M)output:#(#i)ALBUM=*}#(#i)ALBUM=}
+  artist=${${(M)output:#(#i)ARTIST=*}#(#i)ARTIST=}
+  mbid=${${(M)output:#(#i)MUSICBRAINZ_TRACKID=*}#(#i)MUSICBRAINZ_TRACKID=}
+  title=${${(M)output:#(#i)TITLE=*}#(#i)TITLE=}
+  len=${${(M)output:#ZOMGSECS:*}#ZOMGSECS: }
+
+  typeset -i len
+  tstamp=$(export TZ=UTC; strftime "%Y-%m-%d %H:%M:%S" ${EPOCHSECONDS})
+  reply=("${artist}" "${title}" "${album}" "${mbid}" "${len}")
+}
+
+parse_eyeD3() {
+  local output album artist mbid title len tstamp
+
+  output=(${(f)"$(eyeD3 --no-color $1)"})
+
+  album=${${${(M)output:#album: *}#album: }%%	*}
+  artist=${${(M)output:#*	artist: *}#*	artist: }
+  mbid=${${(M)output:#Unique File ID: \[http://musicbrainz.org\] *}#Unique File ID: \[http://musicbrainz.org\] }
+  title=${${${(M)output:#title: *}#title: }%%	*}
+  len=${${(M)output:#Time: *}#Time: }
+
+  if [[ "$len" == (#b)([0-9]##):([0-9]##):([0-9]##)[^0-9]* ]]
+  then
+    (( len = $match[1] * 3600 + $match[2] * 60 + $match[3] + 1 ))
+  elif [[ "$len" == (#b)([0-9]##):([0-9]##)[^0-9]* ]]
+  then
+    (( len = $match[1] * 60 + $match[2] + 1 ))
+  else
+    (( len = 0 ))
+  fi
+
+  typeset -i len
+  tstamp=$(export TZ=UTC; strftime "%Y-%m-%d %H:%M:%S" ${EPOCHSECONDS})
+  reply=("${artist}" "${title}" "${album}" "${mbid}" "${len:-0}")
+}
+
+parse_mutagen() {
+  local output album artist mbid title len tstamp
+
+  output=(${(f)"$(mutagen-inspect --no-apev2 --no-flac $1)"})
+
+  album=${${(M)output:#TALB=*}#TALB=}
+  artist=${${(M)output:#TPE1=*}#TPE1=}
+  mbid=${${(M)output:#UFID=http://musicbrainz.org=*}#UFID=http://musicbrainz.org=}
+  title=${${(M)output:#TIT2=*}#TIT2=}
+  len=${${(M)output:#- MPEG*seconds*}/- MPEG*(#b) ([0-9.]##) seconds*/$match[1]}
+
+  typeset -i len
+  tstamp=$(export TZ=UTC; strftime "%Y-%m-%d %H:%M:%S" ${EPOCHSECONDS})
+  reply=("${artist}" "${title}" "${album}" "${mbid}" "${len:-0}")
+
+  [[ "${len}" -eq 0 ]] && return 1 || return 0
+}
+
+parse_mutagenflac() {
+  local output album artist mbid title len tstamp
+
+  output=(${(f)"$(mutagen-inspect --no-apev2 --no-mp3 $1)"})
+  album=${${(M)output:#album=*}#album=}
+  artist=${${(M)output:#artist=*}#artist=}
+  mbid=${${(M)output:#musicbrainz_trackid=*}#musicbrainz_trackid=}
+  title=${${(M)output:#title=*}#title=}
+  len=${${(M)output:#- FLAC,*seconds*Hz*}/- FLAC,(#b) ([0-9.]##) seconds*/$match[1]}
+
+  typeset -i len
+  tstamp=$(export TZ=UTC; strftime "%Y-%m-%d %H:%M:%S" ${EPOCHSECONDS})
+  reply=("${artist}" "${title}" "${album}" "${mbid}" "${len}")
+}
+
+
+#include shuffle functions
+# shuffle: ZOMG functions for shuffling tracks
+#   Copyright (C) 2005, 2006, 2007  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+zomg_shuffle() {
+  declare -A h
+  local +h -Z 5 RANDOM=$EPOCHSECONDS
+  integer i
+  for ((i=1; i <= $#; ++i)) { h[$i.$RANDOM]=$argv[i] }
+  reply=( $h )
+}
+
+
+#include lastfmradio functions
+# lastfmradio: ZOMG last.fm radio functions
+#   Copyright (C) 2005, 2006, 2007, 2008, 2009  Clint Adams
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+typeset -A radio_host
+radio_host[lastfm]=ws.audioscrobbler.com
+radio_host[librefm]=alpha.libre.fm
+
+lastfm_quit() {
+  if [[ -z "$BUFFER" ]]; then
+    BUFFER="q"
+    zle .accept-line
+  fi
+}
+
+lastfm_tune() {
+  local network="$1" lastfm_session="$2" station="$3"
+  local tunestatus
+
+  status_msg "Tuning to $station... "
+
+  tunestatus=$(wget -q --output-document=- "http://${baseurl}${basepath}/adjust.php?session=${lastfm_session}&url=${station}&debug=0")
+
+  for i in "${(f)tunestatus}"
+  do
+    status_msg "$i"
+  done
+}
+
+lastfm_radio_getplaylist() {
+  local network="$1" session="$2"
+  local i
+
+  wget -q -O $zomgdatadir/radio_playlist.xspf "http://${radio_host[$network]}/radio/xspf.php?sk=${session}&discovery=0&desktop=1.3.0.58" || return 99
+  zomghelper-xspf $zomgdatadir/radio_playlist.xspf > $zomgdatadir/radio_playlist || return 98
+
+  unset zomg_xspf_location zomg_xspf_title zomg_xspf_id zomg_xspf_album
+  unset zomg_xspf_creator zomg_xspf_duration zomg_xspf_image
+
+  for i in ${(f)"$(<$zomgdatadir/radio_playlist)"}
+  do
+    case "$i" in
+      ((#b)([^=]##)\[([0-9]##)\]=(*))
+      eval zomg_xspf_$match[1]\[$match[2]\]="${(q)match[3]}"
+      ;;
+      ((#b)([^=]##)=(*))
+      eval zomg_xspf_$match[1]="${(q)match[2]}"
+      ;;
+      (*)
+      ;;
+    esac
+  done
+
+  if [[ -z $zomg_xspf_location ]]; then
+    status_msg "Empty playlist, quitting."
+    return 99
+  fi
+
+  (( wehavecurses == 1 )) && scrollclear mw
+  current_msg "$zomg_xspf_playlist_title by $zomg_xspf_playlist_creator"
+  (( wehavecurses == 1 )) && scrollclear tw
+  for i in {1..${#zomg_xspf_location}}
+  do
+    play_msg "$i. $zomg_xspf_creator[$i] / $zomg_xspf_title[$i]"
+  done
+}
+
+lastfm_playchunk() {
+  local network="$1" lastfm_session="$2"
+  local trackkey
+
+  lastfm_radio_getplaylist "$network" "$lastfm_session" || return 99
+
+  for currenttrack in {1..${#zomg_xspf_location}}
+  do
+
+    for site in $submission_sites
+    do
+
+    audioscrobbler_construct_np_query "$username[$site]" "$sessionid[$site]" \
+     "$zomg_xspf_creator[$currenttrack]" "$zomg_xspf_title[$currenttrack]" \
+     "$zomg_xspf_album[$currenttrack]" "" \
+     ${${zomg_xspf_duration[$currenttrack]}/000(#e)/} "$EPOCHSECONDS" && \
+      audioscrobbler_np_submit "$site" ${(j::)reply} "$username[$site]"
+
+    done
+
+  time_status_msg "Now playing $zomg_xspf_creator[$currenttrack] / $zomg_xspf_title[$currenttrack] / $zomg_xspf_album[$currenttrack] / $(( $zomg_xspf_duration[$currenttrack] / 1000.0 ))"
+
+  starttime=$EPOCHSECONDS
+#  "$mp3streamer[@]" $zomg_xspf_location[$currenttrack] >/dev/null 2>&1 &
+case "$network" in
+  (librefm)
+  ogg123 -b 2048 $zomg_xspf_location[$currenttrack] 2>/dev/null
+  ;;
+  (*)
+  "$mp3streamer[@]" $zomg_xspf_location[$currenttrack] 2>/dev/null
+esac
+  endtime=$EPOCHSECONDS
+
+  skip=0
+      (( endtime - starttime <= (${${zomg_xspf_duration[$currenttrack]}/000(#e)/} / 2.0 ) )) &&
+      (( endtime - starttime < 240 )) && skip=1
+
+      (( ${${zomg_xspf_duration[$currenttrack]}/000(#e)/} < 30 )) && skip=1
+
+      if [[ $skip -eq 1 ]];
+      then
+	status_msg "SKIPPING"
+	skip=0
+      else
+
+      for site in $submission_sites
+      do
+
+	if [[ $site == $network ]]; then
+		trackkey=L"$zomg_xspf_lastfm_trackauth[$currenttrack]"
+	else
+		trackkey=P
+	fi
+
+        audioscrobbler_constructquery "$sessionid[$site]" \
+          "$zomg_xspf_creator[$currenttrack]" "$zomg_xspf_title[$currenttrack]" \
+          "$zomg_xspf_album[$currenttrack]" "" \
+          "${${zomg_xspf_duration[$currenttrack]}/000(#e)/}" "$starttime" \
+          "$trackkey" &&
+	    audioscrobbler_submit "$site" ${(j::)reply} "$username[$site]" || { submit[$site]=0; audioscrobbler_cache "$site" "$reply[2]" }
+      done
+
+      fi
+
+  if (( wehavecurses == 1 )); then
+  zcurses timeout bw 0
+  if zcurses input bw; then
+    case "$REPLY" in
+    (" ")
+      zcurses timeout bw -1
+      pause=""
+      while [[ $pause != [gqm] ]]; do
+        status_msg "Paused. Press 'g' to resume playlist or 'q' to quit or 'm' to get a menu."
+        zcurses input bw pause
+      done
+	case "$pause" in
+	(q) zcurses end ; exit 0 ;;
+	(m) return 1 ;;
+	esac
+      status_msg "Unpausing..."
+      ;;
+    (*)
+      status_msg "I don't know what '$REPLY' means in this context."
+    ;;
+    esac
+  fi
+
+  fi
+
+  done
+  return 0
+}
+
+lastfm_playloop() {
+  while lastfm_playchunk "$@"
+  do
+    status_msg "Fetching new playlist data."
+  done
+}
+
+lastfm_radio() {
+  local station="$1"
+  local network=${${station%://*}:-lastfm}
+  local passwordmd5=${${="$(print -n $password[$network] | md5sum)"}[1]}
+  local -a handshake
+  local lastfm_session streamurl radiocmd streamstate
+  local baseurl basepath
+
+  (( $#commands[zomghelper-xspf] )) || { print "zomghelper-xspf utility missing; we cannot play radio\n" ; exit 1; }
+  [[ ! -o interactive ]] && zmodload zsh/curses && zomgcurses_init || wehavecurses=0
+
+  if (( wehavecurses == 1 )); then
+    trap "zcurses end" EXIT || exec $SHELL -i $zomg_scriptname -r $station
+  else
+    [[ -o interactive ]] || exec $SHELL -i $zomg_scriptname -r $station
+  fi
+
+  # we do this when we're not interactive so that the player will skip but
+  # zomg will not end
+  trap "status_msg 'Skip song... to get a menu, hit space and wait for a track to finish.'" INT
+
+  status_msg "Connecting to Last.fm radio"
+  log_msg "Radio handshake to http://${radio_host[$network]}/radio/handshake.php\?version=1.3.0.58\&platform=linux\&username=${username[$network]}\&passwordmd5=${passwordmd5}\&language=en"
+
+  handshake=( ${(f)"$(wget -q --output-document=- http://${radio_host[$network]}/radio/handshake.php\?version=1.3.0.58\&platform=linux\&username=${username[$network]}\&passwordmd5=${passwordmd5}\&language=en)"} )
+
+  lastfm_session=${${(M)handshake:#session=*}#session=}
+  streamurl=${${(M)handshake:#stream_url=*}#stream_url=}
+  baseurl=${${${(M)handshake:#base_url=*}#base_url=}:-ws.audioscrobbler.com}
+  basepath=${${${(M)handshake:#base_path=*}#base_path=}:-/radio}
+
+  if [[ -n "$lastfm_session" && "$lastfm_session" != FAILED ]]; then
+    status_msg "Connecting to Last.fm session ${lastfm_session}"
+    log_msg "Stream URL $streamurl"
+  else
+    status_msg "Handshake failed"
+    sleep 2
+    exit 47
+
+  fi
+
+  if [[ -n "$station" && "$station" == lastfm://* ]]; then
+    lastfm_tune "$network" $lastfm_session $station
+  fi
+
+  if [[ -n "$station" && "$station" == librefm://* ]]; then
+    if [[ $network == lastfm ]]; then
+      status_msg "Can't do that right now."
+    else
+      lastfm_tune "$network" $lastfm_session $station
+    fi
+  fi
+
+  if [[ -x =mpg123 ]]; then
+    mp3streamer=(mpg123 -b 2048 -q)
+  else
+    mp3streamer=(mplayer -quiet -noconsolecontrols -cache 2048 -cache-min 1)
+  fi
+
+  lastfm_playloop "$network" "$lastfm_session"
+
+  status_msg "Either type a menu command or hit 'h' to get some help."
+
+  if (( wehavecurses == 1 )); then
+
+  while true
+  do
+
+  zcurses timeout bw -1
+  zcurses input bw
+
+  case "$REPLY" in
+    (f)
+      status_msg "Rehandshaking..."
+      if as_validate_handshake "$network" $username[$network] $password[$network]; then
+        parse_submiturl "$network"
+	parse_np_submiturl "$network"
+	if [[ -s $zomgdatadir/cache ]]; then
+	  status_msg "Flushing cache for lastfm..."
+	  audioscrobbler_flushcache "$network" $username[$network] $sessionid[$network] &&
+	  { submit[$network]=1; mv $zomgdatadir/cache $zomgdatadir/cache.old ; status_msg "Flushed" } ||
+	  { submit[$network]=0; status_msg "Failed"; as_invalidate_handshake "$network" $username[$network] }
+	else
+	  status_msg "Cache is empty: nothing to flush."
+	fi
+      else
+        status_msg "Fail"
+      fi
+      ;;
+    (h)
+      status_msg 'f: flush the cache and attempt to resume "realtime" submission'
+      status_msg 'h: this help message'
+      status_msg 'p: play another playlist set (usually up to 5 songs)'
+      status_msg 'q: quit zomg'
+      status_msg '<Ctrl-L>: attempt to refresh the screen (results may be unexpected)'
+      status_msg 't: tune to another radio station'
+      ;;
+    (p)
+      status_msg "Playing another playlist set."
+      lastfm_playloop "$network" "${lastfm_session}"
+      status_msg "Type 'p' to play a few more songs or 'q' to quit."
+      ;;
+    (q)
+      zcurses end
+      exit 0
+      ;;
+    ($'\014')
+      status_msg "Refreshing screen."
+      zcurses touch tw
+      zcurses refresh tw
+      zcurses touch mw
+      zcurses refresh mw
+      zcurses touch bw
+      zcurses refresh bw
+      zcurses refresh
+      ;;
+    (t)
+      status_msg "r - recommended"
+      status_msg "u - personal station"
+      status_msg "l - loved tracks"
+      status_msg "n - neighbouuuuurs"
+      status_msg "any other key to abort"
+
+      zcurses timeout bw -1
+      zcurses input bw tune
+
+      case "$tune" in
+        (r) lastfm_tune "$network" ${lastfm_session} lastfm://user/${username[$network]}/recommended/100 ;;
+        (u) lastfm_tune "$network" ${lastfm_session} lastfm://user/${username[$network]}/personal ;;
+        (l) lastfm_tune "$network" ${lastfm_session} lastfm://user/${username[$network]}/loved ;;
+        (n) lastfm_tune "$network" ${lastfm_session} lastfm://user/${username[$network]}/neighbours ;;
+	(*) : ;;
+      esac
+      status_msg "Type 'p' to play a few more songs or 'q' to quit."
+      ;;
+    (*)
+      status_msg "I don't know what '$REPLY' is."
+      status_msg "Press h for help."
+      ;;
+  esac
+
+  done
+  
+  else
+
+  unset HISTFILE
+  HISTSIZE=512
+  SAVEHIST=512
+  setopt histignorealldups
+  history -ap $zomgdatadir/lastfm_history
+
+  zle -N lastfm_quit
+  bindkey '^D' lastfm_quit
+  autoload -U compinit
+  compinit
+  bindkey '^I' _history-complete-older
+
+  while true
+  do
+    [[ $#jobstates -eq 1 ]] && streamstate="" || streamstate="[broken] "
+
+    radiocmd=""
+    vared -hp "${streamstate}last.fm $username[$network] $timeleft> " radiocmd
+    print -s $radiocmd
+
+    case "$radiocmd" in
+      (h)
+      print "h: help"
+#      print "n: show what's playing now"
+      print "q: quit"
+#      print "s: skip"
+      print "p: play another set of songs from the same station"
+      print "t lastfm://<station> : tune to another radio station"
+      print "tu <lastfm user> : shortcut to tune to lastfm://user/<user>/personal"
+      print "tl <lastfm user> : shortcut to tune to lastfm://user/<user>/loved"
+      print "tn <lastfm user> : shortcut to tune to lastfm://user/<user>/neighbours"
+#      print "love: mark this track as loved"
+#      print "ban: ban this track"
+#      print "discovery <on/off>: turn discovery mode on or off"
+#      print "rtp: turn scrobbling on"
+#      print "nortp: turn scrobbling off"
+      ;;
+#      (n)
+#      lastfm_get_np "${lastfm_session}" 0
+#      ;;
+#      (ndebug)
+#      lastfm_get_np "${lastfm_session}" 1
+#      ;;
+      (q|exit)
+      kill %2
+      exit 0
+      ;;
+#      (s)
+#      print "Skipping... " $(wget -q --output-document=- "http://${baseurl}${basepath}/control.php?session=${lastfm_session}&command=skip&debug=0")
+#      lastfm_get_np "${lastfm_session}" 0
+#      ;;
+      (p)
+      lastfm_playloop "$network" "${lastfm_session}"
+      ;;
+      (t (#b)(lastfm://[^ ]##))
+      lastfm_tune "$network" ${lastfm_session} $match[1]
+      lastfm_playloop "$network" "${lastfm_session}"
+#      lastfm_get_np "${lastfm_session}" 0
+      ;;
+      (tu (#b)([^ ]##))
+      lastfm_tune "$network" ${lastfm_session} lastfm://user/$match[1]/personal
+      lastfm_playloop "$network" "${lastfm_session}"
+#      lastfm_get_np "${lastfm_session}" 0
+      ;;
+      (tl (#b)([^ ]##))
+      lastfm_tune "$network" ${lastfm_session} lastfm://user/$match[1]/loved
+      lastfm_playloop "$network" "${lastfm_session}"
+#      lastfm_get_np "${lastfm_session}" 0
+      ;;
+      (tn (#b)([^ ]##))
+      lastfm_tune "$network" ${lastfm_session} lastfm://user/$match[1]/neighbours
+      lastfm_playloop "$network" "${lastfm_session}"
+#      lastfm_get_np "${lastfm_session}" 0
+      ;;
+#      (love)
+#      print "Loving... " $(wget -q --output-document=- "http://${baseurl}${basepath}/control.php?session=${lastfm_session}&command=love&debug=0")
+#      ;;
+#      (ban)
+#      print "Banning... " $(wget -q --output-document=- "http://${baseurl}${basepath}/control.php?session=${lastfm_session}&command=ban&debug=0")
+#      ;;
+#      (discovery (#b)(on|off))
+#      print "Turning discovery ${match[1]}..." $(wget -q --output-document=- "http://${baseurl}${basepath}/adjust.php?session=${lastfm_session}&url=lastfm://settings/discovery/${match[1]}&debug=0")
+#      ;;
+#      ((#b)(rtp|nortp))
+#      print "Setting ${match[1]}..." $(wget -q --output-document=- "http://${baseurl}${basepath}/control.php?session=${lastfm_session}&command=${match[1]}")
+#      ;;
+      (*)
+      print "WTF?! Try 'h' for help"
+      ;;
+
+    esac
+  done
+
+  fi
+}
+
+
+if [[ ! -d $zomgconfdir ]];
+then
+  mkdir $zomgconfdir || exit 9
+fi
+
+if [[ ! -d $zomgdatadir ]];
+then
+  mkdir $zomgdatadir || exit 10
+fi
+
+truncate_log
+
+local starttime=0 endtime=0 filetype shuffle=0 dolastfmradio=0 nonet=0 totes=0
+
+skip=0
+
+[[ -d /usr/lib/zomg ]] && PATH="$PATH:/usr/lib/zomg"
+
+while getopts "nrtzh" opt; do
+  case "$opt" in
+    (z)
+    shuffle=1
+    ;;
+    (r)
+    dolastfmradio=1
+    ;;
+    (n)
+    nonet=1
+    ;;
+    (h)
+    cat <<EOF
+usage: $0 [-z] [-n] [-t] musicfile1 [musicfile2] [...musicfileN]
+       $0 -r [lastfm url]
+
+  -z    shuffle tracks
+  -n    do not make outgoing network connections
+  -t    treat arguments as directories instead of files
+
+  -r    last.fm radio mode
+EOF
+    exit 0
+    ;;
+    (t)
+    totes=1
+    ;;
+    (*)
+    print -- "Run $0 -h for help."
+    exit 99
+    ;;
+  esac
+done
+
+(( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
+
+LASTFM_USER=""
+LASTFM_PASSWORD=""
+LIBREFM_USER=""
+LIBREFM_PASSWORD=""
+sitechoice=""
+
+if [[ ! -f $zomgconfdir/conf ]];
+then
+  print "Do you have accounts with last.fm, libre.fm, or both?"
+  print "1) last.fm"
+  print "2) libre.fm"
+  print "3) last.fm and libre.fm"
+  while [[ $sitechoice != [123] ]]; do
+    vared -p "site choice> " sitechoice
+  done
+
+conffile=(
+"zomg_config_version=2"
+"typeset -A handshake_host username password"
+"handshake_host[lastfm]=post.audioscrobbler.com"
+"handshake_host[librefm]=turtle.libre.fm"
+)
+
+  case "$sitechoice" in
+    ([13])
+      vared -p "last.fm username> " LASTFM_USER
+      vared -p "last.fm password> " LASTFM_PASSWORD
+      conffile+=(
+      $(printf 'username[lastfm]="%s"' "${LASTFM_USER}")
+      $(printf 'password[lastfm]="%s"' "${LASTFM_PASSWORD}")
+      )
+      ;|
+    ([23])
+      vared -p "libre.fm username> " LIBREFM_USER
+      vared -p "libre.fm password> " LIBREFM_PASSWORD
+      conffile+=(
+      $(printf 'username[librefm]="%s"' "${LIBREFM_USER}")
+      $(printf 'password[librefm]="%s"' "${LIBREFM_PASSWORD}")
+      )
+      ;|
+    (1)
+      conffile+=(
+      'submission_sites=(lastfm)'
+      )
+      ;|
+    (2)
+      conffile+=(
+      'submission_sites=(librefm)'
+      )
+      ;|
+    (3)
+      conffile+=(
+      'submission_sites=(lastfm librefm)'
+      )
+      ;;
+  esac
+
+print -l $conffile >$zomgconfdir/conf
+
+fi
+
+[[ -r $zomgconfdir/conf ]] || exit 12
+
+unset zomg_config_version
+source $zomgconfdir/conf
+
+if [[ $zomg_config_version -ne 2 ]];
+then
+  print >&2 "The config version is incorrect.  Please rename $zomgconfdir/conf"
+  print >&2 "to $zomgconfdir/conf.old and invoke zomg again to create the"
+  print >&2 "config in the proper format."
+  exit 1
+fi
+
+if [[ -f $zomgdatadir/cache ]];
+then
+  if [[ -f $zomgdatadir/cache.lastfm ]];
+  then
+    print >&2 "You have both a $zomgdatadir/cache and a"
+    print >&2 "$zomgdatadir/cache.lastfm.  Please remove one and re-invoke zomg."
+    exit 1
+  else
+    mv -f $zomgdatadir/cache $zomgdatadir/cache.lastfm
+  fi
+fi
+
+if (( nonet == 0 )); then
+
+  for site in $submission_sites
+  do
+
+  if [[ -f $zomgdatadir/cache.$site ]];
+  then
+    if as_validate_handshake $site $username[$site] $password[$site]
+    then
+      parse_submiturl $site
+      parse_np_submiturl $site
+      status_msg "Flushing cache for $site..."
+      audioscrobbler_flushcache $site $username[$site] $sessionid[$site] &&
+      { submit[$site]=1; mv $zomgdatadir/cache.$site $zomgdatadir/cache.$site.old ; status_msg "Flushed $site" } ||
+      { submit[$site]=0; status_msg "Failed"; as_invalidate_handshake $site $username[$site] }
+      else
+	status_msg "HANDSHAKE FAILED"
+	submit[$site]=0
+	as_invalidate_handshake $site $username[$site]
+      fi
+    else
+      submit[$site]=1
+      as_validate_handshake $site $username[$site] $password[$site] && parse_submiturl $site && parse_np_submiturl $site || submit[$site]=0
+    fi
+
+  done
+
+  else
+  for site in $submission_sites
+  do
+    print "Not handshaking."
+    submit[$site]=0
+  done
+  fi
+
+  if (( dolastfmradio == 1 )); then
+    case "$1" in
+    (lastfm://*) ;&
+    (librefm://*) lastfm_radio "$@" ;;
+    (*) status_msg "Bad radio station given. Try again." ; exit 1 ;;
+    esac
+    exit 0
+  else
+
+    trap 'skippy' INT
+
+    [[ $# -gt 0 ]] || { print "No arguments; exiting."; exit 0 }
+
+    if (( totes == 1 )); then
+      for i in "$@"
+      do
+       [[ -d "$i" ]] && playlist+=( $i/**/*.(ogg|mp3|flac) )
+      done
+    else
+      playlist=("$@")
+    fi
+
+    if (( shuffle == 1 )); then
+      print Shuffling $#playlist files...
+      zomg_shuffle $playlist
+      set -- "$reply[@]"
+    else
+      set -- "$playlist[@]"
+    fi
+
+    for i in "$@"
+    do
+      if [[ ! -r "$i" ]]; then
+	  print "Cannot read file: $i; skipping"
+	  continue
+      fi
+      case "$i" in
+	(*.ogg)
+	# assume vorbis
+	[[ -x =zomghelper ]] && parse_zomghelper $i || parse_ogginfo $i
+	trackreply=("$reply[@]")
+
+	if [[ -n $trackreply[1] && -n $trackreply[2] ]]; then
+        for site in $submission_sites
+        do
+	audioscrobbler_construct_np_query $username[$site] $sessionid[$site] "$trackreply[1]" \
+	"$trackreply[2]" \
+	"$trackreply[3]" \
+	"$trackreply[4]" \
+	"$trackreply[5]" \
+	"$EPOCHSECONDS" && audioscrobbler_np_submit "$site" ${(j::)reply} "$username[$site]"
+        done
+	fi
+
+	starttime=$EPOCHSECONDS
+	ogg123 --audio-buffer 2048 -v $i
+	endtime=$EPOCHSECONDS
+	;;
+	(*.mp3)
+	[[ -x =mutagen-inspect ]] && parse_mutagen $i || parse_eyeD3 $i
+	trackreply=("$reply[@]")
+
+	if [[ -n $trackreply[1] && -n $trackreply[2] ]]; then
+        for site in $submission_sites
+        do
+
+	audioscrobbler_construct_np_query $username[$site] $sessionid[$site] "$trackreply[1]" \
+	"$trackreply[2]" \
+	"$trackreply[3]" \
+	"$trackreply[4]" \
+	"$trackreply[5]" \
+	"$EPOCHSECONDS" && audioscrobbler_np_submit $site ${(j::)reply} "$username[$site]"
+
+        done
+	fi
+
+	starttime=$EPOCHSECONDS
+	mpg123 --gapless -C -v $i
+	endtime=$EPOCHSECONDS
+	;;
+	(*.flac)
+	parse_mutagenflac $i
+	trackreply=("$reply[@]")
+
+	if [[ -n $trackreply[1] && -n $trackreply[2] ]]; then
+        for site in $submission_sites
+        do
+
+	audioscrobbler_construct_np_query $username[$site] $sessionid[$site] "$trackreply[1]" \
+	"$trackreply[2]" \
+	"$trackreply[3]" \
+	"$trackreply[4]" \
+	"$trackreply[5]" \
+	"$EPOCHSECONDS" && audioscrobbler_np_submit $site ${(j::)reply} "$username[$site]"
+
+        done
+	fi
+
+	starttime=$EPOCHSECONDS
+	ogg123 --audio-buffer 2048 -v $i
+	endtime=$EPOCHSECONDS
+	;;
+	(*)
+	print "Unknown file extension: $i" >&2
+	continue
+	;;
+      esac
+
+      (( ctrlc >= 1 )) && (( ctrlc = 0 ))
+
+      print Played for $(( endtime - starttime )) secs out of $trackreply[5] secs.
+      (( endtime - starttime <= ($trackreply[5] / 2.0 ) )) &&
+      (( endtime - starttime < 240 )) && skip=1
+
+      (( $trackreply[5] < 30 )) && skip=1
+      [[ -n "$trackreply[1]" && -n "$trackreply[2]" ]] || skip=1
+
+      if [[ $skip -eq 1 ]];
+      then
+	status_msg "SKIPPING"
+	skip=0
+      else
+
+
+	if [[ -n $trackreply[1] && -n $trackreply[2] ]]; then
+	for site in $submission_sites
+        do
+
+	audioscrobbler_constructquery "$sessionid[$site]" "$trackreply[1]" \
+	"$trackreply[2]" \
+	"$trackreply[3]" \
+	"$trackreply[4]" \
+	"$trackreply[5]" \
+	"$starttime" P || exit 2
+	audioscrobbler_submit $site ${(j::)reply} "$username[$site]" || { submit[$site]=0; audioscrobbler_cache $site $reply[2] }
+
+        done
+	else
+		status_mgs "Skipping submission of poorly-tagged file $i."
+	fi
+      fi
+    done
+  fi

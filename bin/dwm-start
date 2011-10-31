@@ -1,0 +1,14 @@
+#!/bin/sh
+
+while true
+	do 
+	$HOME/bin/dwm-status.sh 
+	sleep 2s
+done &
+
+while true
+	do
+	dwm 2> /dev/null
+	#dwm 2> ~/.dwm.log
+done
+

@@ -1,0 +1,3 @@
+#!/bin/sh
+xterm -geometry 98x50 -e mplayer "$1"
+

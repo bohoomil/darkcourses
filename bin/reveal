@@ -1,0 +1,3 @@
+#!/bin/sh
+mplayer -vo dummy -ao null -identify $1 2>&1 | grep -E "VIDEO:|AUDIO:"
+

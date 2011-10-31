@@ -1,0 +1,4 @@
+#!/bin/sh
+sudo init 3 && sudo init 5
+pkill -KILL -u bohoomil
+
