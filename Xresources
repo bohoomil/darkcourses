@@ -1,0 +1,69 @@
+! Urxvt !
+URxvt*termName:        screen-256color
+URxvt*buffered:        true
+URxvt*geometry:        104x34
+URxvt*background:      #000C1A
+URxvt*foreground:      #8A9199
+URxvt*cursorColor:     #335A80
+URxvt*urgentOnBell:    true
+URxvt*letterSpace:     -0.5
+URxvt*renderFont:      true
+
+! borderless and no scrollbar !
+URxvt*scrollBar_right: false
+URxvt*scrollBar:       false
+URxvt*borderLess:      false
+URxvt*internalBorder:  3
+
+! xft settings !
+Xft.dpi:               96
+Xft.antialias:         1
+Xft.rgba:              rgb
+Xft.autohint:          0
+Xft.lcdfilter:         lcddefault
+Xft.hinting:           1
+Xft.hintstyle:         hintfull
+
+! clickable links, etc. !
+URxvt.perl-ext-common: default,url-select,matcher
+URxvt.keysym.M-u:      perl:url-select:select_next
+URxvt.urlLauncher:     firefox
+URxvt.underlineURLs:   false
+URxvt.matcher.button:  1
+URxvt.matcher.rend.0:  fg33 bg1
+
+! font & colour !
+#include "/home/bohoomil/.config/term-fonts/menlo"
+#include "/home/bohoomil/.config/colours/dc3"
+
+! -- Xterm settings -- !
+XTerm*toolBar:         false
+XTerm*scrollBar:       false
+XTerm*rightScrollBar:  false
+XTerm*dynamicColors:   true
+XTerm*background:      #000C1A
+XTerm*foreground:      #8A9299
+XTerm*faceName:        PragmataPro:Regular:pixelsize=14:antialias=false
+XTerm*allowBoldFonts:  false
+XTerm*boldMode:        true
+XTerm*geometry:        102x33
+
+xterm*VT100.translations:  #override \
+        <Key>Home:     string("\033[1~")  \n\
+        <Key>End:      string("\033[4~")  \n\
+
+Xcursor.theme:         Neutral++
+Xcursor.size:          18
+
+! default fonts for xorg apps !
+*font: -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
+*boldFont: -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
+
+! xdvi !
+xdvi.shrinkFactor:     7
+xdvi.keepPosition:     True
+xdvi.gsAlpha:          True
+xdvi.gamma:            1.200000
+xdvi.geometry:         802x991
+
+#include "/home/bohoomil/.config/xorg-defaults/XCalc-col3"
