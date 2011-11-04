@@ -1,0 +1,26 @@
+static const Rule rules[] = {
+	{ "Inkscape",    NULL,    NULL,       1 << 1,     True,      -1,     -1, False, False },
+	{ "Mypaint",     NULL,    NULL,       1 << 1,     True,      -1,     -1, False, False },
+	{ "Gpa",         NULL,    NULL,            0,     True,      -1,     -1, False, False },
+	{ "Gpick",       NULL,    NULL,            0,     True,      -1,     -1, False, False },
+	{  NULL,         NULL,  "Preferences - Geeqie",   0,  True,  -1,     -1, False, False },
+	{  NULL,         NULL,  "Editors - Geeqie",       0,  True,  -1,     -1, False, False },
+	{  NULL,   NULL,  "Window options and layout - Geeqie", 0, True, -1, -1, False, False },
+	{  NULL,         NULL,  "Cache Maintenance - Geeqie",  0,  True, -1, -1, False, False },
+	{  NULL,         NULL, "Edit command results - Geeqie", 0, True, -1, -1, False, False },
+	{  NULL,         NULL,    "ncmpcpp",  1 << 1,     False,     -1,     -1, False, False },
+};
+
+static const char *mpdcmd[]    = { "urxvtc", "-title", "ncmpcpp", "-geometry", "97x30-8+22", "-e", "ncmpcpp", NULL };
+static const char *mpdprev[]   = { "mpc", "prev", NULL };
+static const char *mpdtoggle[] = { "mpc", "toggle", NULL };
+static const char *mpdnext[]   = { "mpc", "next", NULL };
+static const char *mpdstop[]   = { "mpc", "stop", NULL };
+
+static Key keys[] = {
+	{ 0,                          XF86XK_AudioPrev,   spawn,  {.v = mpdprev } },
+	{ 0,                          XF86XK_AudioPlay,   spawn,  {.v = mpdtoggle } },
+	{ 0,                          XF86XK_AudioNext,   spawn,  {.v = mpdnext } },
+	{ 0,                          XF86XK_AudioStop,   spawn,  {.v = mpdstop } },
+};
+

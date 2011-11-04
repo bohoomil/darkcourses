@@ -1,0 +1,29 @@
+#!/bin/sh
+
+cfgfile="$XDG_CONFIG_HOME/dwm/config.h"
+if [ -f $cfgfile ]; then
+  dwmbin="$XDG_DATA_HOME/dwm/dwm"
+  if [ $cfgfile -nt $dwmbin ]; then
+    makedir="/tmp/dwm$$"
+    mkdir $makedir
+    cp -R "DWMSRC"* $makedir
+    cp $cfgfile $makedir
+    cd $makedir
+    make
+    R=$?
+    if [ $R -gt 0 ] && [ $R -le 127 ]; then
+      notify-send 'startdwmd' 'error compiling new dwm'
+    else
+      notify-send 'startdwmd' 'succesfully compiled new dwm'
+      mkdir -p "$XDG_DATA_HOME/dwm"
+      cp dwm $dwmbin
+    fi
+    rm -Rf $makedir
+  fi
+else
+  dwmbinb=`which dwm`
+fi
+
+dwmbin="$dwmbin 2>&1 >> ~/.local/share/dwm/log"
+
+exec $dwmbin

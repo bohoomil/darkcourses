@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/dwm/!svn/ver/101/trunk/dwm-sprinkles/layouts
+END
+bstackhoriz.c
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/dwm/!svn/ver/101/trunk/dwm-sprinkles/layouts/bstackhoriz.c
+END
+gaplessgrid.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/dwm/!svn/ver/74/trunk/dwm-sprinkles/layouts/gaplessgrid.c
+END
+grid.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/dwm/!svn/ver/74/trunk/dwm-sprinkles/layouts/grid.c
+END
+nbstack.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/dwm/!svn/ver/101/trunk/dwm-sprinkles/layouts/nbstack.c
+END
+bstack.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/dwm/!svn/ver/101/trunk/dwm-sprinkles/layouts/bstack.c
+END
+fibonacci.c
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/dwm/!svn/ver/101/trunk/dwm-sprinkles/layouts/fibonacci.c
+END
