@@ -21,8 +21,9 @@ syntax on
 " wrap'n'jump by display lines
 "set background=dark
 
-if $TERM =~ '^linux'
-	colorscheme miro8     " colourscheme for the 8 colour linux term
+if &t_Co < 256
+"if $TERM =~ '^linux'
+	colorscheme dc3c    " colourscheme for the 8 colour linux term
 else
 	colorscheme dc3
 endif
