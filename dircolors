@@ -58,26 +58,26 @@ TERM xterm-debian
 # Background color codes:
 # 40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 
-#NORMAL         00 # no color code at all
+#NORMAL         00       # no color code at all
 FILE           38;5;247 # regular file: use no color at all
-RESET          0 # reset to "normal" color
+RESET          0        # reset to "normal" color
 DIR            38;5;241 # directory
-LINK           01;36 # symbolic link. (If you set this to 'target' instead of a
+LINK           01;36    # symbolic link. (If you set this to 'target' instead of a
 
  # numerical value, the color is as for the file pointed to.)
-MULTIHARDLINK  00 # regular file with more than one link
-FIFO           40;33 # pipe
-SOCK           01;35 # socket
-DOOR           01;35 # door
+MULTIHARDLINK  00       # regular file with more than one link
+FIFO           40;33    # pipe
+SOCK           01;35    # socket
+DOOR           01;35    # door
 BLK            40;31;01 # block device driver
 CHR            40;33;01 # character device driver
 ORPHAN         40;31;01 # symlink to nonexistent file, or non-stat'able file
-SETUID         37;41 # file that is setuid (u+s)
-SETGID         30;43 # file that is setgid (g+s)
-CAPABILITY     30;41 # file with capability
+SETUID         37;41    # file that is setuid (u+s)
+SETGID         30;43    # file that is setgid (g+s)
+CAPABILITY     30;41    # file with capability
 STICKY_OTHER_WRITABLE 36;40 # dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE 01;36 # dir that is other-writable (o+w) and not sticky
-STICKY         37;44 # dir with the sticky bit set (+t) and not other-writable
+OTHER_WRITABLE 01;36    # dir that is other-writable (o+w) and not sticky
+STICKY         37;44    # dir with the sticky bit set (+t) and not other-writable
 
 # executables (bright green)
 EXEC           01;32
@@ -297,6 +297,8 @@ EIGHTBIT 1
 .fonts         00;36
 .git           00;36
 .gitignore     00;36
+.nvidia-settings-rc 00;36
+.pwmanrc       00;36
 .hgrc          01;34
 .hgignore      01;34
 .go            01;34
@@ -366,8 +368,8 @@ EIGHTBIT 1
 .zsh           01;35
 
 .urlview       01;35
-.vim           01;35
-.vimrc         01;35
+.vim           01;34
+.vimrc         01;34
 .NERDTreeBookmarks 01;35
 .docutils      01;35
 .xinitrc       01;31 
