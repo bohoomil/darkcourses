@@ -43,7 +43,7 @@ XTerm*rightScrollBar:  false
 XTerm*dynamicColors:   true
 XTerm*background:      #000C1A
 XTerm*foreground:      #8A9299
-XTerm*faceName:        PragmataPro:Regular:pixelsize=14:antialias=false
+XTerm*faceName:        DejaVu Sans Mono:Regular:pixelsize=14:antialias=false
 XTerm*allowBoldFonts:  false
 XTerm*boldMode:        true
 XTerm*geometry:        102x33
