@@ -1,0 +1,7 @@
+
+URxvt.font:xft:dejavu sans mono:reguler:pixelsize=14
+URxvt.boldFont:xft:dejavu sans mono:regular:pixelsize=14
+URxvt.italicFont:xft:dejavu sans mono:italic:pixelsize=14
+URxvt.boldItalicFont:xft:dejavu sans mono:italic:pixelsize=14
+
+! vim:ft=xdefaults
