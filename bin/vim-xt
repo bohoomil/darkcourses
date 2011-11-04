@@ -1,6 +1,6 @@
 #!/bin/sh
 
-edit="xterm -fn 'xft:pragmatapro:pixelsize=14' -geometry 110x64 -e vim"
+edit="xterm -geometry 110x64 -e vim"
 
 if [ ! -f "$1" ]; then
 	$edit 
