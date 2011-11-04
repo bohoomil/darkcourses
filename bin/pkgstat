@@ -3,26 +3,26 @@
 # Display the number of installed packages,
 # version of the kernel and gcc used.
 
-all=`pacman -Q | wc | cut -c 1-8`
-expl=`pacman -Qe | wc | cut -c 1-8`
-loc=`pacman -Qm | wc | cut -c 1-8`
-kernel=`uname -r`
-gcc=`gcc --version | grep gcc | cut -c 11-38`
-setup=`grep -i 'installed filesystem' /var/log/pacman.log | perl -lne 'print $1 while (/\[(.*?)\]/g)'`
+ALL=`pacman -Q | wc | cut -c 1-8`
+EXPL=`pacman -Qe | wc | cut -c 1-8`
+LOCAL=`pacman -Qm | wc | cut -c 1-8`
+KERNEL=`uname -r`
+GCC=`gcc --version | grep gcc | cut -c 11-38`
+SETUP=`grep -i 'installed filesystem' /var/log/pacman.log | perl -lne 'print $1 while (/\[(.*?)\]/g)'`
 
 echo You have ...
 
-echo -e "\e[01;31m $all\e[0;0m" installed packages altogether;
+echo -e "\e[01;31m $ALL\e[0;0m" installed packages altogether;
 
-echo -e "\e[01;33m $expl\e[0;0m" explicitly installed packages;
+echo -e "\e[01;33m $EXPL\e[0;0m" explicitly installed packages;
 
-echo -e "\e[01;32m $loc\e[0;0m" localy installed packages.
+echo -e "\e[01;32m $LOCAL\e[0;0m" localy installed packages.
 
-echo -e Your system was originally set up "\e[00;37m$setup\e[0;0m"
+echo -e Your system was originally set up "\e[00;37m$SETUP\e[0;0m"
 
-echo -e You are using kernel "\e[01;34m $kernel\e[0;0m"
+echo -e You are using kernel "\e[01;34m $KERNEL\e[0;0m"
 
-echo -e and gcc version "\e[01;35m $gcc\e[0;0m"
+echo -e and gcc version "\e[01;35m $GCC\e[0;0m"
 
 exit 0
 
