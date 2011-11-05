@@ -69,11 +69,9 @@ let NERDTreeHightlightCursorline=1
 " txt2tags
 au BufNewFile,BufRead *.t2t set ft=txt2tags
 au Filetype txt2tags source $HOME/.vim/syntax/txt2tags.vim
-"au BufNewFile,BufRead *.t2t set spell
 au BufNewFile,BufRead *.t2t set wrap
 au BufNewFile,BufRead *.t2t set lbr
 au! BufRead,BufNewFile *.json set filetype=json foldmethod=syntax 
-"au Filetype txt2tags noremap <F10> :TlistToggle<Enter>
 
 " latex
 filetype plugin indent on
@@ -116,7 +114,6 @@ if has("autocmd")
 	"autocmd FileType eml set tw=80  " limit width to n cols for email files
 	autocmd BufRead *.eml set tw=0 fo=cq wm=0 " no automatic wrapping, rewrapping will wrap to 80
 	autocmd BufRead ~/.mutt/temp/mutt-* set tw=80 ft=mail " nocindent spell   " width, mail syntax hilight, spellcheck
-	"autocmd FileType tex set tw=197   " wrap at 197 chars for LaTeX files
 endif
 
 " automatically give executable permissions if file 
@@ -195,7 +192,6 @@ if has('mouse')
 	set mouse=a
 endif
 set mousemodel=popup_setpos
-
 
 " improves redrawing for newer computers
 set tf
