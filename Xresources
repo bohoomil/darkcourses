@@ -56,8 +56,8 @@ Xcursor.theme:         Neutral++
 Xcursor.size:          18
 
 ! default fonts for xorg apps !
-*font: -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
-*boldFont: -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
+*font:                 -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
+*boldFont:             -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
 
 ! xdvi !
 xdvi.shrinkFactor:     7
