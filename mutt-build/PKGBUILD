@@ -1,0 +1,94 @@
+# bohoomil 
+
+pkgname=mutt
+pkgver=1.5.21
+pkgrel=5
+pkgdesc="A small but very powerful text-based mail client"
+url="http://www.mutt.org/"
+backup=('etc/muttrc')
+arch=('i686' 'x86_64')
+depends=('openssl' 'gdbm' 'mime-types' 'slang' 'libidn' 'heimdal' 'gnupg' 'gpgme')
+makedepends=('libxslt') 
+conflicts=('mutt')
+provides=('mutt')
+source=(ftp://ftp.mutt.org/mutt/devel/${pkgname}-${pkgver}.tar.gz
+        ftp://ftp.mutt.org/pub/mutt/contrib/urlview-0.9.tar.gz
+        muttrc.example
+        ${pkgname}-${pkgver}.echo_stat.patch
+        ${pkgname}-${pkgver}.source_multiple.patch
+        ${pkgname}-${pkgver}.sidebar.5302767aa6aa.patch
+        ${pkgname}-${pkgver}.initials.patch
+        urlview-0.9.manprefix.patch
+				urlview-0.9.patch)
+md5sums=('a29db8f1d51e2f10c070bf88e8a553fd'
+         '67731f73e69297ffd106b65c8aebb2ab'
+         '336d1d8e290a0595dbe2cd92d720ffc9'
+         '5c67c8bf89160b48cfd6a110d0c8e34a'
+         'ed4a36e47975a760b0f41ffed827cb92'
+         '69d4e16c242fffcf82aabfa429be0501'
+         '1e22b6f0a2a6628289baee19c37e2536'
+				 'cddf01efd62c477adc8dada7d991b106'
+         '489d5318495aef96c7af93fe14fcb3fb')
+license=('GPL')
+
+build() {
+  if [ -e $srcdir/.built ] ; then
+    return 0;
+  fi
+
+	## build mutt
+  cd $srcdir/mutt-$pkgver
+  patch -p1 -Nui ../${pkgname}-${pkgver}.sidebar.5302767aa6aa.patch
+  patch -p1 -Nui ../${pkgname}-${pkgver}.initials.patch
+  patch -p1 -Nui ../${pkgname}-${pkgver}.echo_stat.patch 
+  patch -p1 -Nui ../${pkgname}-${pkgver}.source_multiple.patch
+
+  find -name \*.orig -delete
+
+  aclocal -I m4
+  autoheader
+  automake --foreign
+  autoconf
+
+  ./configure --prefix=/usr --sysconfdir=/etc \
+  --enable-gpgme --disable-pop --enable-imap --enable-smtp \
+  --enable-debug --disable-warnings --enable-exact-address \
+  --enable-hcache --with-slang --with-regex --with-gss=/usr \
+  --with-ssl=/usr --with-sasl --with-idn || return 1
+
+  make || return 1
+
+  ## build urlview
+  cd $srcdir/urlview-0.9
+	patch -p1 -Nui ../urlview-0.9.patch
+
+  ./configure --prefix=/usr --sysconfdir=/etc \
+              --with-slang --enable-warnings || return 1
+
+  make || return 1
+
+  # Delete all the patch-save files
+  find -name \*.orig -delete
+  touch $srcdir/.built
+}
+
+package() {
+  ## mutt
+  cd $srcdir/mutt-$pkgver
+
+  make DESTDIR=${pkgdir} install || return 1
+  rm -f ${pkgdir}/usr/bin/{flea,muttbug}
+  rm -f ${pkgdir}/usr/share/man/man1/{flea,muttbug}.1
+  rm -f ${pkgdir}/etc/mime.types*
+  install -m644 -D ${srcdir}/muttrc.example ${pkgdir}/etc/muttrc.example
+
+  ## urlview
+  cd $srcdir/urlview-0.9
+  patch -p1 -Nui ../urlview-0.9.manprefix.patch
+  mkdir -p ${pkgdir}/usr/man/man1/ ${pkgdir}/usr/bin
+  make DESTDIR=${pkgdir} install || return 1
+  mv ${pkgdir}/usr/man/man1/* ${pkgdir}/usr/share/man/man1/
+  rm -r ${pkgdir}/usr/man
+
+  rm $srcdir/.built
+}
