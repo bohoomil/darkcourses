@@ -19,7 +19,7 @@ source=(ftp://ftp.mutt.org/mutt/devel/${pkgname}-${pkgver}.tar.gz
         ${pkgname}-${pkgver}.sidebar.5302767aa6aa.patch
         ${pkgname}-${pkgver}.initials.patch
         urlview-0.9.manprefix.patch
-				urlview-0.9.patch)
+	urlview-0.9.patch)
 md5sums=('a29db8f1d51e2f10c070bf88e8a553fd'
          '67731f73e69297ffd106b65c8aebb2ab'
          '336d1d8e290a0595dbe2cd92d720ffc9'
@@ -27,7 +27,7 @@ md5sums=('a29db8f1d51e2f10c070bf88e8a553fd'
          'ed4a36e47975a760b0f41ffed827cb92'
          '69d4e16c242fffcf82aabfa429be0501'
          '1e22b6f0a2a6628289baee19c37e2536'
-				 'cddf01efd62c477adc8dada7d991b106'
+	 'cddf01efd62c477adc8dada7d991b106'
          '489d5318495aef96c7af93fe14fcb3fb')
 license=('GPL')
 
