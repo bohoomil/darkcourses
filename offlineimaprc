@@ -1,0 +1,48 @@
+[general]
+# NOTE: cronjob calls the quiet UI with -u
+ui = TTY.TTYUI
+accounts = account1,account2
+
+# Gives you a nice blinky output on the console so you know what's happening:
+#ui = Curses.Blinkenlights
+# If uncommented, this would show nothing at all. Great for cronjobs or background-processes:
+#ui = Noninteractive.Quiet
+
+### account1 ###
+[Account account1]
+localrepository = account1-local
+remoterepository = account1-remote
+
+[Repository account1-local]
+type = Maildir
+localfolders = ~/.mail/account1
+
+[Repository account1-remote]
+type = Gmail 
+remoteport = 993
+remoteuser = account1@gmail.com
+remotepass = xXxXxXxXxX
+ssl = yes 
+realdelete = yes
+nametrans = lambda folder: re.sub('.*Spam$', 'Spam', re.sub('.*Drafts$', 'Drafts', re.sub('.*Sent Mail$', 'Sent', re.sub('.*Starred$', 'Flagged', re.sub('.*Trash$', 'Trash', folder)))))
+
+### account2 ###
+[Account account2]
+localrepository = account2-local
+remoterepository = account2-remote
+
+[Repository account2-local]
+type = Maildir
+localfolders = ~/.mail/account2
+
+[Repository account2-remote]
+type = Gmail 
+remoteport = 993
+remoteuser = account2@gmail.com
+remotepass = xXxXxXxXxX
+ssl = yes 
+realdelete = yes
+nametrans = lambda folder: re.sub('.*Spam$', 'Spam', re.sub('.*Drafts$', 'Drafts', re.sub('.*Sent Mail$', 'Sent', re.sub('.*Starred$', 'Flagged', re.sub('.*Trash$', 'Trash', folder)))))
+
+# vim: ft=cfg tw=0
+
