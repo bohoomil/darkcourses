@@ -1,0 +1,149 @@
+# vim:fenc=utf-8:nu:ai:si:et:ts=2:sw=2:ft=muttrc
+
+# directories and commands
+set alias_file          = ~/.mutt/alias               # alias file
+set header_cache        = ~/.mutt/cache/headers       # headers dir
+set message_cachedir    = ~/.mutt/cache/bodies        # bodies dir
+set certificate_file    = ~/.mutt/certificates        # certs dir
+set mailcap_path        = ~/.mutt/mailcap             # mime / filetypes
+set tmpdir              = ~/.mutt/temp                # temp dir
+set editor              = "/usr/bin/vim -c 'set tw=80 ft=mail' -c 'set wrap' -c 'set nocp'"
+set ispell              = "/usr/bin/aspell -e -c"     # use aspell as ispell
+set print_command       = /usr/bin/enscript           # print with enscript
+
+# main options
+set mbox_type           = Maildir                     # mailbox type
+set folder              = ~/.mail                     # mailbox location
+set spoolfile           = "+account1/INBOX"           # account1 INBOX is default
+set timeout             = 3                           # idle time before scanning
+set mail_check          = 0                           # minimum time between scans
+set sort_alias          = alias                       # sort alias file by alias
+set reverse_alias                                     # show names from alias file in index
+set move
+set delete
+set quit
+unset mark_old
+set beep_new
+set pipe_decode                                  # strip headers and eval mimes when piping
+set thorough_search                              # strip headers and eval mimes before searching
+
+# index options
+set sort                = threads
+set sort_aux            = reverse-last-date-received
+set uncollapse_jump                              # don't collapse on an unread message
+set sort_re                                      # thread based on regex
+set reply_regexp        = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+
+# pager options
+set pager_index_lines   = 10                          # number of index lines to show
+set pager_context       = 5                           # number of context lines to show
+set pager_stop                                        # don't go to next message automatically
+set menu_scroll                                       # scroll in menus 
+set smart_wrap                                        # don't split words
+set tilde                                             # show tildes like in vim
+unset markers                                         # no plus signs
+auto_view text/html                                   # view html automatically
+alternative_order text/plain text/enriched text/html  # save html for last
+set quote_regexp        = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set status_on_top                                     # as you'd expect
+
+# formats
+set date_format         = "%d.%m.%y at %k:%M"
+set index_format        = "%3C  %S   %D • %-35.35L %s %> %c"
+set pager_format        = "Reading message %C of %m %> %lL (%P)" # pager statusbar
+set folder_format       = "%2C %t %N %8s %d %f"                  # mailbox list view
+set status_format       = " %?M?%M/?%m total: %?n?%n new, ?%?u?%u unread, ?%?p?%p drafts, ?%?t?%t +tagged, ?%?d?%d deleted, ?(%f %l)  %?b?%b unread messages. ?%>  %V   sort by: %s/%S  (%P)"
+set alias_format        = "%4n %t %-20a  %r"
+
+# composing mail
+set realname                                          # real name
+set envelope_from                                     # account being used
+set sig_dashes                                        # dashes before signature
+set edit_headers                                      # show headers when composing
+set fast_reply                                        # skip to compose when replying
+set fcc_attach                                        # save attachments with the body
+unset mime_forward                                    # fwd attachments as part of body
+set forward_format      = "Fwd: %s"                   # format for subject when forwarding
+set forward_decode                                    # decode when forwarding
+set attribution         = "On %d, %n wrote:"          # set the attribution
+set reply_to                                          # reply to Reply to: field
+set reverse_name                                      # reply as whomever it was to
+set include                                           # include message in replies
+set forward_quote                                     # include message in forwards
+
+# headers to show
+ignore *                                              # ignore all headers
+unignore from: to: cc: date: subject:                 # show only these
+hdr_order from: to: cc: date: subject:                # and in this order
+
+# boxes
+mailboxes account1 +account1/INBOX +account1/all +account1/arch +account1/drafts +account1/flagged +account1/sent +account1/software +account1/spam +account1/subscriptions +account1/trash
+
+mailboxes account2 +account2/INBOX +account2/all +account2/books +account2/drafts +account2/flagged +account2/sent +account2/trash 
+
+# sourced bits
+source $alias_file
+source ~/.mutt/colors.muttrc
+source ~/.mutt/sidebar.muttrc
+source ~/.mutt/gpg.rc
+
+# account specific sources
+folder-hook account1/* source ~/.mutt/account1.muttrc
+folder-hook account2/* source ~/.mutt/account2.muttrc
+
+# Mailing lists
+lists arch-announce@archlinux.org                     # Arch announcements
+subscribe arch-announce@archlinux.org
+
+lists arch-general@archlinux.org                      # Arch general list
+subscribe arch-general@archlinux.org
+
+# bindings
+bind pager q            exit
+bind pager /            search
+bind pager <up>         previous-line
+bind pager <down>       next-line
+bind pager k            previous-line
+bind pager j            next-line
+bind pager gg           top
+bind pager G            bottom
+bind index gg           first-entry
+bind index G            last-entry
+bind index D            delete-pattern
+bind pager K            previous-undeleted
+bind pager J            next-undeleted
+bind index K            previous-unread
+bind index J            next-unread
+bind index W            clear-flag
+bind index w            set-flag
+bind index,pager R      group-reply
+bind compose p          pgp-menu
+
+## tidy up here... ##
+# macros
+macro index gb   "<change-folder> = +account1/INBOX<enter>"       "go to account1 inbox"
+macro index ga   "<change-folder> = +account2/INBOX<enter>"       "go to account2 inbox"
+
+macro index \Cr  "<tag-prefix><clear-flag>N"                      "mark tagged messages as read"
+macro index \Cs  "<pipe-message>cat > ~/"                         "save message as" 
+macro index B    "<limit>~b "                                     "search message bodies"
+
+macro index,pager <F11> "<shell-escape>less /usr/share/doc/mutt/manual.txt<enter>" "Show Mutt documentation"
+macro index,pager <F12> ":toggle help<enter>:set ?help<enter>"    "toggle help status line"
+macro index,pager <F5> ":source ~/.mutt/muttrc\n"          "Reload the muttrc"
+
+macro compose \Cg "Fgpg --clearsign\ny"
+macro compose \Cp "Fgpg --clearsign\ny^T^Uapplication/pgp; format=text; x-action=sign\n"
+macro compose Y pfy "send mail without pgp"
+
+macro pager \Cb <pipe-entry>'urlview'<enter> 'Follow links with urlview'
+
+# Address book ------------------------------------------------------------------------------
+set query_command= "abook --mutt-query '%s'"
+# sync abook and alias
+macro index A      "!abook-autoexport\n:source ~/.mutt/alias\n"          "Start abook"
+macro index \Ca    "|abook-autoexport --add-email-quiet\n:source ~/.mutt/alias\n" "Create new alias from the actual message"
+
+# quick-sync ~/Mail immediately with offlineimap
+macro index Z   "<shell-escape>/usr/bin/offlineimap -q -o<enter>" "sync IMAP"
+

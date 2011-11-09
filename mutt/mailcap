@@ -1,0 +1,7 @@
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+image/*; feh --scale-down %s
+audio/*; mplayer %s
+video; mplayer %s
+text/*; vim %s
+application/pdf; acroread %s
+application/x-html; firefox %s
