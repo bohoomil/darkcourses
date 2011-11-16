@@ -20,6 +20,8 @@ dunst &
 
 unclutter -idle 5 &
 
+parcellite -n &
+
 xautolock -time 60 -locker "sudo pm-suspend" &
 
 exec $HOME/bin/dwm-start
