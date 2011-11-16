@@ -118,7 +118,7 @@ regex/\.t([gp]?z|ar\.g?[zZ])$|\.ipk$
 	View=%view{ascii} gzip -dc %f 2>/dev/null | tar tvvf -
 
 regex/\.tar\.bz$
-	# Open=%cd %p/utar://
+	Open=%cd %p/utar://
 	View=%view{ascii} bzip -dc %f 2>/dev/null | tar tvvf -
 
 regex/\.t(ar\.bz2|bz2?|b2)$
@@ -137,7 +137,7 @@ regex/\.t(ar\.xz|xz)$
 
 # .tar.F - used in QNX
 regex/\.tar\.F$
-	# Open=%cd %p/utar://
+	Open=%cd %p/utar://
 	View=%view{ascii} freeze -dc %f 2>/dev/null | tar tvvf -
 
 # .qpr/.qpk - QNX Neutrino package installer files
@@ -290,7 +290,7 @@ regex/\.(so|so\.[0-9\.]*)$
 
 # Object
 type/^ELF
-	#Open=%var{PAGER:more} %f
+	Open=%var{PAGER:more} %f
 	View=%view{ascii} file %f && nm -C %f
 
 ### Documentation ###
@@ -357,23 +357,14 @@ regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.xz$
 
 # CHM
 regex/\.(chm|CHM)$
-	#Open=which xchm > /dev/null 2>&1 && (xchm %f 2>/dev/null &)
-	Open=firefox  %f &
+	Open=firefox %f 2>/dev/null &
 
 ### Images ###
 
-#regex/\.([gG][iI][fF])$
-	#Include=image
-   #Open=which gifview > /dev/null 2>&1 && (gifview -a %f 2>/dev/null &)
-	 #Open=viewnior %f >/dev/null 2>&1 &
-   #Open=which gifview > /dev/null 2>&1 && (gifview %f 2>/dev/null &)
-
 type/^JPEG
-	#View=%view{ascii} identify %f; test -x /usr/bin/exif && echo && exif %f 2>/dev/null
 	Include=image
 
 type/^JPG
-	#View=%view{ascii} identify %f; test -x /usr/bin/exif && echo && exif %f 2>/dev/null
 	Include=image
 
 type/^PC\ bitmap
@@ -415,16 +406,10 @@ shell/.ico
 
 type/^SVG
 	Open=rsvg-view %f &
-	#Open=geeqie %f &
-	#View=geeqie %f
 
 include/image
-	#Open=if [ "$DISPLAY" = "" ]; then zgv %f; else (geeqie %f 2>/dev/null &); fi
-	#Open=if [ "$DISPLAY" = "" ]; then zgv %f; else (viewnior %f >/dev/null 2>&1 &); fi
 	Open=if [ "$DISPLAY" = "" ]; then zgv %f; else (xnview %f >/dev/null 2>&1 &); fi
-	#View=xnview %f >/dev/null 2>&1 &
 	View=%view{ascii} identify %f
-	#View=%view{ascii} asciiview %f
 
 shell/.ttf
 	Open=LC_ALL=pl_PL.UTF8 gnome-font-viewer %f
@@ -447,15 +432,16 @@ shell/.pfb
 shell/.pcf
 	Open=LC_ALL=pl_PL.UTF8 gnome-font-viewer %f
 
+shell/.bdf
+	Open=LC_ALL=pl_PL.UTF8 gnome-font-viewer %f
+
 ### Sound files ###
 
 regex/\.([wW][aA][vV]|[sS][nN][dD]|[vV][oO][cC]|[aA][uU]|[sS][mM][pP]|[aA][iI][fF][fF]|[sS][nN][dD]|[fF][lL][aA][cC]|[aA][pP][eE]|[mM][pP][cC])$
-       #Open=if [ "$DISPLAY" = "" ]; then mplayer %f; else (xmms %f >/dev/null 2>&1 &); fi
-		Open=mplayer %f
+	Open=mplayer %f
 
 regex/\.([mM][oO][dD]|[sS]3[mM]|[xX][mM]|[iI][tT]|[mM][tT][mM]|669|[sS][tT][mM]|[uU][lL][tT]|[fF][aA][rR])$
-       Open=mikmod %f
-       #Open=tracker %f
+	Open=mikmod %f
 
 regex/\.([wW][aA][wW]22)$
        Open=vplay -s 22 %f
@@ -468,12 +454,10 @@ regex/\.([mM]4[aA])$
 	Open=mplayer %f
 
 regex/\.([oO][gG][gG|aA|vV|xX])$
-	#Open=if [ "$DISPLAY" = "" ]; then ogg123 %f; else (xmms %f >/dev/null 2>&1 &); fi
 	Open=mplayer %f
 	View=%view{ascii} ogginfo %s
 
 regex/\.([sS][pP][xX]|[fF][lL][aA][cC])$
-	#Open=if [ "$DISPLAY" = "" ]; then play %f; else (xmms %f >/dev/null 2>&1 &); fi
 	Open=mplayer %f
 
 regex/\.([mM][iI][dD][iI]?|[rR][mM][iI][dD]?)$
@@ -487,7 +471,6 @@ regex/\.([wW][mM][aA])$
 ### Play lists ###
 
 regex/\.([mM]3[uU]|[pP][lL][sS])$
-	#Open=if [ -z "$DISPLAY" ]; then mplayer -vo null -playlist %f; else (xmms -p %f >/dev/null 2>&1 &); fi
 	View=mplayer -vo dummy -playlist %f
 	Open=mplayer -vo dummy -playlist %f
 
@@ -541,10 +524,7 @@ regex/\.([sS][wW][fF])$
 	Include=firefox %f
 
 include/video
-	#Open=(mplayer -noass %f >/dev/null 2>&1 &)
 	Open=(mplayer -noass %f)
-	#Open=(gtv %f >/dev/null 2>&1 &)
-	#Open=(xanim %f >/dev/null 2>&1 &)
 
 
 ### Documents ###
@@ -557,15 +537,11 @@ type/^PostScript
 # PDF
 type/^PDF
 	Open=(acroread %f 2>/dev/null &)
-	#Open=(xpdf %f &)
-	#Open=(acroread %f &)
-	#Open=(ghostview %f &)
 	View=%view{ascii} pdftotext %f -
 
 # epub
 type/^EPUB
 	Open=(lucidor %f 2>/dev/null &)
-	#View=%view{ascii} pdftotext %f -
 
 # Scribus
 regex/\.([Ss][Ll][Aa])$
@@ -580,8 +556,6 @@ shell/.dvi
 
 # html
 regex/\.([hH][tT][mM][lL]?)$
-#	Open=(if test -n "" && test -n "$DISPLAY"; then ( file://%d/%p &) 1>&2; else elinks %f || w3m -force_html %f || ${PAGER:-more} %f; fi) 2>/dev/null
-#	View=%view{ascii} elinks -dump %f 2>/dev/null || w3m -dump %f 2>/dev/null || w3m -dump -force_html %f
 	Open=(w3m %f)
 	View=%view{ascii} w3m %f 2>/dev/null || w3m -force_html %f
 
@@ -591,8 +565,6 @@ shell/.sdw
 
 # StarOffice 6 and OpenOffice.org formats
 regex/\.(odt|ott|sxw|stw|ods|ots|sxc|stc|odp|otp|sxi|sti|odg|otg|sxd|std|odb|odf|sxm|odm|sxg)$
-	#Open=(libreoffice %f &)
-	#View=%view{ascii} odt2txt %f &
 	Open=(unzip -p %f content.xml | o3totxt | less)
 	View=unzip -p %f content.xml | o3totxt | less
 
@@ -602,19 +574,14 @@ shell/.abw
 
 # Microsoft Word Document
 regex/\.([Dd][oO][cCtT]|[Ww][rR][iI])$
-	#Open=(abiword %f >/dev/null 2>&1 &)
 	View=%view{ascii} antiword -t %f || strings %f
-#type/^Microsoft\ Word
-	#Open=(abiword %f >/dev/null 2>&1 &)
 	View=%view{ascii} antiword -t %f || strings %f
 
 # DOC document
-#regex/\.([dD][oO][cC])$
 	Open=antiword -f %f | less
 
 # DOCX document
 regex/\.([dD][oO][cC][xX])$
-	#Open=(lowriter %f >/dev/null 2>&1 &)
 	Open=(docx2txt.sh %f)
 
 # XLS document
@@ -627,7 +594,6 @@ regex/\.([xX][lL][sS][xX])$
 
 # RTF document
 regex/\.([rR][tT][fF])$
-	#Open=(localc %f >/dev/null 2>&1 &)
 	Open=catdoc %f | less || strings %f	
 	View=%view{ascii} catdoc %f || strings %f
 
@@ -658,6 +624,14 @@ regex/\.([eE][mM][lL])$
 # DjVu
 regex/\.(djvu|DJVU)$
 	Open=djview %f 2>/dev/null &
+
+# ebuild
+regex/\.(ebuild)$
+	Open=%var{EDITOR:vi} %f
+
+# PKGBUILD
+shell/PKGBUILD
+	Open=%var{EDITOR:vi} %f
 
 ### Miscellaneous ###
 
@@ -767,8 +741,6 @@ regex/\.xz$
 	View=%view{ascii} xz -dc %f 2>/dev/null
 
 shell/.air
-#Open=(/usr/bin/adobe-air %f &)
-#Open=which adobe-air > /dev/null 2>&1 && (adobe-air %f 2>/dev/null &) 
 	Open=%var{adobe-air} %f
 
 ### Default ###
