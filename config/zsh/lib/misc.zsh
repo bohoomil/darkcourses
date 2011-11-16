@@ -52,6 +52,6 @@ alias history='fc -l 1'
 
 ## Color grep results
 export GREP_OPTIONS='--color=always'
-export GREP_COLORS='ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
+export GREP_COLORS='ms=00;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 
 
