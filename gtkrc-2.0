@@ -2,9 +2,9 @@
 
 gtk-theme-name="Clearlooks9x"
 gtk-icon-theme-name="Faenza-Cupertino"
-gtk-font-name="Aller Light 9"
+gtk-font-name="Segoe UI Regular 9"
 gtk-cursor-theme-name="Neutral++"
-gtk-cursor-theme-size=18
+gtk-cursor-theme-size=22
 gtk-toolbar-style=GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR
 gtk-button-images=1
