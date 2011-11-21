@@ -1,13 +1,12 @@
 ! Urxvt !
 URxvt*termName:        screen-256color
-URxvt*buffered:        true
 URxvt*geometry:        104x34
 URxvt*background:      #000C1A
 URxvt*foreground:      #8A9199
 URxvt*cursorColor:     #335A80
 URxvt*urgentOnBell:    true
 URxvt*letterSpace:     -0.5
-URxvt*renderFont:      true
+!URxvt*renderFont:      true
 
 ! borderless and no scrollbar !
 URxvt*scrollBar_right: false
@@ -37,27 +36,29 @@ URxvt.matcher.rend.0:  fg33 bg1
 #include "/home/bohoomil/.config/colours/dc3"
 
 ! -- Xterm settings -- !
+XTerm*termName:        xterm-256color
+XTterm*utf8:           2
 XTerm*toolBar:         false
 XTerm*scrollBar:       false
 XTerm*rightScrollBar:  false
 XTerm*dynamicColors:   true
 XTerm*background:      #000C1A
 XTerm*foreground:      #8A9299
-XTerm*faceName:        DejaVu Sans Mono:Regular:pixelsize=14:antialias=false
+XTerm*faceName:        Envy Code R:Medium:pixelsize=13
 XTerm*allowBoldFonts:  false
 XTerm*boldMode:        true
 XTerm*geometry:        102x33
 
-xterm*VT100.translations:  #override \
-        <Key>Home:     string("\033[1~")  \n\
-        <Key>End:      string("\033[4~")  \n\
+xterm*VT100.translations: #override \
+							 <Key>Home: string("\033[1~")  \n\
+							  <Key>End: string("\033[4~")  \n\
 
 Xcursor.theme:         Neutral++
-Xcursor.size:          18
+Xcursor.size:          22
 
 ! default fonts for xorg apps !
-*font:                 -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
-*boldFont:             -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
+*font: -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
+*boldFont: -*-fixed-medium-r-normal-*-*-130-*-*-*-*-iso10646-1
 
 ! xdvi !
 xdvi.shrinkFactor:     7
@@ -67,3 +68,4 @@ xdvi.gamma:            1.200000
 xdvi.geometry:         802x991
 
 #include "/home/bohoomil/.config/xorg-defaults/XCalc-col3"
+
