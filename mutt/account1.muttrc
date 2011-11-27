@@ -3,10 +3,10 @@
 set from      = "account1 full name <account1@gmail.com>"
 set sendmail  = "/usr/bin/msmtp -a account1"
 set mbox      = "+account1/INBOX"
-set record    = "+account1/Sent"
-set postponed = "+account1/Drafts"
+set record    = "+account1/sent"
+set postponed = "+account1/drafts"
 
-macro index E "<change-folder>+account1/archive<enter><limit>~B "   "search everything"
+macro index E "<change-folder>+account1/all<enter><limit>~B "       "search everything"
 macro index D "<save-message>+account1/trash<enter>"                "move message to the trash"
 macro index F "<save-message>+account1/flagged<enter>"              "mark message ad flagged"
 macro index S "<save-message>+account1/spam<enter>"                 "mark message as spam"
