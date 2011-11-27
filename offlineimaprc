@@ -1,6 +1,6 @@
 [general]
 # NOTE: cronjob calls the quiet UI with -u
-ui = TTY.TTYUI
+ui = ttyui
 accounts = account1,account2
 
 # Gives you a nice blinky output on the console so you know what's happening:
@@ -24,7 +24,7 @@ remoteuser = account1@gmail.com
 remotepass = xXxXxXxXxX
 ssl = yes 
 realdelete = yes
-nametrans = lambda folder: re.sub('.*Spam$', 'Spam', re.sub('.*Drafts$', 'Drafts', re.sub('.*Sent Mail$', 'Sent', re.sub('.*Starred$', 'Flagged', re.sub('.*Trash$', 'Trash', folder)))))
+nametrans = lambda folder: re.sub('.*Spam$', 'spam', re.sub('.*Drafts$', 'drafts', re.sub('.*All Mail$', 'all', re.sub('.*Sent Mail$', 'sent', re.sub('.*Starred$', 'flagged', re.sub('.*Trash$', 'trash', re.sub('.*software$', 'software', re.sub('.*subscriptions', 'subscriptions', folder))))))))
 
 ### account2 ###
 [Account account2]
@@ -42,7 +42,6 @@ remoteuser = account2@gmail.com
 remotepass = xXxXxXxXxX
 ssl = yes 
 realdelete = yes
-nametrans = lambda folder: re.sub('.*Spam$', 'Spam', re.sub('.*Drafts$', 'Drafts', re.sub('.*Sent Mail$', 'Sent', re.sub('.*Starred$', 'Flagged', re.sub('.*Trash$', 'Trash', folder)))))
+nametrans = lambda folder: re.sub('.*Spam$', 'spam', re.sub('.*Drafts$', 'drafts', re.sub('.*Aent Mail$', 'all', re.sub('.*Sent Mail$', 'sent', re.sub('.*Starred$', 'flagged', re.sub('.*Trash$', 'trash', re.sub('.*books', 'books', folder)))))))
 
 # vim: ft=cfg tw=0
-
