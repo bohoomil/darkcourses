@@ -1,0 +1,7 @@
+
+URxvt*font:xft:OCR\-A AT:regular:pixelsize=13
+URxvt*boldFont:xft:OCR\-A AT:regular:pixelsize=13
+URxvt*italicFont:xft:OCR\-A AT:italic:pixelsize=13
+URxvt*boldItalicFont:xft:OCR\-A AT:italic:pixelsize=13
+
+! vim:ft=xdefaults

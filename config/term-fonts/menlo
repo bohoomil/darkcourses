@@ -1,7 +1,7 @@
 
-URxvt.font:xft:menlo:reguler:pixelsize=13
-URxvt.boldFont:xft:menlo:regular:pixelsize=13
-URxvt.italicFont:xft:menlo:italic:pixelsize=13
-URxvt.boldItalicFont:xft:menlo:italic:pixelsize=13
+URxvt.font:xft:menlo:reguler:pixelsize=14:antialias=false
+URxvt.boldFont:xft:menlo:regular:pixelsize=14:antialias=false
+URxvt.italicFont:xft:menlo:italic:pixelsize=14:antialias=false
+URxvt.boldItalicFont:xft:menlo:italic:pixelsize=14:antialias=false
 
 ! vim:ft=xdefaults

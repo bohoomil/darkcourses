@@ -1,7 +1,7 @@
 
-URxvt.font:xft:consolas:medium:pixelsize=14
-URxvt.boldFont:xft:consolas:medium:pixelsize=14
-URxvt.italicFont:xft:consolas:italic:pixelsize=14
-URxvt.boldItalicFont:xft:consolas:italic:pixelsize=14
+URxvt.font:xft:consolas:medium:pixelsize=14:antialias=false
+URxvt.boldFont:xft:consolas:medium:pixelsize=14:antialias=false
+URxvt.italicFont:xft:consolas:italic:pixelsize=14:antialias=false
+URxvt.boldItalicFont:xft:consolas:italic:pixelsize=14:antialias=false
 
 ! vim:ft=xdefaults
