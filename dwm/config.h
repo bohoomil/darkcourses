@@ -56,6 +56,8 @@ static const Rule rules[] = {
 	{ "XCalc",       NULL,    NULL,            0,     True,      -1,     -1, False, False },
 	{ "XFontSel",    NULL,    NULL,            0,     True,      -1,     -1, False, False },
 	{ "Rsvg-view",   NULL,    NULL,            0,     True,      -1,     -1, False, False },
+	{ "Display",     NULL,    NULL,            0,     True,      -1,     -1, False, False },
+	{ "Parcellite",  NULL,    NULL,            0,     True,      -1,     -1, False, False },
 	{  NULL,         NULL,  "Xdefaults Color Picker", 0,  True,  -1,     -1, False, False },
 	{  NULL,         NULL, "NVIDIA X Server Settings", 0, True,  -1,     -1, False, False },
 	{  NULL,         NULL,   "feh",            0,     True,      -1,     -1, False, False },
@@ -65,6 +67,7 @@ static const Rule rules[] = {
 	{  NULL,         NULL,    "pad",           0,     True,      -1,     -1, False, False },
 	{  NULL,         NULL,    "mc",            0,     True,      -1,     -1, False, False },
 	{ "XTerm",       NULL,    NULL,            0,     True,      -1,     -1, False, False },
+	{  NULL,         NULL,   "vterm",          0,     True,      -1,     -1, False, False },
 	{ "Gnome-font-viewer", NULL,  NULL,        0,     True,      -1,     -1, False, False },
 };
 
@@ -113,13 +116,13 @@ static const Tag tags[] = {
 static const char *dmenucmd[]  = { "dmenu-dwm", NULL };
 static const char *termcmd[]   = { "urxvtc", "-title", "urxvt", NULL };
 static const char *tmuxcmd[]   = { "urxvtc", "-title", "tmux", "-e", "tmux", "-f", "/home/bohoomil/.tmux.conf", NULL };
-static const char *xtermcmd[]  = { "xterm", "-title", "xterm", NULL };
+static const char *xtermcmd[]  = { "urxvt-term", NULL };
 static const char *webbcmd[]   = { "firefox", "-title", "Firefox", NULL };
 static const char *mailcmd[]   = { "urxvtc", "-title", "mutt", "-e", "mutt", NULL };
-static const char *padcmd[]    = { "xterm", "-title", "pad", "-geometry", "78x12+10+800", NULL };
-static const char *fmcmd[]     = { "urxvtc", "-title", "mc", "-fn", "xft:PragmataPro:Regular:pixelsize=13", "-fb", "xft:PragmataPro:Regular:pixelsize=13", "-fi", "xft:PragmataPro:Italic:pixelsize=13", "-fbi", "xft:PragmataPro:Italic:pixelsize=13", "-geometry", "102x36+0-0", "-e", "mc", NULL };
+static const char *padcmd[]    = { "urxvt-pad", NULL };
+static const char *fmcmd[]     = { "urxvt-fm", NULL };
 static const char *deadcmd[]   = { "deadbeef", NULL };
-static const char *vimcmd[]    = { "vim-xt", NULL };
+static const char *vimcmd[]    = { "vim-bin", NULL };
 static const char *volup[]     = { "amixer", "-q", "sset", "PCM", "1+", NULL };
 static const char *voldw[]     = { "amixer", "-q", "sset", "PCM", "1-", NULL };
 static const char *volmt[]     = { "amixer", "-q", "sset", "PCM", "toggle", NULL };
@@ -154,10 +157,8 @@ static Key keys[] = {
 	{ ControlMask|Mod1Mask,       XK_b,      spawn,           {.v = webbcmd} },
 	{ ControlMask|Mod1Mask,       XK_m,      spawn,           {.v = mailcmd} },
 	{ ControlMask|Mod1Mask,       XK_p,      spawn,           {.v = padcmd} },
-//	{ ControlMask|Mod1Mask,       XK_n,      spawn,           {.v = mpdcmd} },
 	{ ControlMask|Mod1Mask,       XK_d,      spawn,           {.v = deadcmd} },
 	{ ControlMask|Mod1Mask,       XK_v,      spawn,           {.v = vimcmd} },
-//	{ ControlMask|Mod1Mask,       XK_e,      spawn,           {.v = editcmd} },
 	/* attach  */
 	{ MODKEY|ControlMask,         XK_a,      setattachmode,   {.i = AttAsFirst } },
 	{ MODKEY|ControlMask,         XK_l,      setattachmode,   {.i = AttAsLast } },
