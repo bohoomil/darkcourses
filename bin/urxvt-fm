@@ -1,0 +1,2 @@
+#!/bin/sh
+urxvtc -fn "xft:Envy Code R:medium:pixelsize=13:antialias=false" -fb "xft:Envy Code R:medium:pixelsize=13:antialias=false" -fi "xft:Envy Code R:italic:pixelsize=13:antialias=false" -fbi "xft:Envy Code R:italic:pixelsize=13:antialias=false" -title "mc" -geometry 102x36+0-0 -e mc
