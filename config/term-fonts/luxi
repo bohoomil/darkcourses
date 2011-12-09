@@ -1,5 +1,5 @@
 
-URxvt.font:xft:luxi mono:reguler:pixelsize=13
+URxvt.font:xft:luxi mono:regular:pixelsize=13
 URxvt.boldFont:xft:luxi mono:regular:pixelsize=13
 URxvt.italicFont:xft:luxi mono:italic:pixelsize=13
 URxvt.boldItalicFont:xft:luxi mono:italic:pixelsize=13
