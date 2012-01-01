@@ -1,0 +1,8 @@
+ 
+term urxvt
+snap 10
+bw 2
+fg #005577
+fc #A64286
+mask1 mod4
+bg #001833

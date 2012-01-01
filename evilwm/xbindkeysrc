@@ -1,0 +1,81 @@
+# For the benefit of emacs users: -*- shell-script -*-
+#
+# Version: 1.8.5
+#
+# If you edit this file, do not forget to uncomment any lines
+# that you change.
+# The pound(#) symbol may be used anywhere for comments.
+#
+# To specify a key, you can use 'xbindkeys --key' or
+# 'xbindkeys --multikey' and put one of the two lines in this file.
+#
+# The format of a command line is:
+#    "command to start"
+#       associated key
+#
+#
+# A list of keys is in /usr/include/X11/keysym.h and in
+# /usr/include/X11/keysymdef.h
+# The XK_ is not needed.
+#
+# List of modifier:
+#   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4, Mod5 (Scroll).
+#
+
+# The release modifier is not a standard X modifier, but you can
+# use it if you want to catch release events instead of press events
+
+# By defaults, xbindkeys does not pay attention with the modifiers
+# NumLock, CapsLock and ScrollLock.
+# Uncomment the lines above if you want to pay attention to them.
+
+#keystate_numlock = enable
+#keystate_capslock = enable
+#keystate_scrolllock= enable
+
+###########################
+# xbindkeys configuration #
+###########################
+
+"xbindkeys_show" 
+  control+shift + q
+
+# specify a mouse button
+"urxvtc"
+  control + b:2
+
+"urxvtc -e tmux"
+	m:0xc + c:28
+
+"/usr/local/bin/dmenu-dwm"
+	m:0x0 + c:135
+
+"firefox"
+	m:0xc + c:56
+
+"deadbeef"
+	m:0xc + c:40
+
+"urxvt-term"
+	m:0xc + c:53
+
+"urxvt-fm"
+	m:0xc + c:41
+
+"urxvt-pad"
+	m:0xc + c:33
+
+"sudo pm-suspend"
+	m:0x45 + c:39
+
+"sudo shutdown -h now"
+	m:0x45 + c:43
+
+"sudo shotdown -r now"
+	m:0x45 + c:27
+
+
+##################################
+# End of xbindkeys configuration #
+##################################

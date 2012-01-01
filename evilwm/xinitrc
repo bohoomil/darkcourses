@@ -1,0 +1,39 @@
+
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/* ; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+/usr/bin/urxvtd -q -o -f &
+
+xrdb -load $HOME/.Xresources
+
+xset r rate 200 30
+
+sh $HOME/.fehbg &
+
+dunst &
+
+unclutter -idle 5 &
+
+parcellite -n &
+
+xautolock -time 60 -locker "sudo pm-suspend" &
+
+nvidia-settings -a GlyphCache=1
+nvidia-settings -a InitialPixmapPlacement=2
+
+## evilwm #######################################
+xsetroot -cursor_name left_ptr
+xbindkeys -f $HOME/.xbindkeysrc &
+evilwm &
+$HOME/bin/dzen-evil-left.sh &
+exec $HOME/bin/dzen-evil-right.sh
+
+## xterm ########################################
+#xterm -geometry 80x60+600+0 &
+#exec xterm -geometry 80x60+0+0 -name login
+
+# vim:set ts=2 sw=2 ft=sh et:
