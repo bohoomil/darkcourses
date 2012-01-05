@@ -1,3 +1,5 @@
+unset LANG
+
 if [ -s /etc/locale.conf ]; then
 	. /etc/locale.conf
 fi
