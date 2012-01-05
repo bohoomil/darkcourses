@@ -1,0 +1,2 @@
+Create symlinks to the files located in /etc/fonts/conf.avail to make things work as expected.
+
