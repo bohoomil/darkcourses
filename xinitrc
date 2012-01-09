@@ -16,7 +16,7 @@ sh $HOME/.fehbg &
 
 dunst &
 
-/usr/bin/urxvtd -q -o -f &
+/usr/bin/urxvtd -q -o -f
 
 unclutter -idle 5 &
 
