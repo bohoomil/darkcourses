@@ -1,7 +1,12 @@
 ! vim:ft=xdefaults
-! dc3, a.k.a. darkcourses v. 3
+! dc3, a.k.a. darkcourses v. 3.1
 ! by bohoomil
 
+! .Xresources bg/fg colours
+!*background: #000C1A
+!*foreground: #8A9199
+
+! fg/bg for Xorg apps
 *background: #d9d9d9
 *foreground: #000C1A
 
@@ -10,11 +15,11 @@
 *color8:     #3A4759
 
 ! red
-*color1:     #802535
-*color9:     #B33E54
+*color1:     #801A2B
+*color9:     #B3364B
 
 ! green
-*color2:     #34733F
+*color2:     #2E733A
 *color10:    #4BA65A
 
 ! yellow
@@ -27,7 +32,7 @@
 
 ! magenta
 *color5:     #4D578C
-*color13:    #A64286
+*color13:    #A63A82
 
 ! cyan
 *color6:     #008080
