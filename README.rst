@@ -8,3 +8,4 @@ Additionaly, you'll find here a bunch of my config files, as well as my customiz
 
 .. image:: https://github.com/bohoomil/darkcourses/raw/master/darkcourses.png
 
+
