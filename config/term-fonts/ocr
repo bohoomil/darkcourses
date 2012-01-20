@@ -1,7 +1,7 @@
 
-URxvt*font:xft:OCR\-A AT:regular:pixelsize=13
-URxvt*boldFont:xft:OCR\-A AT:regular:pixelsize=13
-URxvt*italicFont:xft:OCR\-A AT:italic:pixelsize=13
-URxvt*boldItalicFont:xft:OCR\-A AT:italic:pixelsize=13
+URxvt*font:xft:OCR\-A AT:style=regular:pixelsize=13:antialias=false
+URxvt*boldFont:xft:OCR\-A AT:style=regular:pixelsize=13:antialias=false
+URxvt*italicFont:xft:OCR\-A AT:style=regular:pixelsize=13:antialias=false
+URxvt*boldItalicFont:xft:OCR\-A AT:style=regular:pixelsize=13:antialias=false
 
 ! vim:ft=xdefaults

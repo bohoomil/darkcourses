@@ -1,7 +1,0 @@
-
-URxvt.font:xft:andale mono:medium:pixelsize=13
-URxvt.boldFont:xft:andale mono:medium:pixelsize=13
-URxvt.italicFont:xft:andale mono:italic:pixelsize=13
-URxvt.boldItalicFont:xft:andale mono:italic:pixelsize=13
-
-! vim:ft=xdefaults
